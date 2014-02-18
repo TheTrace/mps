@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+	%strong Title:
+	= @template_task.title
+
+%p
+	%strong Text:
+	= @template_task.text
+
+%p
+	%strong Tentative Due Date:
+	= @template_task.tentative_due_date
+
+%p
+	%strong Sort Order:
+	= @template_task.sort_order
+
+= link_to 'Edit', edit_template_task_path(@template_task)
+|
+= link_to 'Back', template_tasks_path

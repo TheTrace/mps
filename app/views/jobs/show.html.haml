@@ -1,0 +1,50 @@
+.center-block
+	%p#notice= notice
+
+	#list-group{ :style => "float:right;" }
+		/ Float right stuff
+		- @job.tasks.each do |t|
+			%a{ :href => "#{}", :class => "list-group-item list-group-item-success" }
+				= t.title
+
+	%H1= @job.title
+
+	%p
+		%strong Text:
+		= @job.text
+
+	%p
+		%strong Reference:
+		= @job.reference
+
+	%p
+		%strong Party A:
+		= @job.party_a_id
+
+	%p
+		%strong Party B:
+		= @job.party_b_id
+
+	%p
+		%strong Legal Rep:
+		= @job.legal_rep
+
+	%p
+		%strong Mediator:
+		= @job.mediator
+
+	%p
+		%strong Fees Paid:
+		&pound;
+		= @job.fees_paid
+
+	%p
+		%strong Mediation Date:
+		= @job.mediation_date
+
+	= link_to 'Edit', edit_job_path(@job)
+	|
+	= link_to 'Back', jobs_path
+	|
+	= link_to 'Destroy', @job, method: :delete, data: { confirm: 'Are you sure you want to DELETE this job?' }
+

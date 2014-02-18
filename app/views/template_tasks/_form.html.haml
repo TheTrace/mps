@@ -1,0 +1,34 @@
+= form_for(@template_task, :html => { :class => "form-horizontal", :role => "form" } ) do |f|
+	- if @template_task.errors.any?
+		#error_explanation
+			%h2
+				= pluralize(@template_task.errors.count, "error")
+				prohibited this template_task from being saved:
+
+			%ul
+				- @template_task.errors.full_messages.each do |msg|
+					%li= msg
+
+	.form-group
+		.field
+			= f.label :title
+			%br
+			= f.text_field :title
+
+		.field
+			= f.label :tentative_due_date
+			%br
+			= f.text_field :tentative_due_date
+
+		.field
+			= f.label :sort_order
+			%br
+			= f.text_field :sort_order
+
+		.field
+			= f.label :text
+			%br
+			= f.text_area :text
+
+	.actions
+		= f.submit class: "btn btn-primary"

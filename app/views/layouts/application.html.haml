@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+%html
+	%head
+		%title Mediation Progression System
+		= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+		= javascript_include_tag "application", "data-turbolinks-track" => true
+		= csrf_meta_tags
+
+	%body{ :role => "document" }
+
+		/ Fixed navbar
+		.navbar{ :class => "navbar-inverse navbar-fixed-top", :role => "navigation" }
+			.container
+				.navbar-header
+					%button.navbar-toggle{ :type => "button", :"data-toggle" => "collapse", :"data-target" => ".navbar-collapse" }
+						%span.sr-only Toggle navigation
+						%span.icon-bar
+						%span.icon-bar
+						%span.icon-bar
+					= link_to "Mediation Progression System", :root, :class => "navbar-brand"
+				.navbar-collapse{ :class => "collapse" }
+					%ul.nav{ :class => "navbar-nav" }
+						%li{ :class => "#{params[:controller].eql?("jobs") ? "active" : ""}" }= link_to "Home", :root
+						%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
+						%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Notes", :notes
+						%li{ :class => "#{params[:controller].eql?("contacts") ? "active" : ""}" }= link_to "Contacts", :contacts
+						%li{ :class => "#{params[:controller].eql?("template_tasks") ? "active" : ""}" }= link_to "Admin", :template_tasks
+						%li.dropdown
+							%a.dropdown-toggle{ :href => "#", :"data-toggle" => "dropdown" }
+								Dropdown
+								%b.caret
+							%ul.dropdown-menu
+								%li
+									%a{ :href => "#" } Action
+								%li
+									%a{ :href => "#" }Another action
+								%li
+									%a{ :href => "#" }Something else here
+								%li.divider
+								%li.dropdown-header Nav header
+								%li
+									%a{ :href => "#" } Separated link
+								%li
+									%a{ :href => "#" } One more separated link
+
+
+		= yield

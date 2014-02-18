@@ -1,0 +1,16 @@
+%h1 Jobs Listing
+
+%ul
+	- @jobs.each do |job|
+		%li.job{ :onclick => "location.href='" + job_path(job) + "'"}
+			/= link_to 'Edit', job
+			= job.title + ", " + job.text
+			/ = "&nbsp;&nbsp;&nbsp;".html_safe
+			/ &nbsp;&nbsp;&nbsp;
+			/ = link_to 'Edit', edit_job_path(job)
+			/ &nbsp;&nbsp;&nbsp;
+			/ = link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Job', new_job_path
