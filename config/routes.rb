@@ -63,5 +63,5 @@ Mps::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  match '/', to: => 'jobs#index', via: 'get'
+  match '/', to: 'jobs#index', via: 'get'
 end

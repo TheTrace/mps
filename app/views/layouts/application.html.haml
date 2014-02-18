@@ -17,10 +17,10 @@
 						%span.icon-bar
 						%span.icon-bar
 						%span.icon-bar
-					= link_to "Mediation Progression System", :root, :class => "navbar-brand"
+					= link_to "Mediation Progression System", '/', :class => "navbar-brand"
 				.navbar-collapse{ :class => "collapse" }
 					%ul.nav{ :class => "navbar-nav" }
-						%li{ :class => "#{params[:controller].eql?("jobs") ? "active" : ""}" }= link_to "Home", :root
+						%li{ :class => "#{params[:controller].eql?("jobs") ? "active" : ""}" }= link_to "Home", '/'
 						%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
 						%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Notes", :notes
 						%li{ :class => "#{params[:controller].eql?("contacts") ? "active" : ""}" }= link_to "Contacts", :contacts
