@@ -1,7 +1,7 @@
 // Place all the styles related to the jobs controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.job {
+li.job {
 	display: inline-block;
 	width: 240px;
 	height: 180px;
@@ -13,3 +13,7 @@
 	color: wheat;
 	cursor: pointer;
 }
+
+.panel-heading.hand { cursor: pointer; }
+.panel.job-height { height: 200px; }
+.panel-body.job-height { height: 102px; overflow: auto; }

@@ -69,6 +69,6 @@ class TemplateTasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def template_task_params
-      params.require(:template_task).permit(:title, :text, :tentative_due_date, :sort_order)
+      params.require(:template_task).permit(:title, :text, :due_days, :hard_due_days, :sort_order)
     end
 end

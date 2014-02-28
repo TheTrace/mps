@@ -1,0 +1,48 @@
+%p#notice= notice
+
+%h2= link_to @task.job.title, @task.job if @task.job
+
+.form-horizontal
+	.form-group
+		%strong.col-sm-3 Sort Order:
+		.col-sm-4
+			= @task.sort_order
+
+	.form-group
+		%strong.col-sm-3 Title:
+		.col-sm-4
+			= @task.title
+
+	.form-group
+		%strong.col-sm-3 Text:
+		.col-sm-4
+			= @task.text
+
+	.form-group
+		%strong.col-sm-3 Party A Complete Date:
+		.col-sm-4
+			= @task.party_a_complete_date
+
+	.form-group
+		%strong.col-sm-3 Party B Complete Date:
+		.col-sm-4
+			= @task.party_b_complete_date
+
+	.form-group
+		%strong.col-sm-3 Tentative Due Date:
+		.col-sm-4
+			= @task.tentative_due_date
+
+	.form-group
+		%strong.col-sm-3 Due Date:
+		.col-sm-4
+			= @task.due_date
+
+	.form-group
+		%strong.col-sm-3 Complete Date:
+		.col-sm-4
+			= @task.complete_date
+
+= link_to 'Edit', edit_task_path(@task)
+|
+= link_to 'Back', tasks_path

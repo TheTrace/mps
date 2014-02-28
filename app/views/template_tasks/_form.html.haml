@@ -10,25 +10,25 @@
 					%li= msg
 
 	.form-group
-		.field
-			= f.label :title
-			%br
-			= f.text_field :title
+		= f.label :sort_order, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :sort_order, :class => "form-control"
 
-		.field
-			= f.label :tentative_due_date
-			%br
-			= f.text_field :tentative_due_date
+	.form-group
+		= f.label :title, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :title, :class => "form-control"
 
-		.field
-			= f.label :sort_order
-			%br
-			= f.text_field :sort_order
+	.form-group
+		= f.label :"Days until due", :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :due_days, :class => "form-control"
 
-		.field
-			= f.label :text
-			%br
-			= f.text_area :text
+	.form-group
+		= f.label :text, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_area :text, :class => "form-control", :rows => "5"
 
 	.actions
-		= f.submit class: "btn btn-primary"
+		.col-sm-offset-2
+			= f.submit class: "btn btn-primary"

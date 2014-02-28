@@ -1,0 +1,50 @@
+%h1 Task List
+
+%table.table
+	%thead
+		%tr
+			%th 
+			%th Title
+			%th Text
+			%th Complete A
+			%th Complete B
+			%th Complete Date
+			%th Tentative Due
+			%th Due Date
+			%th
+			%th
+			%th
+
+	%tbody
+		- current_job = nil
+		- @tasks.each do |task|
+			- if current_job != task.job
+				- current_job = task.job
+				%tr.success
+					%td{ :colspan => 11 }= link_to task.job.title, task.job if task.job
+			%tr
+				%td= task.sort_order
+				%td= task.title
+				%td= task.text
+				%td
+					- if !task.party_a_complete_date.blank?
+						= task.party_a_complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.party_a_complete_date.year}")
+				%td
+					- if !task.party_b_complete_date.blank?
+						= task.party_b_complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.party_b_complete_date.year}")
+				%td
+					- if !task.complete_date.blank?
+						= task.complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.complete_date.year}")
+				%td
+					- if !task.tentative_due_date.blank?
+						= task.tentative_due_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.tentative_due_date.year}")
+				%td
+					- if !task.due_date.blank?
+						= task.due_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.due_date.year}")
+				%td= link_to 'Show', task
+				%td= link_to 'Edit', edit_task_path(task)
+				%td= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure you want to delete this task?' }
+
+%br
+
+= link_to 'New Task', new_task_path

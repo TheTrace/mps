@@ -1,16 +1,46 @@
 %h1 Jobs Listing
 
-%ul
-	- @jobs.each do |job|
-		%li.job{ :onclick => "location.href='" + job_path(job) + "'"}
-			/= link_to 'Edit', job
-			= job.title + ", " + job.text
-			/ = "&nbsp;&nbsp;&nbsp;".html_safe
-			/ &nbsp;&nbsp;&nbsp;
-			/ = link_to 'Edit', edit_job_path(job)
-			/ &nbsp;&nbsp;&nbsp;
-			/ = link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' }
+%div{ :style => "float:right;" }
+	#list-group
+		/ Float right stuff
+		- @tasks.each do |t|
+			%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success" }
+				= t.title
+				- if !t.due_date.blank?
+					= " (" + t.due_date.day().to_s + "/" + t.due_date.month().to_s + ")"
+				- elsif !t.tentative_due_date.blank?
+					= " (" + t.tentative_due_date.day().to_s + "/" + t.tentative_due_date.month().to_s + ")"
 
+
+%div{ :style => "float:left; width:75%;" }
+	%ul
+		- @jobs.each do |job|
+			-# %li.job{ :onclick => "location.href='" + job_path(job) + "'"}
+			-#= link_to 'Edit', job
+			-#= job.title + ", " + job.text
+			-# = "&nbsp;&nbsp;&nbsp;".html_safe
+			-# &nbsp;&nbsp;&nbsp;
+			-# = link_to 'Edit', edit_job_path(job)
+			-# &nbsp;&nbsp;&nbsp;
+			-# = link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' }
+
+			.col-sm-3
+				.panel{ :class => "job-height panel-primary" }
+					.panel-heading.hand{ :onclick => "location.href='" + job_path(job) + "'"}= job.title.to_s + " - " + job.reference.to_s
+					.panel-body.job-height= job.text.to_s
+					-# ptyA = job.party_a.last_name if job.party_a
+					-# ptyB = Contact.where("contacts.id=?",job.party_b_id).first if job.party_b_id
+					-# ptyA = Contact.where("contacts.id=?",job.party_a_id).first if job.party_a_id
+
+					.panel-footer
+						= job.party_a.blank? ? "No Party A" : ("<strong>"+job.party_a.last_name.to_s+"</strong>").html_safe
+						v
+						= job.party_b.blank? ? "No Party B" : ("<strong>"+job.party_b.last_name.to_s+"</strong>").html_safe
+						-# n.last_name.to_s
+						-#.panel-footer= ptyA.last_name.to_s + " and " + job.party_b_id.to_s
+				-#= debug job.party_a
+
+%div{ :style => "clear:both;" }
 %br
 
 = link_to 'New Job', new_job_path

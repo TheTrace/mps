@@ -1,0 +1,26 @@
+%p#notice= notice
+
+%p
+	%strong Title:
+	= @note.title
+
+%p
+	%strong Text:
+	= @note.text
+
+%p
+	%strong Type:
+	= @note.note_type
+
+%p
+	%strong Cost:
+	= number_to_currency(@note.cost.to_s, unit: "&pound; ".html_safe)
+
+%p
+	%strong Time:
+	= @note.time_taken
+
+
+= link_to 'Edit', edit_note_path(@note)
+|
+= link_to 'Back', notes_path

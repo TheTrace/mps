@@ -1,0 +1,35 @@
+%h1 Listing notes
+
+%table.table
+	%thead
+		%tr
+			%th Title
+			%th Text
+			%th Type
+			%th.text-right Cost
+			%th Time
+			%th 
+			%th
+			%th
+ 
+	%tbody
+		- current_job = nil
+		- @notes.each do |note|
+			- if current_job != note.job
+				- current_job = note.job
+				%tr.success
+					%td{ :colspan => 11 }= note.job.title if note.job
+			%tr
+				%td= note.title
+				%td= note.text
+				%td= note.note_type
+				%td.text-right= number_to_currency(note.cost.to_s, unit: "&pound; ".html_safe)
+				%td= note.time_taken
+				%td
+					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, note, html = {:title => "Show"}
+					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(note), html = {:title => "Edit"}
+				%td.text-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, note, method: :delete, data: { confirm: 'Are you sure?' }, :title => "Destroy"
+
+%br
+
+= link_to 'New Note', new_note_path

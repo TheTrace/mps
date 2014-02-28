@@ -1,0 +1,58 @@
+= form_for(@task, :html => { :class => "form-horizontal", :role => "form" }) do |f|
+	- if @task.errors.any?
+		#error_explanation
+			%h2
+				= pluralize(@task.errors.count, "error")
+				prohibited this task from being saved:
+
+			%ul
+				- @task.errors.full_messages.each do |msg|
+					%li= msg
+
+	%h2= @task.job.title if @task.job
+
+	.form-group
+		= f.label :title, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :title, :class => "form-control autofocus"
+
+	.form-group
+		= f.label :text, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_area :text, :class => "form-control", :rows => "5"
+
+	.form-group
+		= f.label :tentative_due_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :tentative_due_date, :class => "form-control autofocus"
+
+	.form-group
+		= f.label :due_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :due_date, :class => "form-control autofocus"
+
+	.form-group
+		= f.label :party_a_complete_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :party_a_complete_date, :class => "form-control autofocus"
+
+	.form-group
+		= f.label :party_b_complete_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :party_b_complete_date, :class => "form-control autofocus"
+
+	.form-group
+		= f.label :complete_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :complete_date, :class => "form-control autofocus"
+
+	.form-group
+		= f.label :sort_order, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :sort_order, :class => "form-control autofocus"
+
+
+	.actions
+		.col-sm-offset-2
+			= f.submit class: "btn btn-primary"
+

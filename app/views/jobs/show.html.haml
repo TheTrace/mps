@@ -4,39 +4,38 @@
 	#list-group{ :style => "float:right;" }
 		/ Float right stuff
 		- @job.tasks.each do |t|
-			%a{ :href => "#{}", :class => "list-group-item list-group-item-success" }
+			%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success" }
 				= t.title
 
 	%H1= @job.title
+
+	%h2
+		%strong Reference:
+		= @job.reference
 
 	%p
 		%strong Text:
 		= @job.text
 
 	%p
-		%strong Reference:
-		= @job.reference
-
-	%p
 		%strong Party A:
-		= @job.party_a_id
+		= @job.party_a.blank? ? "<em>No Party A</em>".html_safe : @job.party_a.full_name
 
 	%p
 		%strong Party B:
-		= @job.party_b_id
+		= @job.party_b.blank? ? "<em>No Party B</em>".html_safe : @job.party_b.full_name
 
 	%p
 		%strong Legal Rep:
-		= @job.legal_rep
+		= @job.legal_representative.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_representative.full_name
 
 	%p
 		%strong Mediator:
-		= @job.mediator
+		= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : @job.mediator_contact.full_name
 
 	%p
 		%strong Fees Paid:
-		&pound;
-		= @job.fees_paid
+		= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
 
 	%p
 		%strong Mediation Date:

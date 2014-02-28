@@ -1,0 +1,27 @@
+%h1 Template Tasks
+
+%table.table
+	%thead
+		%tr
+			%th
+			%th Title
+			%th Text
+			%th Days til Due
+			%th
+			%th
+			%th
+
+	%tbody
+		- @template_tasks.each do |template_task|
+			%tr
+				%td= template_task.sort_order
+				%td= template_task.title
+				%td= template_task.text
+				%td= template_task.due_days
+				%td= link_to 'Show', template_task
+				%td= link_to 'Edit', edit_template_task_path(template_task)
+				%td= link_to 'Destroy', template_task, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Template task', new_template_task_path

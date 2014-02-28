@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140214143626) do
+ActiveRecord::Schema.define(version: 20140220222739) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20140214143626) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "job_id"
-    t.integer  "type_id"
+    t.string   "note_type"
     t.decimal  "cost",       precision: 9, scale: 2
     t.string   "time_taken"
   end
@@ -71,12 +71,8 @@ ActiveRecord::Schema.define(version: 20140214143626) do
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "job_id"
-    t.datetime "party_a_complete_date"
-    t.datetime "party_b_complete_date"
-    t.datetime "complete_date"
-    t.datetime "tentative_due_date"
-    t.datetime "due_date"
+    t.integer  "due_days"
+    t.integer  "hard_due_days"
     t.integer  "sort_order"
   end
 

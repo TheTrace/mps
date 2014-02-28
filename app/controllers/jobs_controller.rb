@@ -5,6 +5,7 @@ class JobsController < ApplicationController
   # GET /jobs.json
   def index
     @jobs = Job.all
+    @tasks = Task.order("due_date,tentative_due_date")
   end
 
   # GET /jobs/1
