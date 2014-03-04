@@ -1,4 +1,5 @@
 Mps::Application.routes.draw do
+  get "users/new"
   resources :template_tasks
 
   resources :contacts
