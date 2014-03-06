@@ -1,0 +1,17 @@
+%p#notice= notice
+
+.form-horizontal
+	.form-group
+		%strong.col-sm-3 Name:
+		.col-sm-4
+			= @user.name
+
+	.form-group
+		%strong.col-sm-3 Email:
+		.col-sm-4
+			= @user.email
+
+
+= link_to 'Edit', edit_user_path(@user)
+|
+= link_to 'Back', users_path

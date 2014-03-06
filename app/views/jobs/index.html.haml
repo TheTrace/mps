@@ -26,16 +26,17 @@
 
 			.col-sm-3
 				.panel{ :class => "job-height panel-primary" }
-					.panel-heading.hand{ :onclick => "location.href='" + job_path(job) + "'"}= job.title.to_s + " - " + job.reference.to_s
-					.panel-body.job-height= job.text.to_s
+					.panel-heading.hand{ :onclick => "location.href='" + job_path(job) + "'"}
+						= job.reference.to_s
+						= job.party_a.blank? ? "? A" : ("<strong>"+job.party_a.last_name.to_s+"</strong>").html_safe
+						v
+						= job.party_b.blank? ? "? B" : ("<strong>"+job.party_b.last_name.to_s+"</strong>").html_safe
+					.panel-body.job-height= job.title.to_s + " - " + job.text.to_s
 					-# ptyA = job.party_a.last_name if job.party_a
 					-# ptyB = Contact.where("contacts.id=?",job.party_b_id).first if job.party_b_id
 					-# ptyA = Contact.where("contacts.id=?",job.party_a_id).first if job.party_a_id
 
 					.panel-footer
-						= job.party_a.blank? ? "No Party A" : ("<strong>"+job.party_a.last_name.to_s+"</strong>").html_safe
-						v
-						= job.party_b.blank? ? "No Party B" : ("<strong>"+job.party_b.last_name.to_s+"</strong>").html_safe
 						-# n.last_name.to_s
 						-#.panel-footer= ptyA.last_name.to_s + " and " + job.party_b_id.to_s
 				-#= debug job.party_a

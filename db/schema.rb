@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303192829) do
+ActiveRecord::Schema.define(version: 20140306144423) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20140303192829) do
     t.integer  "job_id"
     t.string   "note_type"
     t.decimal  "cost",       precision: 9, scale: 2
-    t.string   "time_taken"
+    t.decimal  "time_taken", precision: 9, scale: 2
   end
 
   create_table "tasks", force: true do |t|
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(version: 20140303192829) do
     t.datetime "tentative_due_date"
     t.datetime "due_date"
     t.integer  "sort_order"
+    t.decimal  "cost",                  precision: 9, scale: 2
+    t.boolean  "is_financial",                                  default: false
   end
 
   create_table "template_tasks", force: true do |t|
@@ -74,6 +76,7 @@ ActiveRecord::Schema.define(version: 20140303192829) do
     t.integer  "due_days"
     t.integer  "hard_due_days"
     t.integer  "sort_order"
+    t.boolean  "is_financial",  default: false
   end
 
   create_table "users", force: true do |t|
@@ -81,6 +84,9 @@ ActiveRecord::Schema.define(version: 20140303192829) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest"
   end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end

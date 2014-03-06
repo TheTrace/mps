@@ -43,6 +43,11 @@
 		.col-sm-4
 			= @task.complete_date
 
+	.form-group
+		%strong.col-sm-3 Finincial task:
+		.col-sm-4
+			= @task.is_financial ? "Yes" : "No"
+
 = link_to 'Edit', edit_task_path(@task)
 |
 = link_to 'Back', tasks_path

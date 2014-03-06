@@ -21,7 +21,7 @@
 			- if current_job != task.job
 				- current_job = task.job
 				%tr.success
-					%td{ :colspan => 11 }= link_to task.job.title, task.job if task.job
+					%td{ :colspan => 11 }= link_to( task.job.reference + " " + task.job.title, task.job) if task.job
 			%tr
 				%td= task.sort_order
 				%td= task.title
