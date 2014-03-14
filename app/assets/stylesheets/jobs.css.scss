@@ -12,7 +12,12 @@ li.job {
 	background: darkslategrey;
 	color: wheat;
 	cursor: pointer;
+	text-align: center;
+	h1 { font-size: 18px; }
 }
+
+.task-list { width: 25%; min-width: 200px; }
+.job-list { width: 73%; min-width: 300px; float: left; }
 
 .panel-heading.hand { cursor: pointer; }
 .panel.job-height { height: 200px; }

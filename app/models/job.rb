@@ -14,10 +14,19 @@ class Job < ActiveRecord::Base
 			new_task.title = t.title
 			new_task.text = t.text
 			new_task.job_id = self.id
-			new_task.tentative_due_date = DateTime.now() + t.due_days
+			new_task.tentative_due_date = DateTime.now() + t.due_days.to_i
 			new_task.due_date = t.hard_due_days.blank? ? nil : DateTime.now() + t.hard_due_days
 			new_task.sort_order = t.sort_order
+			new_task.is_financial = t.is_financial
 			new_task.save()
 		end
+	end
+
+	def party_a_name
+		party_a.blank? ? "?" : party_a.last_name
+	end
+
+	def party_b_name
+		party_b.blank? ? "?" : party_b.last_name
 	end
 end

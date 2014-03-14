@@ -1,10 +1,11 @@
 .center-block
 	%p#notice= notice
 
-	#list-group{ :style => "float:right;" }
+	-##list-group{ :style => "float:right;" }
+	#list-group.pull-right
 		/ Float right stuff
 		- @job.tasks.each do |t|
-			%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success" }
+			%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial}" }
 				= t.title
 
 	%H1= @job.title
@@ -43,7 +44,7 @@
 
 	= link_to 'Edit', edit_job_path(@job)
 	|
-	= link_to 'Back', jobs_path
+	= link_to 'Index', jobs_path
 	|
 	= link_to 'Destroy', @job, method: :delete, data: { confirm: 'Are you sure you want to DELETE this job?' }
 

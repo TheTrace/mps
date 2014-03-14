@@ -1,28 +1,29 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+TODO stuff
 
-Things you may want to cover:
+General
+- Add search box
 
-* Ruby version
+Tasks
+- Show check boxes for marking off
+- Create logic for showing by due date
+- Create hover classes for job/task pair highlight
+- Ability to sort rows (task templates)
+- Add jQuery UI date dropdowns (use for times on notes too)
 
-* System dependencies
+Notes
+- Input form on job show page
+- Show related notes for job
 
-* Configuration
+Jobs
+- Restructure to have
+-- Potential mediators, lawyers, etc
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+Contacts
+- Add types (Solicitor, Mediator, Clients)
+- Add ability to add contact from job form
+- Add ability to search contact from job form
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.

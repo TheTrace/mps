@@ -51,6 +51,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def complete_a
+    set_task
+    if @task.a_complete?
+      @task.update_attribute(:party_a_complete_date, nil)
+    else
+      @task.update_attribute(:party_a_complete_date, DateTime.now)
+    end
+    render :text => ( @task.a_complete? ? 'complete' : 'uncomplete' )
+  end
+
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy

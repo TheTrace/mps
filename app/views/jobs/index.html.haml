@@ -1,47 +1,75 @@
 %h1 Jobs Listing
 
-%div{ :style => "float:right;" }
-	#list-group
+.pull-right.task-list
+	-#list-group
+	%ul
 		/ Float right stuff
 		- @tasks.each do |t|
-			%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success" }
-				= t.title
-				- if !t.due_date.blank?
-					= " (" + t.due_date.day().to_s + "/" + t.due_date.month().to_s + ")"
-				- elsif !t.tentative_due_date.blank?
-					= " (" + t.tentative_due_date.day().to_s + "/" + t.tentative_due_date.month().to_s + ")"
+			%li
+				%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial}" }
+					= t.title
+					= " (" + t.due_date_text + ")"
+				- if t.job
+					%br
+					.checkbox
+						%label
+							= check_box t, :party_a_complete_date, :onclick => "complete_party_a( #{t.id} );", :checked => t.a_complete?
+							= t.job.party_a_name
+	
+					.checkbox
+						%label
+							= check_box_tag :party_b_complete
+							= t.job.party_b_name
 
 
-%div{ :style => "float:left; width:75%;" }
+.job-list
 	%ul
 		- @jobs.each do |job|
-			-# %li.job{ :onclick => "location.href='" + job_path(job) + "'"}
-			-#= link_to 'Edit', job
-			-#= job.title + ", " + job.text
+			%li.job{ :onclick => "location.href='" + job_path(job) + "'"}
+				%h1
+					= job.reference.to_s
+					%br
+					= job.party_a_name
+					v
+					= job.party_b_name
+				= job.title
 			-# = "&nbsp;&nbsp;&nbsp;".html_safe
 			-# &nbsp;&nbsp;&nbsp;
 			-# = link_to 'Edit', edit_job_path(job)
 			-# &nbsp;&nbsp;&nbsp;
 			-# = link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' }
 
-			.col-sm-3
-				.panel{ :class => "job-height panel-primary" }
-					.panel-heading.hand{ :onclick => "location.href='" + job_path(job) + "'"}
-						= job.reference.to_s
-						= job.party_a.blank? ? "? A" : ("<strong>"+job.party_a.last_name.to_s+"</strong>").html_safe
-						v
-						= job.party_b.blank? ? "? B" : ("<strong>"+job.party_b.last_name.to_s+"</strong>").html_safe
-					.panel-body.job-height= job.title.to_s + " - " + job.text.to_s
-					-# ptyA = job.party_a.last_name if job.party_a
-					-# ptyB = Contact.where("contacts.id=?",job.party_b_id).first if job.party_b_id
-					-# ptyA = Contact.where("contacts.id=?",job.party_a_id).first if job.party_a_id
-
-					.panel-footer
-						-# n.last_name.to_s
-						-#.panel-footer= ptyA.last_name.to_s + " and " + job.party_b_id.to_s
-				-#= debug job.party_a
+			-#.col-sm-3
+			-#	.panel{ :class => "job-height panel-primary" }
+			-#		.panel-heading.hand{ :onclick => "location.href='" + job_path(job) + "'"}
+			-#			= job.reference.to_s
+			-#			= job.party_a.blank? ? "? A" : ("<strong>"+job.party_a.la-#st_name.to_s+"</strong>").html_safe
+			-#			v
+			-#			= job.party_b.blank? ? "? B" : ("<strong>"+job.party_b.last_name.to_s+"</strong>").html_safe
+			-#		.panel-body.job-height= job.title.to_s + " - " + job.text.to_s
+			-#		-# ptyA = job.party_a.last_name if job.party_a
+			-#		-# ptyB = Contact.where("contacts.id=?",job.party_b_id).fi-#rst if job.party_b_id
+			-#		-# ptyA = Contact.where("contacts.id=?",job.party_a_id).first if job.party_a_id
+-#
+			-#		.panel-footer
+			-#			-# n.last_name.to_s
+			-#			-#.panel-footer= ptyA.last_name.to_s + " and " + job.party_b_id.to_s
+			-#	-#= debug job.party_a
 
 %div{ :style => "clear:both;" }
 %br
 
 = link_to 'New Job', new_job_path
+
+%script
+	function complete_party_a( task_id ) {
+	//begin_operation();
+	jQuery.post( '/tasks/'+task_id+'/complete_a', function(data) {
+	if (data=='complete') {
+	jQuery('.task-'+task_id).addClass( 'complete' );
+	} else {
+	jQuery('.task-'+task_id).removeClass( 'complete' );
+	}
+	//end_operation();
+	} );
+	}

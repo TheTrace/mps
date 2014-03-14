@@ -17,9 +17,9 @@
 	= @template_task.due_days
 
 %p
-	%strong Finincial task:
+	%strong Financial task:
 	= @template_task.is_financial ? "Yes" : "No"
 
 = link_to 'Edit', edit_template_task_path(@template_task)
 |
-= link_to 'Back', template_tasks_path
+= link_to 'Index', template_tasks_path

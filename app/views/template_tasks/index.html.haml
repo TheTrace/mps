@@ -13,7 +13,7 @@
 
 	%tbody
 		- @template_tasks.each do |template_task|
-			%tr
+			%tr{ :class => "#{'financial' if template_task.is_financial}" }
 				%td= template_task.sort_order
 				%td= template_task.title
 				%td= template_task.text
