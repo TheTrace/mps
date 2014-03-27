@@ -18,7 +18,7 @@
 			- if current_job != note.job
 				- current_job = note.job
 				%tr.success
-					%td{ :colspan => 11 }= note.job.title if note.job
+					%td{ :colspan => 11 }= note.job.ref if note.job
 			%tr
 				%td= note.title
 				%td= note.text

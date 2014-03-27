@@ -14,4 +14,8 @@ class Task < ActiveRecord::Base
 	def b_complete?
 		return !party_b_complete_date.blank?
 	end
+
+	def task_complete?
+		return a_complete? && b_complete?
+	end
 end

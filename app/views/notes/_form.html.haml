@@ -31,12 +31,12 @@
 		.col-sm-5
 			.input-group
 				%span.input-group-addon &pound;
-				= f.text_field :cost, :class => "form-control"
+				= f.number_field :cost, :class => "form-control", :step => "any"
 
 	.form-group
 		= f.label :time_taken, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :time_taken, :class => "form-control"
+			= f.number_field :time_taken, :class => "form-control", :step => "any"
 
 	.actions
 		.col-sm-offset-2

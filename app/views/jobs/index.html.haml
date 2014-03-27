@@ -6,20 +6,21 @@
 		/ Float right stuff
 		- @tasks.each do |t|
 			%li
-				%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial}" }
+				-#%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial} #{'complete' if t.task_complete?}" }
+				%div{ :class => "list-group-item list-group-item-success collapsed hand#{' financial' if t.is_financial}#{' complete' if t.task_complete?}", :"data-toggle" => "collapse", :"data-target" => "#comp#{ t.id }" }
 					= t.title
 					= " (" + t.due_date_text + ")"
-				- if t.job
-					%br
-					.checkbox
-						%label
-							= check_box t, :party_a_complete_date, :onclick => "complete_party_a( #{t.id} );", :checked => t.a_complete?
-							= t.job.party_a_name
-	
-					.checkbox
-						%label
-							= check_box_tag :party_b_complete
-							= t.job.party_b_name
+				%div{ :id => "comp#{ t.id }", :class => "collapse", :style => "height: 0px;" }
+					- if t.job
+						.checkbox
+							%label
+								= check_box :task, :party_a_complete_date, :onclick => "complete_party_a( #{t.id} );", :checked => t.a_complete?
+								= t.job.party_a_name
+		
+						.checkbox
+							%label
+								= check_box :task, :party_b_complete, :onclick => "complete_party_b( #{t.id} );", :checked => t.b_complete?
+								= t.job.party_b_name
 
 
 .job-list
@@ -65,6 +66,18 @@
 	function complete_party_a( task_id ) {
 	//begin_operation();
 	jQuery.post( '/tasks/'+task_id+'/complete_a', function(data) {
+	if (data=='complete') {
+	jQuery('.task-'+task_id).addClass( 'complete' );
+	} else {
+	jQuery('.task-'+task_id).removeClass( 'complete' );
+	}
+	//end_operation();
+	} );
+	}
+
+	function complete_party_b( task_id ) {
+	//begin_operation();
+	jQuery.post( '/tasks/'+task_id+'/complete_b', function(data) {
 	if (data=='complete') {
 	jQuery('.task-'+task_id).addClass( 'complete' );
 	} else {

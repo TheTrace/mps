@@ -6,7 +6,12 @@ Mps::Application.routes.draw do
 
   resources :notes
 
-  resources :tasks
+  resources :tasks do
+    member do
+      post :complete_a
+      post :complete_b
+    end
+  end
 
   resources :jobs
 

@@ -19,6 +19,6 @@ li.job {
 .task-list { width: 25%; min-width: 200px; }
 .job-list { width: 73%; min-width: 300px; float: left; }
 
-.panel-heading.hand { cursor: pointer; }
+.panel-heading.hand, .list-group-item.hand { cursor: pointer; }
 .panel.job-height { height: 200px; }
 .panel-body.job-height { height: 102px; overflow: auto; }

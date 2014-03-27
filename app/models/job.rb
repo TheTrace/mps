@@ -29,4 +29,12 @@ class Job < ActiveRecord::Base
 	def party_b_name
 		party_b.blank? ? "?" : party_b.last_name
 	end
+
+	def parties
+		party_a_name + " v " + party_b_name
+	end
+
+	def ref
+		reference + " " + parties
+	end
 end

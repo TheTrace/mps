@@ -11,6 +11,7 @@ class JobsController < ApplicationController
 	# GET /jobs/1
 	# GET /jobs/1.json
 	def show
+		@note = Note.new(:job_id => @job.id)
 	end
 
 	# GET /jobs/new
