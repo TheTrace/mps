@@ -21,5 +21,8 @@ test:
 production:
   adapter: mysql
   database: dmc_mps
+  username: alan
+  password: h2Ck8vtq
+  host: localhost
   pool: 5
   timeout: 5000
