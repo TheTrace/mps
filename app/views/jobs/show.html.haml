@@ -3,14 +3,9 @@
 
 	= render :partial => "shared/tasklist", :object => @job.tasks
 
-	%H1= @job.title
+	%H1= @job.ref
 
-	%h2
-		%strong Reference:
-		= @job.reference
-		= @job.party_a.blank? ? "<em>No Party A</em>".html_safe : @job.party_a.full_name
-		v
-		= @job.party_b.blank? ? "<em>No Party B</em>".html_safe : @job.party_b.full_name
+	%h2= @job.title
 
 	%p
 		%strong Text:
@@ -80,5 +75,5 @@
 			%tr
 				%td= n.note_type
 				%td{ :title => n.text }= n.title
-				%td.text-right= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe)
+				%td.text-right= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank?
 				%td.text-right= n.time_taken.to_s + " h".html_safe

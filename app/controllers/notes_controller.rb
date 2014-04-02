@@ -29,7 +29,7 @@ class NotesController < ApplicationController
     respond_to do |format|
       if @note.save
         if params[:from] == "job"
-          format.html { redirect_to job_path(@note.job), notice: 'Note was successfully created.' }
+          redirect_to job_path(@note.job), notice: 'Note was successfully created.' 
           return
         else
           format.html { redirect_to @note, notice: 'Note was successfully created.' }
