@@ -21,7 +21,7 @@ test:
 production:
   adapter: mysql
   database: dmc_mps
-  username: alan
+  username: dmc_mps
   password: h2Ck8vtq
   host: localhost
   pool: 5
