@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-%html
+%html{ :lang => "en" }
 	%head
 		%title Mediation Progression System
 		= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
@@ -22,9 +22,8 @@
 					%ul.nav{ :class => "navbar-nav" }
 						%li{ :class => "#{params[:controller].eql?("jobs") ? "active" : ""}" }= link_to "Home", '/'
 						%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Finance", :notes
-						%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
 						%li{ :class => "#{params[:controller].eql?("contacts") ? "active" : ""}" }= link_to "Contacts", :contacts
-						- b_on = params[:controller].eql?("template_tasks") ||  params[:controller].eql?("users") ||  params[:controller].eql?("notes")
+						- b_on = params[:controller].eql?("template_tasks") ||  params[:controller].eql?("users") ||  params[:controller].eql?("notes") || params[:controller].eql?("tasks")
 						%li.dropdown{ :class => "#{b_on ? "active" : ""}" }
 							%a.dropdown-toggle{ :href => "#", :"data-toggle" => "dropdown" }
 								Admin
@@ -32,19 +31,10 @@
 							%ul.dropdown-menu
 								%li{ :class => "#{params[:controller].eql?("template_tasks") ? "active" : ""}" }= link_to "Task Templates", :template_tasks
 								%li{ :class => "#{params[:controller].eql?("users") ? "active" : ""}" }= link_to "Users", :users
-								%li
-									%a{ :href => "#" } Action
-								%li
-									%a{ :href => "#" } Another action
-								%li
-									%a{ :href => "#" } Something else here
 								%li.divider
-								%li.dropdown-header Nav header
+								%li.dropdown-header Edit Elements
 								%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Notes", :notes
-								%li
-									%a{ :href => "#" } Separated link
-								%li
-									%a{ :href => "#" } One more separated link
+								%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
 
 
 		= yield

@@ -1,0 +1,54 @@
+- if tasklist.any?
+	.pull-right.task-list
+		-#list-group
+		%ul
+			/ Float right stuff
+			- tasklist.each do |t|
+				%li
+					-#%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial} #{'complete' if t.task_complete?}" }
+					%div{ :id => "t#{t.id}", :class => "list-group-item list-group-item-success collapsed h#{t.job.id if t.job} hand#{' financial' if t.is_financial}#{' complete' if t.task_complete?}", :"data-toggle" => "collapse", :"data-target" => "#comp#{ t.id }" }
+						= t.title
+						= " (" + t.due_date_text + ")"
+					%div{ :id => "comp#{ t.id }", :class => "collapse", :style => "height: 0px;" }
+						- if t.job
+							.checkbox
+								%label
+									= check_box :task, :party_a_complete_date, :onclick => "complete_party_a( #{t.id} );", :checked => t.a_complete?
+									= t.job.party_a_name
+			
+							.checkbox
+								%label
+									= check_box :task, :party_b_complete, :onclick => "complete_party_b( #{t.id} );", :checked => t.b_complete?
+									= t.job.party_b_name
+%script
+	function complete_party_a( task_id ) {
+	//begin_operation();
+	jQuery.post( '/tasks/'+task_id+'/complete_a', function(data) {
+	if (data=='complete' || data=='allcomplete') {
+	jQuery('.task-'+task_id).addClass( 'complete' );
+	if (data=='allcomplete') {
+	jQuery('#t'+task_id).addClass( 'complete' );
+	}
+	} else {
+	jQuery('.task-'+task_id).removeClass( 'complete' );
+	jQuery('#t'+task_id).removeClass( 'complete' );
+	}
+	//end_operation();
+	} );
+	}
+
+	function complete_party_b( task_id ) {
+	//begin_operation();
+	jQuery.post( '/tasks/'+task_id+'/complete_b', function(data) {
+	if (data=='complete' || data=='allcomplete') {
+	jQuery('.task-'+task_id).addClass( 'complete' );
+	if (data=='allcomplete') {
+	jQuery('#t'+task_id).addClass( 'complete' );
+	}
+	} else {
+	jQuery('.task-'+task_id).removeClass( 'complete' );
+	jQuery('#t'+task_id).removeClass( 'complete' );
+	}
+	//end_operation();
+	} );
+	}

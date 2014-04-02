@@ -20,7 +20,9 @@
 	%strong Time:
 	= @note.time_taken
 
-
+- if @note.job
+	= link_to "Job", job_path(@note.job)
+	|
 = link_to 'Edit', edit_note_path(@note)
 |
 = link_to 'Index', notes_path

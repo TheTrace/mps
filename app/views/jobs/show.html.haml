@@ -1,23 +1,7 @@
 .center-block
 	%p#notice= notice
 
-	-##list-group{ :style => "float:right;" }
-	#list-group.pull-right
-		/ Float right stuff
-		- @job.tasks.each do |t|
-			%div{ :class => "list-group-item list-group-item-success collapsed hand#{' financial' if t.is_financial}#{' complete' if t.task_complete?}", :"data-toggle" => "collapse", :"data-target" => "#comp#{ t.id }" }
-				= t.title
-				= " (" + t.due_date_text + ")"
-			%div{ :id => "comp#{ t.id }", :class => "collapse", :style => "height: 0px;" }
-				.checkbox
-					%label
-						= check_box :task, :party_a_complete_date, :onclick => "complete_party_a( #{t.id} );", :checked => t.a_complete?
-						= t.job.party_a_name
-
-				.checkbox
-					%label
-						= check_box :task, :party_b_complete, :onclick => "complete_party_b( #{t.id} );", :checked => t.b_complete?
-						= t.job.party_b_name
+	= render :partial => "shared/tasklist", :object => @job.tasks
 
 	%H1= @job.title
 
@@ -54,42 +38,47 @@
 	|
 	= link_to 'Destroy', @job, method: :delete, data: { confirm: 'Are you sure you want to DELETE this job?' }
 
-%hr
+	%hr
 
-%h2 Notes
-= form_for(@note, :html => { :class => "form-horizontal", :role => "form" }) do |f|
-	= f.hidden_field :job_id
-	.form-group
-		= f.label :title, :class => "control-label col-sm-2"
-		.col-sm-5
-			= f.text_field :title, :class => "form-control autofocus"
+	%h2 Notes
+	= form_for(@note, :html => { :class => "form-horizontal", :role => "form" }) do |f|
+		= hidden_field_tag :from, "job"
+		= f.hidden_field :job_id
+		.form-group
+			= f.label :title, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.text_field :title, :class => "form-control autofocus"
 
-	.form-group
-		= f.label :text, :class => "control-label col-sm-2"
-		.col-sm-5
-			= f.text_area :text, :class => "form-control", :rows => "5"
+		.form-group
+			= f.label :text, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.text_area :text, :class => "form-control", :rows => "5"
 
-	.form-group
-		= f.label :type, :class => "control-label col-sm-2"
-		.col-sm-5
-			= f.select :note_type, options_for_select(Note::NoteType.for_select, @note.note_type), {}, :class => "form-control"
+		.form-group
+			= f.label :type, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :note_type, options_for_select(Note::NoteType.for_select, @note.note_type), {}, :class => "form-control"
 
-	.form-group
-		= f.label :cost, :class => "control-label col-sm-2"
-		.col-sm-5
-			.input-group
-				%span.input-group-addon &pound;
-				= f.number_field :cost, :class => "form-control", :step => "any"
+		.form-group
+			= f.label :cost, :class => "control-label col-sm-2"
+			.col-sm-5
+				.input-group
+					%span.input-group-addon &pound;
+					= f.number_field :cost, :class => "form-control", :step => "any"
 
-	.form-group
-		= f.label :time_taken, :class => "control-label col-sm-2"
-		.col-sm-5
-			= f.number_field :time_taken, :class => "form-control", :step => "any"
+		.form-group
+			= f.label :time_taken, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.number_field :time_taken, :class => "form-control", :step => "any"
 
-	.actions
-		.col-sm-offset-2
-			= f.submit class: "btn btn-primary"
+		.actions
+			.col-sm-offset-2
+				= f.submit class: "btn btn-primary"
 
-%ul
-	- @job.notes.each do |n|
-		%li= n.title
+	%table.table.table-striped
+		- @job.notes.each do |n|
+			%tr
+				%td= n.note_type
+				%td{ :title => n.text }= n.title
+				%td.text-right= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe)
+				%td.text-right= n.time_taken.to_s + " h".html_safe

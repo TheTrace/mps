@@ -58,7 +58,7 @@ class TasksController < ApplicationController
     else
       @task.update_attribute(:party_a_complete_date, DateTime.now)
     end
-    render :text => ( @task.a_complete? ? 'complete' : 'uncomplete' )
+    render :text => ( @task.a_complete? ? ( @task.task_complete? ? 'allcomplete' : 'complete') : 'uncomplete' )
   end
 
   def complete_b
@@ -68,7 +68,7 @@ class TasksController < ApplicationController
     else
       @task.update_attribute(:party_b_complete_date, DateTime.now)
     end
-    render :text => ( @task.b_complete? ? 'complete' : 'uncomplete' )
+    render :text => ( @task.b_complete? ? ( @task.task_complete? ? 'allcomplete' : 'complete') : 'uncomplete' )
   end
 
   # DELETE /tasks/1

@@ -10,7 +10,6 @@
 			%th Time
 			%th 
 			%th
-			%th
  
 	%tbody
 		- current_job = nil
@@ -18,7 +17,7 @@
 			- if current_job != note.job
 				- current_job = note.job
 				%tr.success
-					%td{ :colspan => 11 }= note.job.ref if note.job
+					%td{ :colspan => 7 }= link_to note.job.ref, job_path(note.job) if note.job
 			%tr
 				%td= note.title
 				%td= note.text

@@ -1,32 +1,20 @@
+-#%style
+-#	- @jobs.each do |job|
+-#		= ".h#{job.id}:hover { border: 1px solid red; }"
+.pull-right
+	= link_to 'New Job', new_job_path, :class => "btn btn-default"
+
+
 %h1 Jobs Listing
 
-.pull-right.task-list
-	-#list-group
-	%ul
-		/ Float right stuff
-		- @tasks.each do |t|
-			%li
-				-#%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial} #{'complete' if t.task_complete?}" }
-				%div{ :class => "list-group-item list-group-item-success collapsed hand#{' financial' if t.is_financial}#{' complete' if t.task_complete?}", :"data-toggle" => "collapse", :"data-target" => "#comp#{ t.id }" }
-					= t.title
-					= " (" + t.due_date_text + ")"
-				%div{ :id => "comp#{ t.id }", :class => "collapse", :style => "height: 0px;" }
-					- if t.job
-						.checkbox
-							%label
-								= check_box :task, :party_a_complete_date, :onclick => "complete_party_a( #{t.id} );", :checked => t.a_complete?
-								= t.job.party_a_name
-		
-						.checkbox
-							%label
-								= check_box :task, :party_b_complete, :onclick => "complete_party_b( #{t.id} );", :checked => t.b_complete?
-								= t.job.party_b_name
-
+= render :partial => "shared/tasklist", :object => @tasks
 
 .job-list
 	%ul
+		- class_list = ""
 		- @jobs.each do |job|
-			%li.job{ :onclick => "location.href='" + job_path(job) + "'"}
+			- class_list += "'h#{job.id}', "
+			%li.job{ :class => "h#{job.id}", :onclick => "location.href='" + job_path(job) + "'"}
 				%h1
 					= job.reference.to_s
 					%br
@@ -58,31 +46,34 @@
 			-#	-#= debug job.party_a
 
 %div{ :style => "clear:both;" }
-%br
 
-= link_to 'New Job', new_job_path
-
+- class_list = class_list[0..class_list.length-3]
 %script
-	function complete_party_a( task_id ) {
-	//begin_operation();
-	jQuery.post( '/tasks/'+task_id+'/complete_a', function(data) {
-	if (data=='complete') {
-	jQuery('.task-'+task_id).addClass( 'complete' );
-	} else {
-	jQuery('.task-'+task_id).removeClass( 'complete' );
-	}
-	//end_operation();
-	} );
-	}
+	// see: http://stackoverflow.com/questions/12786810/css-hover-on-element-and-highlight-all-with-same-class
+	$(document).ready(function(){
 
-	function complete_party_b( task_id ) {
-	//begin_operation();
-	jQuery.post( '/tasks/'+task_id+'/complete_b', function(data) {
-	if (data=='complete') {
-	jQuery('.task-'+task_id).addClass( 'complete' );
-	} else {
-	jQuery('.task-'+task_id).removeClass( 'complete' );
+	var classes = [#{class_list}]; //list of your classes
+	var elms = {};
+	var n = {}, nclasses = classes.length;
+	function changeColor(classname, color) {
+	var curN = n[classname];
+	for(var i = 0; i < curN; i ++) {
+	elms[classname][i].style.backgroundColor = color;
 	}
-	//end_operation();
-	} );
 	}
+	for(var k = 0; k < nclasses; k ++) {
+	var curClass = classes[k];
+	elms[curClass] = document.getElementsByClassName(curClass);
+	n[curClass] = elms[curClass].length;
+	var curN = n[curClass];
+	for(var i = 0; i < curN; i ++) {
+	elms[curClass][i].onmouseover = function() {
+	changeColor(this.className, "yellow");
+	};
+	elms[curClass][i].onmouseout = function() {
+	changeColor(this.className, "white");
+	};
+	}
+	};
+
+	});

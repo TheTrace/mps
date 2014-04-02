@@ -6,15 +6,12 @@ General
 - Add search box
 
 Tasks
-- Show check boxes for marking off
 - Create logic for showing by due date
 - Create hover classes for job/task pair highlight
 - Ability to sort rows (task templates)
 - Add jQuery UI date dropdowns (use for times on notes too)
 
 Notes
-- Input form on job show page
-- Show related notes for job
 
 Jobs
 - Restructure to have
@@ -25,5 +22,12 @@ Contacts
 - Add ability to add contact from job form
 - Add ability to search contact from job form
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Finance
+- Summarise (by month)
+-- Due - link to breakdown
+-- Received - link to breakdown
+
+DONE
+- Show check boxes for marking off
+- Show related notes for job
+- Input form for notes on job show page
