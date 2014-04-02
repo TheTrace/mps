@@ -1,5 +1,8 @@
 %p#notice= notice
 
+- if @note.job
+	%h1= link_to @note.job.ref, job_path(@note.job)
+
 %p
 	%strong Title:
 	= @note.title
