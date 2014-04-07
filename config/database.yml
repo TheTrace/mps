@@ -26,3 +26,4 @@ production:
   host: localhost
   pool: 5
   timeout: 5000
+  socket: /var/run/mysqld/mysqld.sock
