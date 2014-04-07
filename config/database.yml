@@ -19,11 +19,11 @@ test:
   timeout: 5000
 
 production:
-  adapter: mysql
-  database: dmc_mps
+  adapter: mysql2
+  host: localhost
   username: dmc_mps
   password: h2Ck8vtq
-  host: localhost
+  database: dmc_mps
+  socket: /var/run/mysqld/mysqld.sock
   pool: 5
   timeout: 5000
-  socket: /var/run/mysqld/mysqld.sock
