@@ -48,6 +48,11 @@
 		.col-sm-4
 			= @task.is_financial ? "Yes" : "No"
 
+	.form-group
+		%strong.col-sm-3 Amount:
+		.col-sm-4
+			= number_to_currency(@task.cost.to_s, unit: "&pound; ".html_safe) 
+
 = link_to 'Edit', edit_task_path(@task)
 |
 = link_to 'Index', tasks_path

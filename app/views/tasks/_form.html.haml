@@ -14,7 +14,7 @@
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :title, :class => "form-control autofocus"
+			= f.text_field :title, :class => "form-control"
 
 	.form-group
 		= f.label :text, :class => "control-label col-sm-2"
@@ -24,32 +24,32 @@
 	.form-group
 		= f.label :tentative_due_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :tentative_due_date, :class => "form-control autofocus"
+			= f.text_field :tentative_due_date, :class => "form-control"
 
 	.form-group
 		= f.label :due_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :due_date, :class => "form-control autofocus"
+			= f.text_field :due_date, :class => "form-control"
 
 	.form-group
 		= f.label :party_a_complete_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :party_a_complete_date, :class => "form-control autofocus"
+			= f.text_field :party_a_complete_date, :class => "form-control"
 
 	.form-group
 		= f.label :party_b_complete_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :party_b_complete_date, :class => "form-control autofocus"
+			= f.text_field :party_b_complete_date, :class => "form-control"
 
 	.form-group
 		= f.label :complete_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :complete_date, :class => "form-control autofocus"
+			= f.text_field :complete_date, :class => "form-control"
 
 	.form-group
 		= f.label :sort_order, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :sort_order, :class => "form-control autofocus"
+			= f.text_field :sort_order, :class => "form-control"
 
 	.form-group
 		.col-sm-offset-2.col-sm-10
@@ -57,6 +57,13 @@
 				%label
 					= f.check_box :is_financial
 					Finincial task 
+
+	.form-group
+		= f.label :amount, :class => "control-label col-sm-2"
+		.col-sm-5
+			.input-group
+				%span.input-group-addon &pound;
+				= f.text_field :cost, :class => "form-control"
 
 
 	.actions

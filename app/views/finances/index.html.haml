@@ -1,0 +1,15 @@
+%h1 Owing
+%ul
+	- @jobs.each do |j|
+		%li
+			= j.ref
+			\-
+			= number_to_currency(j.owing.to_s, unit: "&pound; ".html_safe)
+
+%h2 Received
+%ul
+	- @jobs.each do |j|
+		%li
+			= j.ref
+			\-
+			= number_to_currency(j.received.to_s, unit: "&pound; ".html_safe)

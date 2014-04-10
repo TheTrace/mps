@@ -35,6 +35,33 @@ class Job < ActiveRecord::Base
 	end
 
 	def ref
-		reference + " " + parties
+		reference.to_s + " " + parties
+	end
+
+	def owing
+		sum = 0.00
+		tasks.each do |t|
+			next unless !t.task_complete?
+			next unless t.is_financial
+			sum += t.cost.to_f if !t.cost.blank?
+		end
+		notes.each do |n|
+			sum += n.cost.to_f if !n.cost.blank?
+		end
+		return sum
+	end
+
+	def received
+		sum = 0.00
+		tasks.each do |t|
+			next unless t.task_complete?
+			next unless t.is_financial
+			sum += t.cost.to_f if !t.cost.blank?
+		end
+		notes.each do |n|
+			sum += n.cost.to_f if !n.cost.blank?
+		end
+		sum += fees_paid if !fees_paid.blank?
+		return sum
 	end
 end

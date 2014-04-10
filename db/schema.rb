@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306144423) do
+ActiveRecord::Schema.define(version: 20140410120407) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 20140306144423) do
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "solicitor",  default: false
+    t.boolean  "mediator",   default: false
+    t.boolean  "client",     default: false
   end
 
   create_table "jobs", force: true do |t|
@@ -39,6 +42,12 @@ ActiveRecord::Schema.define(version: 20140306144423) do
     t.integer  "mediator"
     t.decimal  "fees_paid",      precision: 9, scale: 2
     t.datetime "mediation_date"
+    t.integer  "legal_rep1"
+    t.integer  "legal_rep2"
+    t.integer  "legal_rep3"
+    t.integer  "mediator1"
+    t.integer  "mediator2"
+    t.integer  "mediator3"
   end
 
   create_table "notes", force: true do |t|
@@ -85,6 +94,8 @@ ActiveRecord::Schema.define(version: 20140306144423) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
+    t.integer  "level",           default: 0
+    t.boolean  "active",          default: true, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

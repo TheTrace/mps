@@ -22,7 +22,7 @@
 				- current_job = task.job
 				%tr.success
 					%td{ :colspan => 11 }= link_to( task.job.reference + " " + task.job.title, task.job) if task.job
-			%tr
+			%tr{ :class => "#{'financial' if task.is_financial}" }
 				%td= task.sort_order
 				%td= task.title
 				%td= task.text
