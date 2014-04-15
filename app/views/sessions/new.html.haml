@@ -1,0 +1,21 @@
+- provide(:title, "Sign in")
+%h1 Sign in
+
+.row
+	.span6.offset3
+		= form_for(:session, url: sessions_path, :html => { :class => "form-horizontal", :role => "form" }) do |f|
+
+			= render 'shared/error_messages'
+			.form-group
+				= f.label :email, :class => "control-label col-sm-2"
+				.col-sm-5
+					= f.text_field :email, :class => "form-control"
+
+			.form-group
+				= f.label :password, :class => "control-label col-sm-2"
+				.col-sm-5
+					= f.password_field :password, :class => "form-control"
+
+			.actions
+				.col-sm-offset-2
+					= f.submit "Sign in", class: "btn btn-large btn-primary"

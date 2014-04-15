@@ -2,14 +2,14 @@
 %ul
 	- @jobs.each do |j|
 		%li
-			= j.ref
+			= link_to j.ref, finance_path(j.id)
 			\-
 			= number_to_currency(j.owing.to_s, unit: "&pound; ".html_safe)
 
-%h2 Received
+%h1 Received
 %ul
 	- @jobs.each do |j|
 		%li
-			= j.ref
+			= link_to j.ref, finance_path(j.id)
 			\-
 			= number_to_currency(j.received.to_s, unit: "&pound; ".html_safe)
