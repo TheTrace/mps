@@ -44,6 +44,41 @@
 		.col-sm-5
 			= f.select :mediator, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator), {}, :class => "form-control"
 
+	.div{ :style => "border: 1px solid gray;" }
+		%h2{ :style => "font-weight:strong;" } Possible Reps
+		.form-group
+			= f.label :legal_rep1, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :legal_rep1, options_for_select([["Please select...",""]]+Contact.for_select, @job.legal_rep1), {}, :class => "form-control"
+
+		.form-group
+			= f.label :mediator1, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :mediator1, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator1), {}, :class => "form-control"
+
+		.form-group
+			= f.label :legal_rep2, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :legal_rep2, options_for_select([["Please select...",""]]+Contact.for_select, @job.legal_rep2), {}, :class => "form-control"
+
+		.form-group
+			= f.label :mediator2, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :mediator2, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator2), {}, :class => "form-control"
+
+		.form-group
+			= f.label :legal_rep3, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :legal_rep3, options_for_select([["Please select...",""]]+Contact.for_select, @job.legal_rep3), {}, :class => "form-control"
+
+		.form-group
+			= f.label :mediator3, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :mediator3, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator3), {}, :class => "form-control"
+
+
+
+
 	.form-group
 		= f.label :fees_paid, :class => "control-label col-sm-2"
 		.col-sm-5

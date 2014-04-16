@@ -45,5 +45,14 @@
   <%= @contact.text %>
 </p>
 
+<p>
+  <strong>Is a:</strong>
+  <%= " Client " if @contact.client %>
+  <%= " Mediator " if @contact.mediator %>
+  <%= " Solicitor " if @contact.solicitor %>
+</p>
+
+
+
 <%= link_to 'Edit', edit_contact_path(@contact) %> |
 <%= link_to 'Back', contacts_path %>

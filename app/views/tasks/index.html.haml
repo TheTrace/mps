@@ -41,9 +41,11 @@
 				%td
 					- if !task.due_date.blank?
 						= task.due_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.due_date.year}")
-				%td= link_to 'Show', task
-				%td= link_to 'Edit', edit_task_path(task)
-				%td= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure you want to delete this task?' }
+				%td
+					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, task, html = {:title => "Show"}
+					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_task_path(task), html = {:title => "Edit"}
+				%td.text-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, task, method: :delete, data: { confirm: 'Are you sure you want to delete this task?' }, :title => "Destroy"
+
 
 %br
 

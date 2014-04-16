@@ -54,6 +54,27 @@
 		.col-sm-5
 			= f.text_area :text, :class => "form-control", :rows => "5"
 
+	.form-group
+		.col-sm-offset-2.col-sm-10
+			.checkbox
+				%label
+					= f.check_box :client
+					Client 
+
+	.form-group
+		.col-sm-offset-2.col-sm-10
+			.checkbox
+				%label
+					= f.check_box :mediator
+					Mediator 
+
+	.form-group
+		.col-sm-offset-2.col-sm-10
+			.checkbox
+				%label
+					= f.check_box :solicitor
+					Solicitor 
+
 	.actions
 		.col-sm-offset-2
 			= f.submit class: "btn btn-primary"
