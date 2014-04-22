@@ -1,0 +1,53 @@
+%header
+	/
+	.navbar.navbar-fixed-top.navbar-inverse
+		.navbar-inner
+			.container
+				= link_to "sample app", root_path, id: "logo"
+				%nav
+					%ul.nav.pull-right
+						%li= link_to "Home", root_path
+						-#%li= link_to "Help", help_path
+						- if signed_in?
+							%li= link_to "Users", '#'
+							%li#fat-menu.dropdown
+								%a.dropdown-toggle{ :href=>"#", :"data-toggle"=>"dropdown" }
+									Account
+									%b.caret
+								%ul.dropdown-menu
+									%li= link_to "Profile", current_user
+									%li= link_to "Settings", '#'
+									%li.divider
+									%li
+										= link_to "Sign out", signout_path, method: "delete"
+						- else
+							%li= link_to "Sign in", signin_path
+
+	/ Fixed navbar
+	.navbar.navbar-inverse.navbar-fixed-top{ :role => "navigation" }
+		.container
+			.navbar-header
+				%button.navbar-toggle{ :type => "button", :"data-toggle" => "collapse", :"data-target" => ".navbar-collapse" }
+					%span.sr-only Toggle navigation
+					%span.icon-bar
+					%span.icon-bar
+					%span.icon-bar
+				= link_to "Mediation Progression System", '/', :class => "navbar-brand"
+			.navbar-collapse{ :class => "collapse" }
+				%ul.nav{ :class => "navbar-nav" }
+					%li{ :class => "#{params[:controller].eql?("jobs") ? "active" : ""}" }= link_to "Home", '/'
+					%li{ :class => "#{params[:controller].eql?("finances") ? "active" : ""}" }= link_to "Finance", :finances
+					%li{ :class => "#{params[:controller].eql?("contacts") ? "active" : ""}" }= link_to "Contacts", :contacts
+					- b_on = params[:controller].eql?("template_tasks") ||  params[:controller].eql?("users") ||  params[:controller].eql?("notes") || params[:controller].eql?("tasks")
+					%li.dropdown{ :class => "#{b_on ? "active" : ""}" }
+						%a.dropdown-toggle{ :href => "#", :"data-toggle" => "dropdown" }
+							Admin
+							%b.caret
+						%ul.dropdown-menu
+							%li{ :class => "#{params[:controller].eql?("template_tasks") ? "active" : ""}" }= link_to "Task Templates", :template_tasks
+							%li{ :class => "#{params[:controller].eql?("users") ? "active" : ""}" }= link_to "Users", :users
+							%li.divider
+							%li.dropdown-header Edit Elements
+							%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Notes", :notes
+							%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
+

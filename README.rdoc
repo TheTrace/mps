@@ -16,6 +16,7 @@ Notes
 Jobs
 - Restructure to have
 -- Potential mediators, lawyers, etc
+- Specified colours
 
 Contacts
 - Add types (Solicitor, Mediator, Clients)
