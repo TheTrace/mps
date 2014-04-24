@@ -4,10 +4,18 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
+# Be sure to include rake in your Gemfile
+gem 'rake'
+ 
+# Use Capistrano for deployment
+gem 'capistrano', '~> 3.0', require: false, group: :development
+gem 'capistrano-rvm'
+
 group :development, :test do
 	# Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
-	gem 'capistrano'
+	gem 'capistrano-rails',   '~> 1.1', require: false
+	gem 'capistrano-bundler', '~> 1.1', require: false
 end
 
 group :production do
@@ -21,6 +29,9 @@ gem 'haml'
 gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.1.0'
 gem 'bcrypt-ruby', '3.1.2'
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
+
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

@@ -5,7 +5,13 @@
 	.span6.offset3
 		= form_for(:session, url: sessions_path, :html => { :class => "form-horizontal", :role => "form" }) do |f|
 
+			-# Following doesn't work
 			= render 'shared/error_messages'
+
+			.container
+				- flash.each do |key, value|
+					.alert{ :class => "alert-#{ key }" }= value
+
 			.form-group
 				= f.label :email, :class => "control-label col-sm-2"
 				.col-sm-5

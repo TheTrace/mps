@@ -29,6 +29,12 @@
 		.col-sm-5
 			= f.password_field :password_confirmation, :class => "form-control"
 
+	- if is_admin?
+		.form-group
+			= f.label "Level", :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :level, options_for_select(User::LevelType.for_select, @user.level), {}, :class => "form-control"
+
 	.actions
 		.col-sm-offset-2
 			= f.submit class: "btn btn-primary"

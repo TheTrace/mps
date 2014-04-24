@@ -1,12 +1,19 @@
+# Ensure that bundle is used for rake tasks
+SSHKit.config.command_map[:rake] = "bundle exec rake"
+ 
 # config valid only for Capistrano 3.1
 lock '3.2.0'
 
 set :application, 'mps'
 set :repo_url, 'git@github.com-alan:TheTrace/mps.git'
+set :deploy_via, :remote_cache
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 set :branch, "master"
+
+# We are only going to use a single stage: production
+set :stages, ["production"]
 
 # Default deploy_to directory is /var/www/my_app
 # set :deploy_to, '/var/www/my_app'
@@ -14,8 +21,13 @@ set :deploy_to, '/home/alan/www/dmc/public_html'
 
 # Default value for :scm is :git
 set :scm, :git
-set :user, "alan"
-set :use_sudo, false
+#set :user, "alan"
+#set :use_sudo, false
+#set :rails_env, "production"
+#set :ssh_options, { :forward_agent => true }
+
+#default_run_options[:pty] = true
+#server "109.74.197.175", :app, :web, :db, :primary => true
 
 # Default value for :format is :pretty
 # set :format, :pretty
@@ -36,7 +48,7 @@ set :use_sudo, false
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 5
 
 namespace :deploy do
 
@@ -45,6 +57,8 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       # execute :touch, release_path.join('tmp/restart.txt')
+      # Restarts Phusion Passenger
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 

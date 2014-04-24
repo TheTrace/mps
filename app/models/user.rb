@@ -10,6 +10,22 @@ class User < ActiveRecord::Base
 	#validates :password, presence: true, length: { minimum: 6 }, on: :create
 	#validates :password_confirmation, presence: true, on: :create
 
+	class LevelType
+		GENERAL = 0
+		ADMINISTRATOR = 1
+
+		NAMES = {
+			GENERAL => "General",
+			ADMINISTRATOR => "Administrator"
+		}
+
+		ALL = [GENERAL, ADMINISTRATOR]
+
+		def self.for_select
+			ALL.map{|t|[NAMES[t], t]}
+		end
+	end
+
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64
 	end

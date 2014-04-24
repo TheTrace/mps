@@ -14,7 +14,11 @@ require 'capistrano/deploy'
 #   https://github.com/capistrano/bundler
 #   https://github.com/capistrano/rails
 #
-# require 'capistrano/rvm'
+require 'capistrano/rvm'
+# We're going to use the full capistrano/rails since
+# it includes the asset compilation, DB migrations
+# and bundler
+require 'capistrano/rails'
 # require 'capistrano/rbenv'
 # require 'capistrano/chruby'
 # require 'capistrano/bundler'
@@ -22,4 +26,10 @@ require 'capistrano/deploy'
 # require 'capistrano/rails/migrations'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
-Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+# Original
+# Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+# From one istallation suggestion
+# Dir.glob('lib/capistrano/**/*.rb').each { |r| import r }
+# Quick fix for cap v2 installation
+# Rake::Task[:production].invoke
+Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
