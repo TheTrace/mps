@@ -6,6 +6,10 @@ class Job < ActiveRecord::Base
 	belongs_to :legal_representative, :class_name=> "Contact", :foreign_key => :legal_rep
 	belongs_to :mediator_contact, :class_name=> "Contact", :foreign_key => :mediator
 
+	def self.for_select
+		Job.all.map{|j|[j.ref, j.id]}
+	end
+
 	def add_tasks
 		template_tasks = TemplateTask.order("template_tasks.sort_order, template_tasks.created_at")
 

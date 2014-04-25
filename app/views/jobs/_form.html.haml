@@ -1,4 +1,4 @@
-= form_for(@job, :html => { :class => "form-horizontal", :role => "form" } ) do |f|
+= form_for(@job, :html => { :class => "form-horizontal", :role => "form", :id => "job_form" } ) do |f|
 	- if @job.errors.any?
 		%div#error_explanation
 			%h2
@@ -9,6 +9,7 @@
 				- @job.errors.full_messages.each do |msg|
 					%li= msg
 
+	= hidden_field_tag "role", ""
 	.form-group
 		= f.label :reference, :class => "control-label col-sm-2"
 		.col-sm-5
@@ -28,6 +29,8 @@
 		= f.label "Party A", :class => "control-label col-sm-2"
 		.col-sm-5
 			= f.select :party_a_id, options_for_select([["Please select...",""]]+Contact.for_select, @job.party_a_id), {}, :class => "form-control"
+		-#.col-sm-1
+		-#	= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "#", html = {:title => "Add", :onclick => "$(add_contact('a'))"}
 
 	.form-group
 		= f.label "Party B", :class => "control-label col-sm-2"
@@ -97,3 +100,9 @@
 
 	:javascript
 		$('[autofocus]:first').focus();
+
+		function add_contact( role ) {
+			alert("Role ="+role);
+			$('input[id=role').val(role);
+			//$('#job_form').submit();
+		};

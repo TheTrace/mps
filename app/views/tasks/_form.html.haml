@@ -11,6 +11,11 @@
 
 	%h2= @task.job.title if @task.job
 
+	- if !@task.job
+		.form-group
+			= f.label :job, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :job_id, options_for_select(Job.for_select), {}, :class => "form-control"
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"
 		.col-sm-5
