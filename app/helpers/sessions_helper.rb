@@ -36,7 +36,7 @@ module SessionsHelper
 	end
 
 	def is_admin?
-		return @current_user.level.to_i.eql?(1)
+		return current_user.level.to_i.eql?(1)
 	end
 
 	def store_location
