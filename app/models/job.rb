@@ -6,6 +6,16 @@ class Job < ActiveRecord::Base
 	belongs_to :legal_representative, :class_name=> "Contact", :foreign_key => :legal_rep
 	belongs_to :mediator_contact, :class_name=> "Contact", :foreign_key => :mediator
 
+	class JobColours
+		PRIMARY = "#428bca"
+		SUCCESS = "#5cb85c"
+		INFO = "#5bc0de"
+		WARNNING = "#f0ad4e"
+		DANGER = "#d9534f"
+
+		ALL = [PRIMARY, SUCCESS, INFO, WARNNING, DANGER]
+	end
+
 	def self.for_select
 		Job.all.map{|j|[j.ref, j.id]}
 	end

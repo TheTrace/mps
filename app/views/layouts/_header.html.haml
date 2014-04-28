@@ -38,23 +38,28 @@
 					%li{ :class => "#{params[:controller].eql?("jobs") ? "active" : ""}" }= link_to "Home", '/'
 					%li{ :class => "#{params[:controller].eql?("finances") ? "active" : ""}" }= link_to "Finance", :finances
 					%li{ :class => "#{params[:controller].eql?("contacts") ? "active" : ""}" }= link_to "Contacts", :contacts
-					- b_on = params[:controller].eql?("template_tasks") ||  params[:controller].eql?("users") ||  params[:controller].eql?("notes") || params[:controller].eql?("tasks")
-					%li.dropdown{ :class => "#{b_on ? "active" : ""}" }
-						%a.dropdown-toggle{ :href => "#", :"data-toggle" => "dropdown" }
-							Admin
-							%b.caret
-						%ul.dropdown-menu
-							%li{ :class => "#{params[:controller].eql?("template_tasks") ? "active" : ""}" }= link_to "Task Templates", :template_tasks
-							%li{ :class => "#{params[:controller].eql?("users") ? "active" : ""}" }= link_to "Users", :users
-							%li.divider
-							%li.dropdown-header Edit Elements
-							%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Notes", :notes
-							%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
-							- if signed_in?
+					- if signed_in?
+						- b_on = params[:controller].eql?("template_tasks") ||  params[:controller].eql?("users") ||  params[:controller].eql?("notes") || params[:controller].eql?("tasks")
+						%li.dropdown{ :class => "#{b_on ? "active" : ""}" }
+							%a.dropdown-toggle{ :href => "#", :"data-toggle" => "dropdown" }
+								Admin
+								%b.caret
+							%ul.dropdown-menu
+								%li{ :class => "#{params[:controller].eql?("template_tasks") ? "active" : ""}" }= link_to "Task Templates", :template_tasks
+								%li{ :class => "#{params[:controller].eql?("users") ? "active" : ""}" }= link_to "Users", :users
+								%li.divider
+								%li.dropdown-header Edit Elements
+								%li{ :class => "#{params[:controller].eql?("notes") ? "active" : ""}" }= link_to "Notes", :notes
+								%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
+					- if signed_in?
+						%li.dropdown.active
+							%a.dropdown-toggle.pull-right{ :href => "#", :"data-toggle" => "dropdown", :class => "#{"active" if params[:controller].eql?("users") && @user && @user == @current_user}" }
+								= @current_user.name
+								%b.caret
+							%ul.dropdown-menu
+								%li{ :class => "#{"active" if params[:controller].eql?("users") && @user && @user == @current_user}" }= link_to "My Profile", edit_user_path(@current_user)
 								%li.divider
 								%li= link_to "Sign out", signout_path, method: "delete"
-					- if signed_in?
-						%li.pull-right{ :class => "#{"active" if params[:controller].eql?("users") && @user && @user == @current_user}" }= link_to @current_user.name, edit_user_path(@current_user)
 					- else
 						%li.pull-right.active= link_to "Sign in", signin_path
 

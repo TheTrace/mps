@@ -1,3 +1,4 @@
+-#%script{ :type=>"text/javascript", :src=>"/jscolor.js" }
 = form_for(@job, :html => { :class => "form-horizontal", :role => "form", :id => "job_form" } ) do |f|
 	- if @job.errors.any?
 		%div#error_explanation
@@ -14,6 +15,11 @@
 		= f.label :reference, :class => "control-label col-sm-2"
 		.col-sm-5
 			= f.text_field :reference, :class => "form-control"
+
+	.form-group
+		= f.label :colour, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :colour, :value => @job.colour, :class => "color {hash:true:required:false}"
 
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"

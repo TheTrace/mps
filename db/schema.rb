@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140416151252) do
+ActiveRecord::Schema.define(version: 20140428111733) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20140416151252) do
     t.integer  "mediator1"
     t.integer  "mediator2"
     t.integer  "mediator3"
+    t.string   "colour",                                 default: "428BCA"
   end
 
   create_table "notes", force: true do |t|
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140416151252) do
     t.string   "note_type"
     t.decimal  "cost",       precision: 9, scale: 2
     t.decimal  "time_taken", precision: 9, scale: 2
+    t.boolean  "paid",                               default: false
   end
 
   create_table "tasks", force: true do |t|
@@ -75,6 +77,7 @@ ActiveRecord::Schema.define(version: 20140416151252) do
     t.integer  "sort_order"
     t.decimal  "cost",                  precision: 9, scale: 2
     t.boolean  "is_financial",                                  default: false
+    t.boolean  "paid",                                          default: false
   end
 
   create_table "template_tasks", force: true do |t|

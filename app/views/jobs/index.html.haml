@@ -14,7 +14,7 @@
 		- class_list = ""
 		- @jobs.each do |job|
 			- class_list += "'h#{job.id}', "
-			%li.job{ :class => "h#{job.id}", :onclick => "location.href='" + job_path(job) + "'"}
+			%li.job{ :class => "h#{job.id}", :onclick => "location.href='" + job_path(job) + "'", :style => "background-color: ##{job.colour ? job.colour : '428bca'}" }
 				%h1
 					= job.reference.to_s
 					%br
