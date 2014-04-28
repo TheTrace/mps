@@ -78,4 +78,20 @@ class Job < ActiveRecord::Base
 		sum += fees_paid if !fees_paid.blank?
 		return sum
 	end
+
+	def foreground_colour
+
+		c = self.colour.to_s
+		c = c[1..-1] if c =~ /^#/
+		return nil if c.blank?
+
+		r = c[0..1].to_i(16).to_f
+		g = c[2..3].to_i(16).to_f
+		b = c[4..5].to_i(16).to_f
+
+		luminance = 1.0 - ( 0.299 * r + 0.587 * g + 0.114 * b) / 255.0
+		luminance < 0.5 ? '#000000' : '#FFFFFF'
+
+	end
+
 end
