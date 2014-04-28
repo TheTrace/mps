@@ -36,7 +36,7 @@
 	%hr
 
 	%h2 Notes
-	= form_for(@note, :html => { :class => "form-horizontal", :role => "form" }) do |f|
+	= form_for(@note, :html => { :class => "form-horizontal", :style => "width: 74%; float: left;", :role => "form" }) do |f|
 		= hidden_field_tag :from, "job"
 		= f.hidden_field :job_id
 		.form-group
@@ -70,7 +70,7 @@
 			.col-sm-offset-2
 				= f.submit class: "btn btn-primary"
 
-	%table.table.table-striped
+	%table.table.table-striped{ :style => "width: 74%; float: left;" }
 		- @job.notes.each do |n|
 			%tr
 				%td= n.note_type
