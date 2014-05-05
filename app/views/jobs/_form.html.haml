@@ -10,7 +10,8 @@
 				- @job.errors.full_messages.each do |msg|
 					%li= msg
 
-	= hidden_field_tag "role", ""
+	-#= hidden_field_tag "role", ""
+	#role
 	.form-group
 		= f.label :reference, :class => "control-label col-sm-2"
 		.col-sm-5
@@ -34,48 +35,60 @@
 	.form-group
 		= f.label "Party A", :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.select :party_a_id, options_for_select([["Please select...",""]]+Contact.for_select, @job.party_a_id), {}, :class => "form-control"
-		-#.col-sm-1
-		-#	= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "#", html = {:title => "Add", :onclick => "$(add_contact('a'))"}
+			= f.select :party_a_id, options_for_select([["Please select...",""]]+Contact.for_select_client, @job.party_a_id), {}, :class => "form-control"
+		.col-sm-1
+			= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('ptya'))"}
 
 	.form-group
 		= f.label :legal_rep_a, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.select :legal_rep, options_for_select([["Please select...",""]]+Contact.for_select, @job.legal_rep), {}, :class => "form-control"
+			= f.select :legal_rep1, options_for_select([["Please select...",""]]+Contact.for_select_legal, @job.legal_rep1), {}, :class => "form-control"
+		.col-sm-1
+			= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('lega'))"}
 
 	.form-group
 		= f.label "Party B", :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.select :party_b_id, options_for_select([["Please select...",""]]+Contact.for_select, @job.party_b_id), {}, :class => "form-control"
+			= f.select :party_b_id, options_for_select([["Please select...",""]]+Contact.for_select_client, @job.party_b_id), {}, :class => "form-control"
+		.col-sm-1
+			= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('ptyb'))"}
 
 	.form-group
 		= f.label :legal_rep_b, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.select :legal_rep1, options_for_select([["Please select...",""]]+Contact.for_select, @job.legal_rep1), {}, :class => "form-control"
+			= f.select :legal_rep2, options_for_select([["Please select...",""]]+Contact.for_select_legal, @job.legal_rep2), {}, :class => "form-control"
+		.col-sm-1
+			= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('legb'))"}
 
 	.form-group
 		= f.label :mediator, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.select :mediator, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator), {}, :class => "form-control"
+			= f.select :mediator, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.mediator), {}, :class => "form-control"
+		.col-sm-1
+			= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('med'))"}
 
 	.div{ :style => "border: 1px solid gray; margin-bottom:10px; padding-left: 20px;" }
 		%h2{ :style => "font-weight:strong;" } Possible Reps
 		.form-group
 			= f.label :mediator1, :class => "control-label col-sm-2"
 			.col-sm-5
-				= f.select :mediator1, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator1), {}, :class => "form-control"
+				= f.select :mediator1, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.mediator1), {}, :class => "form-control"
+			.col-sm-1
+				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('med1'))"}
 
 		.form-group
 			= f.label :mediator2, :class => "control-label col-sm-2"
 			.col-sm-5
-				= f.select :mediator2, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator2), {}, :class => "form-control"
+				= f.select :mediator2, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.mediator2), {}, :class => "form-control"
+			.col-sm-1
+				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('med2'))"}
 
 		.form-group
 			= f.label :mediator3, :class => "control-label col-sm-2"
 			.col-sm-5
-				= f.select :mediator3, options_for_select([["Please select...",""]]+Contact.for_select, @job.mediator3), {}, :class => "form-control"
-
-
+				= f.select :mediator3, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.mediator3), {}, :class => "form-control"
+			.col-sm-1
+				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('med3'))"}
 
 
 	.form-group
@@ -98,7 +111,9 @@
 		$('[autofocus]:first').focus();
 
 		function add_contact( role ) {
-			alert("Role ="+role);
-			$('input[id=role').val(role);
-			//$('#job_form').submit();
+			//alert("Role ="+role);
+			//$('input[id=role').val(role);
+			//$('#'+role).removeAttr('disabled');
+			$('#role').html('<input id="role" name="contact_type" type="hidden" value="'+role+'" />');
+			$('#job_form').submit();
 		};

@@ -3,9 +3,10 @@
 
 %h1 Task Templates
 
-%table.table
+%table#sortable.table.table-hover
 	%thead
 		%tr
+			%th
 			%th
 			%th Title
 			%th Text
@@ -17,7 +18,10 @@
 	%tbody
 		- @template_tasks.each do |template_task|
 			%tr{ :class => "#{'financial' if template_task.is_financial}" }
-				%td= template_task.sort_order
+				-# .ui-state-default
+				%td
+					%span.ui-icon.ui-icon-arrowthick-2-n-s
+				%td.increment= template_task.sort_order
 				%td= template_task.title
 				%td= template_task.text
 				%td= template_task.due_days
@@ -25,5 +29,37 @@
 					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, template_task, html = {:title => "Show"}
 					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_template_task_path(template_task), html = {:title => "Edit"}
 				%td.text-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, template_task, method: :delete, data: { confirm: 'Are you sure you want to delete this task template?' }, :title => "Destroy"
+	/
+		%tr.ui-sortable-placeholder
+			%td &nbsp;
+			%td &nbsp;
+			%td &nbsp;
+			%td &nbsp;
+			%td &nbsp;
+			%td &nbsp;
+			%td &nbsp;
+			%td &nbsp;
 
 -#= link_to 'New Task Template', new_template_task_path
+:javascript
+	// $('#sortable tbody').click(function(e) {alert("Clicked!");});
+
+	// maintain the width of the table row during the re-ordering
+	var fixHelper = function(e, ui) {
+		ui.children().each(function() {
+			$(this).width($(this).width());
+		});
+		return ui;
+	};
+
+	$("#sortable tbody").sortable({ placeholder: "ui-sortable-placeholder", helper: fixHelper, update: function(event, ui) {
+		increment();
+	} }).disableSelection();
+
+	increment = function() {
+		var i = 1;
+		$('.increment').each(function(key,value) {
+			$(this).html(i);
+			i++;
+		});
+	}

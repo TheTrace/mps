@@ -15,6 +15,16 @@ class ContactsController < ApplicationController
   # GET /contacts/new
   def new
     @contact = Contact.new
+    if params[:job]
+      case params[:contact_type]
+      when "ptya", "ptyb"
+        @contact.client = true
+      when "med", "med1", "med2", "med3"
+        @contact.client = true
+      when "lega", "legb"
+        @contact.solicitor = true
+      end
+    end
   end
 
   # GET /contacts/1/edit
@@ -26,14 +36,33 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
 
-    respond_to do |format|
-      if @contact.save
-        format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @contact }
+   if @contact.save
+      if params[:job] && !params[:job].blank?
+        @job = Job.find(params[:job])
+        case params[:contact_type]
+        when "ptya"
+          @job.update_attribute(:party_a_id, @contact.id)
+        when "ptyb"
+          @job.update_attribute(:party_b_id, @contact.id)
+        when "med"
+          @job.update_attribute(:mediator, @contact.id)
+        when "med1"
+          @job.update_attribute(:mediator1, @contact.id)
+        when "med2"
+          @job.update_attribute(:mediator2, @contact.id)
+        when "med3"
+          @job.update_attribute(:mediator3, @contact.id)
+        when "lega"
+          @job.update_attribute(:legal_rep1, @contact.id)
+        when "legb"
+          @job.update_attribute(:legal_rep2, @contact.id)
+        end
+        redirect_to edit_job_path(@job)
       else
-        format.html { render action: 'new' }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
+        redirect_to @contact, notice: 'Contact was successfully created.'
       end
+    else
+      render action: 'new'
     end
   end
 

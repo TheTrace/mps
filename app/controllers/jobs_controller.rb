@@ -28,29 +28,29 @@ class JobsController < ApplicationController
 	def create
 		@job = Job.new(job_params)
 
-		respond_to do |format|
-			if @job.save
-				@job.add_tasks
-				format.html { redirect_to @job, notice: 'Job was successfully created.' }
-				format.json { render action: 'show', status: :created, location: @job }
+		if @job.save
+			@job.add_tasks
+			if params[:contact_type] && !params[:contact_type].blank?
+				redirect_to new_contact_path(:job => @job, :contact_type => params[:contact_type])
 			else
-				format.html { render action: 'new' }
-				format.json { render json: @job.errors, status: :unprocessable_entity }
+				redirect_to @job, notice: 'Job was successfully created.'
 			end
+		else
+			render action: 'new'
 		end
 	end
 
 	# PATCH/PUT /jobs/1
 	# PATCH/PUT /jobs/1.json
 	def update
-		respond_to do |format|
-			if @job.update(job_params)
-				format.html { redirect_to @job, notice: 'Job was successfully updated.' }
-				format.json { head :no_content }
+		if @job.update(job_params)
+			if params[:contact_type] && !params[:contact_type].blank?
+				redirect_to new_contact_path(:job => @job, :contact_type => params[:contact_type])
 			else
-				format.html { render action: 'edit' }
-				format.json { render json: @job.errors, status: :unprocessable_entity }
+				redirect_to @job, notice: 'Job was successfully updated.'
 			end
+		else
+			render action: 'edit'
 		end
 	end
 

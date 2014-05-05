@@ -9,6 +9,8 @@
 				- @contact.errors.full_messages.each do |msg|
 					%li= msg
 
+	= hidden_field_tag :job, params[:job]
+	= hidden_field_tag :contact_type, params[:contact_type]
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"
 		.col-sm-5
