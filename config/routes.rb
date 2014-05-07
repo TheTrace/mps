@@ -1,6 +1,10 @@
 Mps::Application.routes.draw do
   get "users/new"
-  resources :template_tasks
+  resources :template_tasks do
+    collection do
+      post :sort_templates
+    end
+  end
 
   resources :contacts
 

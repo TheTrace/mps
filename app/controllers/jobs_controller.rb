@@ -4,8 +4,8 @@ class JobsController < ApplicationController
 	# GET /jobs
 	# GET /jobs.json
 	def index
-		@jobs = Job.all
-		@tasks = Task.order("due_date,tentative_due_date")
+		@jobs = Job.order("reference")
+		@tasks = Task.where("party_a_complete_date IS NULL OR party_b_complete_date IS NULL").order("due_date,tentative_due_date")
 	end
 
 	# GET /jobs/1

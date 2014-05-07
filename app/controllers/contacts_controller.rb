@@ -20,7 +20,7 @@ class ContactsController < ApplicationController
       when "ptya", "ptyb"
         @contact.client = true
       when "med", "med1", "med2", "med3"
-        @contact.client = true
+        @contact.mediator = true
       when "lega", "legb"
         @contact.solicitor = true
       end

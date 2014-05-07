@@ -9,13 +9,18 @@
 				- @note.errors.full_messages.each do |msg|
 					%li= msg
 
-	%h2= @note.job.title if @note.job
+	%h2= @note.job.ref if @note.job
 
 	- if !@note.job
 		.form-group
 			= f.label :job, :class => "control-label col-sm-2"
 			.col-sm-5
 				= f.select :job_id, options_for_select(Job.for_select), {}, :class => "form-control"
+	.form-group
+		= f.label :Date, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :the_date, :class => "form-control autofocus"
+
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"
 		.col-sm-5
@@ -37,11 +42,21 @@
 			.input-group
 				%span.input-group-addon &pound;
 				= f.number_field :cost, :class => "form-control", :step => "any"
+		.col-sm-2
+			.checkbox
+				%label
+					= f.check_box :paid
+					Paid 
 
 	.form-group
 		= f.label :time_taken, :class => "control-label col-sm-2"
 		.col-sm-5
 			= f.number_field :time_taken, :class => "form-control", :step => "any"
+
+	.form-group
+		= f.label :mileage, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.number_field :mileage, :class => "form-control", :step => "any"
 
 	.actions
 		.col-sm-offset-2

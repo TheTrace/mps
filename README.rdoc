@@ -2,25 +2,27 @@
 
 TODO stuff
 
+- The sort on the task template needs sorting as it won't sort logically, even by grabbing and moving - it does not seem to retain the new position even if I adjust the sort number;
+- In "Type" we need to add Travel (Hrs), Transport (£), Mileage rate - plus a calculation if possible by multiplying miles by a set rate of say 45p per mile;
+- Add a date for notes and sort descending from most recent using date so data can be entered in retrospect;
+- Can we list / search jobs by job reference as options;
+- Can the financials total time & cost by job;
+- I need to be able to enter costs for travel time, Disbursements such as travel, mileage, Parking and add new;
+- Tasks need to be removed from overview list once they have been completed (as discussed)
+
 General
 - Add search box
 
 Tasks
 - Create logic for showing by due date
 - Create hover classes for job/task pair highlight
-- Ability to sort rows (task templates)
 - Add jQuery UI date dropdowns (use for times on notes too)
 
 Notes
 
 Jobs
-- Restructure to have
--- Potential mediators, lawyers, etc
-- Specified colours
 
 Contacts
-- Add types (Solicitor, Mediator, Clients)
-- Add ability to add contact from job form
 - Add ability to search contact from job form
 
 Finance
@@ -32,3 +34,9 @@ DONE
 - Show check boxes for marking off
 - Show related notes for job
 - Input form for notes on job show page
+- Add types (Solicitor, Mediator, Clients)
+- Add ability to add contact from job form
+- Restructure jobs to have
+-- Potential mediators, lawyers, etc
+- Specified colours
+- Ability to sort rows (task templates)

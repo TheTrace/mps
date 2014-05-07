@@ -1,6 +1,10 @@
 .center-block
 	%p#notice= notice
 
+	- if @job.tasks.any?
+		%div.pull-right
+			%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();" }
+				%span.glyphicon.glyphicon-zoom-in
 	= render :partial => "shared/tasklist", :object => @job.tasks
 
 	%H1= @job.ref
@@ -40,6 +44,11 @@
 		= hidden_field_tag :from, "job"
 		= f.hidden_field :job_id
 		.form-group
+			= f.label :Date, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.text_field :the_date, :class => "form-control autofocus"
+
+		.form-group
 			= f.label :title, :class => "control-label col-sm-2"
 			.col-sm-5
 				= f.text_field :title, :class => "form-control autofocus"
@@ -60,11 +69,21 @@
 				.input-group
 					%span.input-group-addon &pound;
 					= f.number_field :cost, :class => "form-control", :step => "any"
+			.col-sm-2
+				.checkbox
+					%label
+						= f.check_box :paid
+						Paid 
 
 		.form-group
 			= f.label :time_taken, :class => "control-label col-sm-2"
 			.col-sm-5
 				= f.number_field :time_taken, :class => "form-control", :step => "any"
+
+		.form-group
+			= f.label :mileage, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.number_field :mileage, :class => "form-control", :step => "any"
 
 		.actions
 			.col-sm-offset-2

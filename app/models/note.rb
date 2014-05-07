@@ -4,19 +4,27 @@ class Note < ActiveRecord::Base
 	class NoteType
 		GENERAL = ""
 		PHONE = "phone"
-		DECISION = "decision"
 		EMAIL = "email"
+		MEETING = "meeting"
+		TRAVEL = "travel"
+		TRANSPORT = "transport"
+		SURVEY = "survey"
+		DECISION = "decision"
 		ARRANGEMENT = "arrangement"
 
 		NAMES = {
 			GENERAL => "General",
 			PHONE => "Phone call",
-			DECISION => "Decision change",
 			EMAIL => "Email",
+			MEETING => "Meeting",
+			TRAVEL => "Travel",
+			TRANSPORT => "Transport",
+			SURVEY => "Survey",
+			DECISION => "Decision change",
 			ARRANGEMENT => "Arrangement change/new"
 		}
 
-		ALL = [GENERAL, PHONE, DECISION, EMAIL, ARRANGEMENT]
+		ALL = [GENERAL, PHONE, EMAIL, MEETING, TRAVEL, TRANSPORT, SURVEY, DECISION, ARRANGEMENT]
 
 		def self.for_select
 			ALL.map{|t|[NAMES[t], t]}

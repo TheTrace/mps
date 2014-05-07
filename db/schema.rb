@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428111733) do
+ActiveRecord::Schema.define(version: 20140507170906) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -51,6 +51,19 @@ ActiveRecord::Schema.define(version: 20140428111733) do
     t.string   "colour",                                 default: "428BCA"
   end
 
+  create_table "logs", force: true do |t|
+    t.string   "detail"
+    t.string   "type_str"
+    t.integer  "note_id"
+    t.integer  "task_id"
+    t.integer  "contact_id"
+    t.integer  "job_id"
+    t.integer  "template_task_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "notes", force: true do |t|
     t.string   "title"
     t.text     "text"
@@ -61,6 +74,8 @@ ActiveRecord::Schema.define(version: 20140428111733) do
     t.decimal  "cost",       precision: 9, scale: 2
     t.decimal  "time_taken", precision: 9, scale: 2
     t.boolean  "paid",                               default: false
+    t.datetime "the_date"
+    t.decimal  "milage",     precision: 9, scale: 2
   end
 
   create_table "tasks", force: true do |t|

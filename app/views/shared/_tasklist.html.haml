@@ -4,9 +4,9 @@
 		%ul
 			/ Float right stuff
 			- tasklist.each do |t|
-				%li
+				%li{ :id => "li#{t.id}" }
 					-#%a{ :href => "#{task_path(t)}", :class => "list-group-item list-group-item-success #{'financial' if t.is_financial} #{'complete' if t.task_complete?}" }
-					%div{ :id => "t#{t.id}", :style => "background-color:##{t.job.colour if t.job}; color: #{t.job.foreground_colour if t.job};", :class => "list-group-item list-group-item-success collapsed j#{t.job.id if t.job} hand", :"data-toggle" => "collapse", :"data-target" => "#comp#{ t.id }" }
+					%div{ :id => "t#{t.id}", :style => "background-color:##{t.job.colour if t.job}; color: #{t.job.foreground_colour if t.job};", :class => "list-group-item list-group-item-success collapsed j#{t.job.id if t.job} hand #{'complete' if t.task_complete?}", :"data-toggle" => "collapse", :"data-target" => "#comp#{ t.id }" }
 						- if t.task_complete?
 							%span.glyphicon.glyphicon-ok
 						- if t.is_financial
@@ -24,35 +24,37 @@
 								%label
 									= check_box :task, :party_b_complete, :onclick => "complete_party_b( #{t.id} );", :checked => t.b_complete?
 									= t.job.party_b_name
-%script
-	function complete_party_a( task_id ) {
-	//begin_operation();
-	jQuery.post( '/tasks/'+task_id+'/complete_a', function(data) {
-	if (data=='complete' || data=='allcomplete') {
-	jQuery('.task-'+task_id).addClass( 'complete' );
-	if (data=='allcomplete') {
-	jQuery('#t'+task_id).addClass( 'complete' );
-	}
-	} else {
-	jQuery('.task-'+task_id).removeClass( 'complete' );
-	jQuery('#t'+task_id).removeClass( 'complete' );
-	}
-	//end_operation();
-	} );
-	}
+	:javascript
+		function complete_party_a( task_id ) {
+			//begin_operation();
+			jQuery.post( '/tasks/'+task_id+'/complete_a', function(data) {
+				if (data=='complete' || data=='allcomplete') {
+					jQuery('.task-'+task_id).addClass( 'complete' );
+					if (data=='allcomplete') {
+						jQuery('#t'+task_id).addClass( 'complete' );
+						jQuery('#li'+task_id).fadeOut(1000);
+					}
+				} else {
+					jQuery('.task-'+task_id).removeClass( 'complete' );
+					jQuery('#t'+task_id).removeClass( 'complete' );
+				}
+				//end_operation();
+			} );
+		}
 
-	function complete_party_b( task_id ) {
-	//begin_operation();
-	jQuery.post( '/tasks/'+task_id+'/complete_b', function(data) {
-	if (data=='complete' || data=='allcomplete') {
-	jQuery('.task-'+task_id).addClass( 'complete' );
-	if (data=='allcomplete') {
-	jQuery('#t'+task_id).addClass( 'complete' );
-	}
-	} else {
-	jQuery('.task-'+task_id).removeClass( 'complete' );
-	jQuery('#t'+task_id).removeClass( 'complete' );
-	}
-	//end_operation();
-	} );
-	}
+		function complete_party_b( task_id ) {
+			//begin_operation();
+			jQuery.post( '/tasks/'+task_id+'/complete_b', function(data) {
+				if (data=='complete' || data=='allcomplete') {
+					jQuery('.task-'+task_id).addClass( 'complete' );
+					if (data=='allcomplete') {
+						jQuery('#t'+task_id).addClass( 'complete' );
+						jQuery('#li'+task_id).fadeOut(1000);
+					}
+				} else {
+					jQuery('.task-'+task_id).removeClass( 'complete' );
+					jQuery('#t'+task_id).removeClass( 'complete' );
+				}
+				//end_operation();
+			} );
+		}

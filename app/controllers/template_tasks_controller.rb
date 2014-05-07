@@ -4,7 +4,7 @@ class TemplateTasksController < ApplicationController
   # GET /template_tasks
   # GET /template_tasks.json
   def index
-    @template_tasks = TemplateTask.all
+    @template_tasks = TemplateTask.order(:sort_order).all
   end
 
   # GET /template_tasks/1
@@ -59,6 +59,18 @@ class TemplateTasksController < ApplicationController
       format.html { redirect_to template_tasks_url }
       format.json { head :no_content }
     end
+  end
+
+  def sort_templates
+    # Saves the new order of templates
+    params[:sort_order].each do |key, value|
+      #puts "tomplate = "+key.to_s
+      #puts "sort_order = "+value.to_s
+      t = TemplateTask.find(key)
+      t.update_attribute(:sort_order, value) if t
+    end
+
+    redirect_to template_tasks_url
   end
 
   private
