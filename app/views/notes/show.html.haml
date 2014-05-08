@@ -5,7 +5,7 @@
 
 %p
 	%strong Date:
-	= @note.the_date.strftime("%d %b %Y")
+	= @note.the_date.strftime("%d %b %Y") if !@note.the_date.blank?
 
 %p
 	%strong Title:
