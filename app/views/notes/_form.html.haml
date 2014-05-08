@@ -1,3 +1,9 @@
+:javascript
+	jQuery(function() {
+		jQuery( "#note_the_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#note_the_date" ).datepicker( "option", "defaultDate", "#{@note.the_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @note.the_date.strftime('%d %b %Y')}" );
+	});
+
 = form_for(@note, :html => { :class => "form-horizontal", :role => "form" }) do |f|
 	- if @note.errors.any?
 		#error_explanation
@@ -11,6 +17,7 @@
 
 	%h2= @note.job.ref if @note.job
 
+	= hidden_field_tag :from, params[:from] if params[:from] && !params[:from].blank?
 	- if !@note.job
 		.form-group
 			= f.label :job, :class => "control-label col-sm-2"
@@ -19,7 +26,8 @@
 	.form-group
 		= f.label :Date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :the_date, :class => "form-control autofocus"
+			- val = @note.the_date.blank? ? (@note.created_at.blank? ? DateTime.now.strftime("%d %b %Y") : @note.created_at.strftime("%d %b %Y")) : @note.the_date.strftime("%d %b %Y")
+			= f.text_field :the_date, :value => val, :class => "form-control autofocus"
 
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"

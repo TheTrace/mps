@@ -4,6 +4,10 @@
 	%h1= link_to @note.job.ref, job_path(@note.job)
 
 %p
+	%strong Date:
+	= @note.the_date.strftime("%d %b %Y")
+
+%p
 	%strong Title:
 	= @note.title
 
@@ -22,6 +26,10 @@
 %p
 	%strong Time:
 	= @note.time_taken
+
+%p
+	%strong Mileage:
+	= @note.mileage
 
 - if @note.job
 	= link_to "Job", job_path(@note.job)

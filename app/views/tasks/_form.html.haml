@@ -1,3 +1,9 @@
+:javascript
+	jQuery(function() {
+		jQuery( "#task_tentative_due_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#task_tentative_due_date" ).datepicker( "option", "defaultDate", "#{@task.tentative_due_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.tentative_due_date.strftime('%d %b %Y')}" );
+	});
+
 = form_for(@task, :html => { :class => "form-horizontal", :role => "form" }) do |f|
 	- if @task.errors.any?
 		#error_explanation
@@ -29,7 +35,8 @@
 	.form-group
 		= f.label :tentative_due_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :tentative_due_date, :class => "form-control"
+			- val = @task.tentative_due_date.blank? ? "" : @task.tentative_due_date.strftime("%d %b %Y")
+			= f.text_field :tentative_due_date, :value => val, :class => "form-control autofocus"
 
 	.form-group
 		= f.label :due_date, :class => "control-label col-sm-2"

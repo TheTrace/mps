@@ -45,14 +45,18 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1
   # PATCH/PUT /notes/1.json
   def update
-    respond_to do |format|
-      if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
+    if @note.update(note_params)
+      bdone = false
+      if params[:from] && !params[:from].blank?
+        if params[:from].eql?("job") && @note.job
+          bdone = true
+          redirect_to @note.job, notice: 'Note was successfully updated.'
+        end
+      elsif !bedone
+        redirect_to @note, notice: 'Note was successfully updated.'
       end
+    else
+      render action: 'edit'
     end
   end
 
@@ -74,6 +78,6 @@ class NotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
-      params.require(:note).permit(:title, :text, :job_id, :note_type, :cost, :time_taken)
+      params.require(:note).permit(:title, :text, :job_id, :note_type, :cost, :time_taken, :paid, :the_date, :mileage)
     end
 end
