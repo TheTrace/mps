@@ -22,7 +22,7 @@
 					-# .ui-state-default
 					%td
 						%span.glyphicon.glyphicon-sort
-					%td
+					%td{ :style => "min-width:170px;"}
 						= text_field_tag "sort_order[#{template_task.id}]", template_task.sort_order, :id => template_task.id, :class => "increment col-sm-4"
 					%td= template_task.title
 					%td= template_task.text
