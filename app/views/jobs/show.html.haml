@@ -11,6 +11,7 @@
 		%div.pull-right
 			%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();" }
 				%span.glyphicon.glyphicon-zoom-in
+		%div{ :style => "clear:right;" }
 	= render :partial => "shared/tasklist", :object => @job.tasks
 
 	%H1= @job.ref
@@ -97,12 +98,14 @@
 				= f.submit class: "btn btn-primary"
 
 	%table.table.table-striped{ :style => "width: 74%; float: left;" }
-		- @job.notes.order("the_date").each do |n|
+		- @job.notes.order("the_date desc").each do |n|
 			%tr
-				%td= n.note_type
+				%td= Note::NoteType::NAMES[n.note_type]
 				%td= n.the_date.strftime("%d %b") if !n.the_date.blank?
 				%td{ :title => n.text }= n.title
-				%td.text-right= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank?
-				%td.text-right= n.time_taken.to_s + " h".html_safe
+				%td.text-right{ :class => "#{'paid' if n.paid}" }
+					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank?
+				%td.text-right= n.time_taken.to_s + " h".html_safe if !n.time_taken.blank?
+				%td.text-right= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
 				-# if is_admin?
 				%td= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(n, :from => "job"), html = {:title => "Edit"}

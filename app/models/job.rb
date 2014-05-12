@@ -57,9 +57,11 @@ class Job < ActiveRecord::Base
 		tasks.each do |t|
 			next unless !t.task_complete?
 			next unless t.is_financial
+			next if t.paid
 			sum += t.cost.to_f if !t.cost.blank?
 		end
 		notes.each do |n|
+			next if n.paid
 			sum += n.cost.to_f if !n.cost.blank?
 		end
 		return sum
@@ -70,13 +72,29 @@ class Job < ActiveRecord::Base
 		tasks.each do |t|
 			next unless t.task_complete?
 			next unless t.is_financial
+			next unless t.paid
 			sum += t.cost.to_f if !t.cost.blank?
 		end
 		notes.each do |n|
+			next unless n.paid
 			sum += n.cost.to_f if !n.cost.blank?
 		end
 		sum += fees_paid if !fees_paid.blank?
 		return sum
+	end
+
+	def time_taken
+		tot_m = 0.00
+		tot_h = 0
+		notes.each do |n|
+			if !n.time_taken.blank?
+				tot_h += (n.time_taken).to_i
+				tot_m += (n.time_taken - (n.time_taken).to_i) * 60
+			end
+		end
+		tot_h += (tot_m / 60).to_i
+		tot = tot_h + ((tot_m/60) - (tot_m/60).to_i)
+		return tot
 	end
 
 	def foreground_colour

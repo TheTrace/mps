@@ -1,20 +1,30 @@
 %h1 Breakdown
 %h2= link_to @job.ref, @job
 
-%ul
+%ul.finance
+	- grand_tot = 0.00
 	%li.list-group-item.list-group-item-success
-		Fees Paid
-		= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
+		%span.reference
+			Fees Paid
+		%span.amount
+			= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
 
 	- @job.tasks.each do |t|
 		- next unless t.is_financial
 		%li{ :class => "list-group-item #{t.task_complete? ? "list-group-item-success" : "financial"}" }
-			= t.title
-			= number_to_currency(t.cost, unit: "&pound; ".html_safe)
+			%span.reference
+				= t.title
+			%span.amount
+				= number_to_currency(t.cost, unit: "&pound; ".html_safe)
 
 	- @job.notes.each do |n|
 		%li{ :class => "list-group-item financial" }
-			= n.title
-			= number_to_currency(n.cost, unit: "&pound; ".html_safe)
+			%span.reference
+				= n.title
+			%span.amount
+				= number_to_currency(n.cost, unit: "&pound; ".html_safe)
+			%span.time
+				= n.time_taken
+				h
 
 = link_to "Index", finances_path

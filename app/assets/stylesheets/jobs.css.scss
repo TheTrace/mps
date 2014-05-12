@@ -22,3 +22,10 @@ li.job {
 .panel-heading.hand, .list-group-item.hand { cursor: pointer; }
 .panel.job-height { height: 200px; }
 .panel-body.job-height { height: 102px; overflow: auto; }
+
+#ui-datepicker-div { display: none; }
+.ui-datepicker { background-color: white; border: 1px solid black; padding: 5px;
+	.ui-datepicker-next { float: right; }
+	.ui-datepicker-title { text-align: center; }
+	.ui-state-active { background-color: red; }
+}
