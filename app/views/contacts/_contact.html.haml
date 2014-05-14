@@ -1,0 +1,15 @@
+%li
+	.col-sm-5
+		= contact_gravatar contact, size: 52
+		= link_to contact.full_name, contact
+		= "(" + contact.types_str + ")" if !contact.types_str.empty?
+		%br
+		= contact.email
+		%br
+		= contact.phone
+	.col-sm-5
+		= contact.company
+		%br
+		= contact.address
+		%br
+		= contact.post_code

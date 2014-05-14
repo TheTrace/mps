@@ -24,4 +24,19 @@ class Contact < ActiveRecord::Base
 		[self.first_name,self.last_name].join(' ')
 	end
 
+	def types_str
+		t = ""
+		if self.client
+			t = "Client"
+			t += ", Mediator" if self.mediator
+			t += ", Solicitor" if self.solicitor
+		elsif self.mediator
+			t = "Mediator"
+			t += ", Solicitor" if self.solicitor
+		elsif self.solicitor
+			t = "Solicitor"
+		end
+		return t
+	end
+
 end
