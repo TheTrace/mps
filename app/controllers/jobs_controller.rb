@@ -5,7 +5,8 @@ class JobsController < ApplicationController
 	# GET /jobs.json
 	def index
 		@jobs = Job.order("reference")
-		@tasks = Task.where("party_a_complete_date IS NULL OR party_b_complete_date IS NULL").order("due_date,tentative_due_date")
+		# @tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL) AND (due_date IS NOT NULL AND due_date < DATE_ADD(CURDATE(), INTERVAL 14 DAY)").order("due_date,tentative_due_date")
+		@tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date")
 	end
 
 	# GET /jobs/1
@@ -72,6 +73,6 @@ class JobsController < ApplicationController
 
 		# Never trust parameters from the scary internet, only allow the white list through.
 		def job_params
-			params.require(:job).permit(:title, :text, :reference, :party_a_id, :party_b_id, :legal_rep, :mediator, :fees_paid, :mediation_date, :colour)
+			params.require(:job).permit(:title, :text, :reference, :party_a_id, :party_b_id, :legal_rep, :mediator, :fees_paid, :mediation_date, :legal_rep1, :legal_rep2, :legal_rep3, :mediator1, :mediator2, :mediator3, :colour)
 		end
 end

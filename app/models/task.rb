@@ -2,9 +2,14 @@ class Task < ActiveRecord::Base
 	belongs_to :job
 
 	def due_date_text
-		return due_date.strftime("%d-%b") if !due_date.blank?
-		return tentative_due_date.strftime("%d-%b") if !tentative_due_date.blank?
+		return the_due_date.strftime("%d-%b") if !the_due_date.blank?
 		return "Not set"
+	end
+
+	def the_due_date
+		return due_date if !due_date.blank?
+		return tentative_due_date if !tentative_due_date.blank?
+		return nil
 	end
 
 	def a_complete?

@@ -23,8 +23,12 @@
 		= @job.text
 
 	%p
-		%strong Legal Rep:
-		= @job.legal_representative.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_representative.full_name
+		%strong Legal Rep A:
+		= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_a.full_name
+
+	%p
+		%strong Legal Rep B:
+		= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_b.full_name
 
 	%p
 		%strong Mediator:

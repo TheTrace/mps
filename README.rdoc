@@ -2,16 +2,19 @@
 
 TODO stuff
 
-- The sort on the task template needs sorting as it won't sort logically, even by grabbing and moving - it does not seem to retain the new position even if I adjust the sort number;
-- In "Type" we need to add Travel (Hrs), Transport (£), Mileage rate - plus a calculation if possible by multiplying miles by a set rate of say 45p per mile;
-- Add a date for notes and sort descending from most recent using date so data can be entered in retrospect;
 - Can we list / search jobs by job reference as options;
-- Can the financials total time & cost by job;
-- I need to be able to enter costs for travel time, Disbursements such as travel, mileage, Parking and add new;
-- Tasks need to be removed from overview list once they have been completed (as discussed)
+- Fix color in job edit - need to refresh page currently to show it
+- Show the color pallet for color box
+- Jobs need a "status" - closed, archived, enquiry, active
+- Jobs need a "start date" - refresh (incomplete) tasks from this date when changed
+- Add 3 "observers" based on mediators for job (maybe use links table)
+- Need a links table for > 1 party in A or B
+- Show up to 2 weeks jobs as default in jobs#index
+- Add mediation date/time UI widget to job mediation date
+- Probably don't need "tentative_due_date" as well as "due_date" for tasks - sort out the logic
 
 General
-- Add search box
+- Add search box - jobs, contacts, notes?
 
 Tasks
 - Create logic for showing by due date
@@ -23,7 +26,6 @@ Notes
 Jobs
 
 Contacts
-- Add ability to search contact from job form
 
 Finance
 - Summarise (by month)
@@ -40,3 +42,13 @@ DONE
 -- Potential mediators, lawyers, etc
 - Specified colours
 - Ability to sort rows (task templates)
+- Add ability to search contact from job form (added "add" buttons)
+--- As asked by Grant ---
+- The sort on the task template needs sorting as it won't sort logically, even by grabbing and moving - it does not seem to retain the new position even if I adjust the sort number;
+- In "Type" we need to add Travel (Hrs), Transport (£), Mileage rate - plus a calculation if possible by multiplying miles by a set rate of say 45p per mile;
+- Add a date for notes and sort descending from most recent using date so data can be entered in retrospect;
+- Can the financials total time & cost by job;
+- I need to be able to enter costs for travel time, Disbursements such as travel, mileage, Parking and add new;
+- Tasks need to be removed from overview list once they have been completed (as discussed)
+- Default tasks to short list (in job view)
+- Update note types: Travel -> Travel (time), Transport -> Transport (cost)

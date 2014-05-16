@@ -3,7 +3,8 @@ class Job < ActiveRecord::Base
 	has_many :notes, :dependent => :destroy
 	belongs_to :party_a, :class_name=> "Contact", :foreign_key => :party_a_id
 	belongs_to :party_b, :class_name=> "Contact", :foreign_key => :party_b_id
-	belongs_to :legal_representative, :class_name=> "Contact", :foreign_key => :legal_rep
+	belongs_to :legal_rep_a, :class_name=> "Contact", :foreign_key => :legal_rep1
+	belongs_to :legal_rep_b, :class_name=> "Contact", :foreign_key => :legal_rep2
 	belongs_to :mediator_contact, :class_name=> "Contact", :foreign_key => :mediator
 
 	class JobColours

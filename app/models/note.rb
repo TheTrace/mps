@@ -18,9 +18,9 @@ class Note < ActiveRecord::Base
 			PHONE => "Phone call",
 			EMAIL => "Email",
 			MEETING => "Meeting",
-			TRAVEL => "Travel",
+			TRAVEL => "Travel (time)",
 			PARKING => "Parking",
-			TRANSPORT => "Transport",
+			TRANSPORT => "Transport (cost)",
 			SURVEY => "Survey",
 			DECISION => "Decision change",
 			ARRANGEMENT => "Arrangement change/new"
