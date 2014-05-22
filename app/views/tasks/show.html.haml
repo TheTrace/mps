@@ -1,18 +1,15 @@
 %p#notice= notice
 
-%h2= link_to @task.job.title, @task.job if @task.job
+= link_to '<< Index', tasks_path
+
+%h1
+	= "(" + @task.sort_order.to_s + ")"
+	= link_to @task.job.title, @task.job if @task.job
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_task_path(@task), html = {:title => "Edit Task"}
+
+%h2= @task.title
 
 .form-horizontal
-	.form-group
-		%strong.col-sm-3 Sort Order:
-		.col-sm-4
-			= @task.sort_order
-
-	.form-group
-		%strong.col-sm-3 Title:
-		.col-sm-4
-			= @task.title
-
 	.form-group
 		%strong.col-sm-3 Text:
 		.col-sm-4
@@ -21,38 +18,34 @@
 	.form-group
 		%strong.col-sm-3 Party A Complete Date:
 		.col-sm-4
-			= @task.party_a_complete_date
+			= @task.party_a_complete_date.strftime("%d %b %Y") if !@task.party_a_complete_date.blank?
 
 	.form-group
 		%strong.col-sm-3 Party B Complete Date:
 		.col-sm-4
-			= @task.party_b_complete_date
+			= @task.party_b_complete_date.strftime("%d %b %Y") if !@task.party_b_complete_date.blank?
 
 	.form-group
 		%strong.col-sm-3 Tentative Due Date:
 		.col-sm-4
-			= @task.tentative_due_date
+			= @task.tentative_due_date.strftime("%d %b %Y") if !@task.tentative_due_date.blank?
 
 	.form-group
 		%strong.col-sm-3 Due Date:
 		.col-sm-4
-			= @task.due_date
+			= @task.due_date.strftime("%d %b %Y") if !@task.due_date.blank?
 
 	.form-group
 		%strong.col-sm-3 Complete Date:
 		.col-sm-4
-			= @task.complete_date
+			= @task.complete_date.strftime("%d %b %Y") if !@task.complete_date.blank?
 
 	.form-group
-		%strong.col-sm-3 Finincial task:
+		%strong.col-sm-3 Finincial Task:
 		.col-sm-4
 			= @task.is_financial ? "Yes" : "No"
 
 	.form-group
 		%strong.col-sm-3 Amount:
 		.col-sm-4
-			= number_to_currency(@task.cost.to_s, unit: "&pound; ".html_safe) 
-
-= link_to 'Edit', edit_task_path(@task)
-|
-= link_to 'Index', tasks_path
+			= number_to_currency(@task.cost.to_s, unit: "&pound; ".html_safe) if !@task.cost.blank?

@@ -1,0 +1,46 @@
+%p#notice= notice
+
+= link_to '<< Index', contacts_path
+
+%h1
+	= @contact.title if !@contact.title.blank?
+	= @contact.full_name
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_contact_path(@contact), html = {:title => "Edit"}
+
+.form-horizontal
+	.form-group
+		%strong.col-sm-3 Company:
+		.col-sm-4
+			= @contact.company
+
+	.form-group
+		%strong.col-sm-3 Phone:
+		.col-sm-4
+			= @contact.phone
+
+	.form-group
+		%strong.col-sm-3 Email:
+		.col-sm-4
+			= @contact.email
+
+	.form-group
+		%strong.col-sm-3 Address:
+		.col-sm-4
+			= @contact.address
+
+	.form-group
+		%strong.col-sm-3 Post code:
+		.col-sm-4
+			= @contact.post_code
+
+	.form-group
+		%strong.col-sm-3 Text:
+		.col-sm-4
+			= @contact.text
+
+	.form-group
+		%strong.col-sm-3 Is a:
+		.col-sm-4
+			= " Client " if @contact.client
+			= " Mediator " if @contact.mediator
+			= " Solicitor " if @contact.solicitor

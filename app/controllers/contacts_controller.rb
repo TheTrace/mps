@@ -19,7 +19,7 @@ class ContactsController < ApplicationController
       case params[:contact_type]
       when "ptya", "ptyb"
         @contact.client = true
-      when "med", "med1", "med2", "med3"
+      when "med", "med1", "med2", "med3", "ob1", "ob2", "ob3"
         @contact.mediator = true
       when "lega", "legb"
         @contact.solicitor = true
@@ -56,6 +56,12 @@ class ContactsController < ApplicationController
           @job.update_attribute(:legal_rep1, @contact.id)
         when "legb"
           @job.update_attribute(:legal_rep2, @contact.id)
+        when "ob1"
+          @job.update_attribute(:observer1, @contact.id)
+        when "ob2"
+          @job.update_attribute(:observer2, @contact.id)
+        when "ob3"
+          @job.update_attribute(:observer3, @contact.id)
         end
         redirect_to edit_job_path(@job)
       else

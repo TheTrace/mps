@@ -2,6 +2,18 @@
 	jQuery(function() {
 		jQuery( "#task_tentative_due_date" ).datepicker( { dateFormat: 'dd M yy' } );
 		jQuery( "#task_tentative_due_date" ).datepicker( "option", "defaultDate", "#{@task.tentative_due_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.tentative_due_date.strftime('%d %b %Y')}" );
+
+		jQuery( "#task_due_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#task_due_date" ).datepicker( "option", "defaultDate", "#{@task.due_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.due_date.strftime('%d %b %Y')}" );
+
+		jQuery( "#task_party_a_complete_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#task_party_a_complete_date" ).datepicker( "option", "defaultDate", "#{@task.party_a_complete_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.party_a_complete_date.strftime('%d %b %Y')}" );
+
+		jQuery( "#task_party_b_complete_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#task_party_b_complete_date" ).datepicker( "option", "defaultDate", "#{@task.party_b_complete_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.party_b_complete_date.strftime('%d %b %Y')}" );
+
+		jQuery( "#task_complete_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#task_complete_date" ).datepicker( "option", "defaultDate", "#{@task.complete_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.complete_date.strftime('%d %b %Y')}" );
 	});
 
 = form_for(@task, :html => { :class => "form-horizontal", :role => "form" }) do |f|
@@ -41,22 +53,26 @@
 	.form-group
 		= f.label :due_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :due_date, :class => "form-control"
+			- val = @task.due_date.blank? ? "" : @task.due_date.strftime("%d %b %Y")
+			= f.text_field :due_date, :value => val, :class => "form-control"
 
 	.form-group
 		= f.label :party_a_complete_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :party_a_complete_date, :class => "form-control"
+			- val = @task.party_a_complete_date.blank? ? "" : @task.party_a_complete_date.strftime("%d %b %Y")
+			= f.text_field :party_a_complete_date, :value => val, :class => "form-control"
 
 	.form-group
 		= f.label :party_b_complete_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :party_b_complete_date, :class => "form-control"
+			- val = @task.party_b_complete_date.blank? ? "" : @task.party_b_complete_date.strftime("%d %b %Y")
+			= f.text_field :party_b_complete_date, :value => val, :class => "form-control"
 
 	.form-group
 		= f.label :complete_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :complete_date, :class => "form-control"
+			- val = @task.complete_date.blank? ? "" : @task.complete_date.strftime("%d %b %Y")
+			= f.text_field :complete_date, :value => val, :class => "form-control"
 
 	.form-group
 		= f.label :sort_order, :class => "control-label col-sm-2"
@@ -76,7 +92,11 @@
 			.input-group
 				%span.input-group-addon &pound;
 				= f.text_field :cost, :class => "form-control"
-
+		.col-sm-2
+			.checkbox
+				%label
+					= f.check_box :paid
+					Paid 
 
 	.actions
 		.col-sm-offset-2

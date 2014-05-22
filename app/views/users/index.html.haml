@@ -1,5 +1,5 @@
 .pull-right
-	= link_to 'Add User', new_user_path, :class => "btn btn-default" if is_admin?
+	= link_to '<span class="glyphicon glyphicon-plus"></span> Add User'.html_safe, new_user_path, :class => "btn btn-default" if is_admin?
 
 %h1 All Users
 

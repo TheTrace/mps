@@ -1,25 +1,28 @@
 %p#notice= notice
 
-%p
-	%strong Sort Order:
-	= @template_task.sort_order
+= link_to '<< Index', template_tasks_path
 
-%p
-	%strong Title:
+%h1
 	= @template_task.title
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_template_task_path(@template_task), html = {:title => "Edit Task Template"}
 
-%p
-	%strong Text:
-	= @template_task.text
+.form-horizontal
+	.form-group
+		%strong.col-sm-3 Sort Order:
+		.col-sm-4
+			= @template_task.sort_order
 
-%p
-	%strong Days until due:
-	= @template_task.due_days
+	.form-group
+		%strong.col-sm-3 Text:
+		.col-sm-4
+			= @template_task.text
 
-%p
-	%strong Financial task:
-	= @template_task.is_financial ? "Yes" : "No"
+	.form-group
+		%strong.col-sm-3 Days until due:
+		.col-sm-4
+			= @template_task.due_days
 
-= link_to 'Edit', edit_template_task_path(@template_task)
-|
-= link_to 'Index', template_tasks_path
+	.form-group
+		%strong.col-sm-3 Financial task:
+		.col-sm-4
+			= @template_task.is_financial ? "Yes" : "No"

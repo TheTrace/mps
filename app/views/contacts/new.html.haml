@@ -1,5 +1,8 @@
+- if params[:job] && !params[:job].blank?
+	= link_to "<< Return to job", edit_job_path(params[:job])
+- else
+	= link_to "<< Index", contacts_path
+
 %h1 New contact
 
 = render 'form'
-
-= link_to 'Index', contacts_path

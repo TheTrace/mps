@@ -9,45 +9,52 @@
 
 	- if @job.tasks.any?
 		%div.pull-right
-			%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();" }
+			%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();", :style => "cursor:pointer;" }
 				%span.glyphicon.glyphicon-zoom-in
 		%div{ :style => "clear:right;" }
 	= render :partial => "shared/tasklist", :object => @job.tasks
 
-	%H1= @job.ref
+	= link_to '<< Index', jobs_path
+	
+	%H1
+		= @job.ref
+		= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_job_path(@job), html = {:title => "Edit", :style => "cursor:pointer;"}
+
 
 	%h2= @job.title
 
-	%p
-		%strong Text:
-		= @job.text
+	.form-horizontal{ :style => "width: 74%; float: left;" }
+		.form-group
+			%strong.col-sm-3 Text:
+			.col-sm-4
+				= @job.text
 
-	%p
-		%strong Legal Rep A:
-		= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_a.full_name
+		.form-group
+			%strong.col-sm-3 Legal Rep A:
+			.col-sm-4
+				= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_a.full_name
 
-	%p
-		%strong Legal Rep B:
-		= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_b.full_name
+		.form-group
+			%strong.col-sm-3 Legal Rep B:
+			.col-sm-4
+				= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_b.full_name
 
-	%p
-		%strong Mediator:
-		= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : @job.mediator_contact.full_name
+		.form-group
+			%strong.col-sm-3 Mediator:
+			.col-sm-4
+				= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : @job.mediator_contact.full_name
 
-	%p
-		%strong Fees Paid:
-		= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
+		.form-group
+			%strong.col-sm-3 Fees Paid:
+			.col-sm-4
+				= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
 
-	%p
-		%strong Mediation Date:
-		= @job.mediation_date
+		.form-group
+			%strong.col-sm-3 Mediation Date:
+			.col-sm-4
+				= @job.mediation_date.strftime("%d %b %Y") if !@job.mediation_date.blank?
 
-	= link_to 'Edit', edit_job_path(@job)
-	|
-	= link_to 'Index', jobs_path
-	|
-	= link_to 'Destroy', @job, method: :delete, data: { confirm: 'Are you sure you want to DELETE this job?' }
-
+	%div{ :style => "clear:left;" }
 	%hr
 
 	%h2 Notes

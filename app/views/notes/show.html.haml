@@ -1,39 +1,41 @@
 %p#notice= notice
 
-- if @note.job
-	%h1= link_to @note.job.ref, job_path(@note.job)
+= link_to '<< Index', notes_path
 
-%p
-	%strong Date:
-	= @note.the_date.strftime("%d %b %Y") if !@note.the_date.blank?
+%h1
+	= link_to @note.job.ref, job_path(@note.job) if @note.job
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(@note), html = {:title => "Edit Note"}
 
-%p
-	%strong Title:
-	= @note.title
+%h2= @note.title
 
-%p
-	%strong Text:
-	= @note.text
+.form-horizontal
+	.form-group
+		%strong.col-sm-3 Date:
+		.col-sm-4
+			= @note.the_date.strftime("%d %b %Y") if !@note.the_date.blank?
 
-%p
-	%strong Type:
-	= @note.note_type
+	.form-group
+		%strong.col-sm-3 Text:
+		.col-sm-4
+			= @note.text
 
-%p
-	%strong Cost:
-	= number_to_currency(@note.cost.to_s, unit: "&pound; ".html_safe)
+	.form-group
+		%strong.col-sm-3 Type:
+		.col-sm-4
+			= Note::NoteType::NAMES[@note.note_type] if !@note.note_type.blank?
 
-%p
-	%strong Time:
-	= @note.time_taken
+	.form-group
+		%strong.col-sm-3 Cost:
+		.col-sm-4
+			= number_to_currency(@note.cost.to_s, unit: "&pound; ".html_safe)
 
-%p
-	%strong Mileage:
-	= @note.mileage
+	.form-group
+		%strong.col-sm-3 Time:
+		.col-sm-4
+			= @note.time_taken
+			h
 
-- if @note.job
-	= link_to "Job", job_path(@note.job)
-	|
-= link_to 'Edit', edit_note_path(@note)
-|
-= link_to 'Index', notes_path
+	.form-group
+		%strong.col-sm-3 Mileage:
+		.col-sm-4
+			= @note.mileage

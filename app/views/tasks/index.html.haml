@@ -1,5 +1,5 @@
 .pull-right
-	= link_to 'Add Task', new_task_path, :class => "btn btn-default" if is_admin?
+	= link_to '<span class="glyphicon glyphicon-plus"></span> Add Task'.html_safe, new_task_path, :class => "btn btn-default" if is_admin?
 
 %h1 Task List
 

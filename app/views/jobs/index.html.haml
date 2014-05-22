@@ -2,7 +2,7 @@
 -#	- @jobs.each do |job|
 -#		= ".h#{job.id}:hover { border: 1px solid red; }"
 .pull-right
-	= link_to 'New Job', new_job_path, :class => "btn btn-default"
+	= link_to '<span class="glyphicon glyphicon-plus"></span> New Job'.html_safe, new_job_path, :class => "btn btn-default"
 
 
 %h1 Jobs Listing

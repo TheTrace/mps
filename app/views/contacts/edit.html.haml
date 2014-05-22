@@ -1,7 +1,9 @@
-%h1 Editing contact
+.pull-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, @task, method: :delete, data: { confirm: "Are you sure you want to DELETE this contact?\n (#{@contact.full_name})" }, :title => "Destroy" if is_admin?
+
+= link_to '<< Index', contacts_path
+
+%h1
+	Editing contact
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, @contact, :title => "Show contact"
 
 = render 'form'
-
-= link_to 'Show', @contact
-|
-= link_to 'Index', contacts_path

@@ -1,7 +1,7 @@
 .pull-right
-	= link_to 'New Contact', new_contact_path, :class => "btn btn-default" if is_admin?
+	= link_to '<span class="glyphicon glyphicon-plus"></span> New Contact'.html_safe, new_contact_path, :class => "btn btn-default" if is_admin?
 
-%h1 Listing contacts
+%h1 Listing Contacts
 
 = will_paginate
 

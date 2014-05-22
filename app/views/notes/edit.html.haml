@@ -1,7 +1,12 @@
-%h1 Editing note
+.pull-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, @note, method: :delete, data: { confirm: "Are you sure you want to DELETE this note?\n (#{@note.title})" }, :title => "Destroy" if is_admin?
+
+- if params[:from] && !params[:from].blank?
+	= link_to "<< Return to job", job_path(@note.job)
+- else
+	= link_to "<< Index", notes_path
+
+%h1
+	Editing Note
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, @note, :title => "Show Note"
 
 = render 'form'
-
-= link_to 'Show', @note
-|
-= link_to 'Index', notes_path

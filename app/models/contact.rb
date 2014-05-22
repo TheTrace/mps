@@ -9,15 +9,21 @@ class Contact < ActiveRecord::Base
 	end 
 
 	def self.for_select_client
-		Contact.where("contacts.client = true").order("contacts.last_name,contacts.first_name").map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
+		q = Contact.order("contacts.last_name,contacts.first_name")
+		q = q.where("contacts.client = true") if !Rails.env.development?
+		q.map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
 	end 
 
 	def self.for_select_legal
-		Contact.where("contacts.solicitor = true").order("contacts.last_name,contacts.first_name").map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
+		q = Contact.order("contacts.last_name,contacts.first_name")
+		q = q.where("contacts.solicitor = true") if !Rails.env.development?
+		q.map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
 	end 
 
 	def self.for_select_mediator
-		Contact.where("contacts.mediator = true").order("contacts.last_name,contacts.first_name").map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
+		q = Contact.order("contacts.last_name,contacts.first_name")
+		q = q.where("contacts.mediator = true") if !Rails.env.development?
+		q.map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
 	end 
 
 	def full_name

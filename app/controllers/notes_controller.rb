@@ -52,7 +52,7 @@ class NotesController < ApplicationController
           bdone = true
           redirect_to @note.job, notice: 'Note was successfully updated.'
         end
-      elsif !bedone
+      elsif !bdone
         redirect_to @note, notice: 'Note was successfully updated.'
       end
     else

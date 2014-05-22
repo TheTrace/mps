@@ -1,4 +1,16 @@
 -#%script{ :type=>"text/javascript", :src=>"/jscolor.js" }
+- start_date = @job.mediation_date.blank? ? "" :  @job.mediation_date.strftime('%d %b %Y')
+- start_hour = @job.mediation_time.blank? ? DateTime.now().strftime('%H') : @job.mediation_time.strftime('%H')
+- start_minute = @job.mediation_time.blank? ? DateTime.now().strftime('%M') : @job.mediation_time.strftime('%M')
+
+:javascript
+	jQuery(function() {
+		jQuery( "#job_mediation_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#job_mediation_date" ).datepicker( "option", "defaultDate", "#{start_date}" );
+
+		jQuery( "#starttime" ).timepicker( { timeFormat: 'hh:mm', hourGrid: 4, minuteGrid: 10, hour: "#{start_hour}", minute: "#{start_minute}" } );
+	});
+
 = form_for(@job, :html => { :class => "form-horizontal", :role => "form", :id => "job_form" } ) do |f|
 	- if @job.errors.any?
 		%div#error_explanation
@@ -10,7 +22,6 @@
 				- @job.errors.full_messages.each do |msg|
 					%li= msg
 
-	-#= hidden_field_tag "role", ""
 	#role
 	.form-group
 		= f.label :reference, :class => "control-label col-sm-2"
@@ -68,7 +79,7 @@
 			= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('med'))"}
 
 	.div{ :style => "border: 1px solid gray; margin-bottom:10px; padding-left: 20px;" }
-		%h2{ :style => "font-weight:strong;" } Possible Mediators / Observers (to come!)
+		%h2{ :style => "font-weight:strong;" } Possible Mediators
 		.form-group
 			= f.label :mediator1, :class => "control-label col-sm-2"
 			.col-sm-5
@@ -90,6 +101,27 @@
 			.col-sm-1
 				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('med3'))"}
 
+		%h2{ :style => "font-weight:strong;" } Possible Observers
+		.form-group
+			= f.label :observer1, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :observer1, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.observer1), {}, :class => "form-control"
+			.col-sm-1
+				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('ob1'))"}
+
+		.form-group
+			= f.label :observer2, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :observer2, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.observer2), {}, :class => "form-control"
+			.col-sm-1
+				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('ob2'))"}
+
+		.form-group
+			= f.label :observer3, :class => "control-label col-sm-2"
+			.col-sm-5
+				= f.select :observer3, options_for_select([["Please select...",""]]+Contact.for_select_mediator, @job.observer3), {}, :class => "form-control"
+			.col-sm-1
+				= link_to "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-plus'></span></button>".html_safe, "", html = {:title => "Add", :onclick => "$(add_contact('ob3'))"}
 
 	.form-group
 		= f.label :fees_paid, :class => "control-label col-sm-2"
@@ -100,8 +132,11 @@
 
 	.form-group
 		= f.label :mediation_date, :class => "control-label col-sm-2"
-		.col-sm-5
-			= f.text_field :mediation_date, :class => "form-control"
+		.col-sm-3
+			- val = @job.mediation_date.blank? ? "" : @job.mediation_date.strftime("%d %b %Y")
+			= f.text_field :mediation_date, :value => val, :class => "form-control"
+		.col-sm-2
+			= f.text_field :mediation_time, :class => "form-control"
 
 	.actions
 		.col-sm-offset-2

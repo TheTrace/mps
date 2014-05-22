@@ -1,5 +1,5 @@
 .pull-right
-	= link_to 'Add Note', new_note_path, :class => "btn btn-default" if is_admin?
+	= link_to '<span class="glyphicon glyphicon-plus"></span> Add Note'.html_safe, new_note_path, :class => "btn btn-default" if is_admin?
 
 %h1 Listing notes
 
