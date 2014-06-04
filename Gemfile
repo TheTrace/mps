@@ -13,16 +13,17 @@ gem 'capistrano-rvm'
 
 group :development, :test do
 	# Use sqlite3 as the database for Active Record
-	gem 'sqlite3'
-	#gem 'mysql2', '0.3.15'
+	#gem 'sqlite3'
+	#gem 'mysql2' #, '0.3.15'
 	gem 'capistrano-rails',   '~> 1.1', require: false
 	gem 'capistrano-bundler', '~> 1.1', require: false
 end
 
+gem 'mysql2'
+
 group :production do
 	#gem 'pg', '0.15.1'
 	#gem 'rails_12factor', '0.0.2'
-	gem 'mysql2'
 end
 
 gem 'haml'

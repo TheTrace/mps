@@ -10,24 +10,27 @@ class Contact < ActiveRecord::Base
 
 	def self.for_select_client
 		q = Contact.order("contacts.last_name,contacts.first_name")
-		q = q.where("contacts.client = true") if !Rails.env.development?
-		q.map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
+		q = q.where("contacts.client = true") #if !Rails.env.development?
+		q.map{|c|[ c.full_name, c.id ]}
 	end 
 
 	def self.for_select_legal
 		q = Contact.order("contacts.last_name,contacts.first_name")
-		q = q.where("contacts.solicitor = true") if !Rails.env.development?
-		q.map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
+		q = q.where("contacts.solicitor = true") #if !Rails.env.development?
+		q.map{|c|[ c.full_name, c.id ]}
 	end 
 
 	def self.for_select_mediator
 		q = Contact.order("contacts.last_name,contacts.first_name")
-		q = q.where("contacts.mediator = true") if !Rails.env.development?
-		q.map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
+		q = q.where("contacts.mediator = true") #if !Rails.env.development?
+		q.map{|c|[ c.full_name, c.id ]}
 	end 
 
 	def full_name
-		[self.first_name,self.last_name].join(' ')
+		fn = [self.first_name,self.last_name].join(' ')
+		fn = self.company if fn.blank?
+		fn = "No Name" if fn.blank?
+		fn
 	end
 
 	def types_str

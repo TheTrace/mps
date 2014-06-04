@@ -8,22 +8,31 @@
 	%p#notice= notice
 
 	- if @job.tasks.any?
-		%div.pull-right
+		.task-list-holder.pull-right
 			%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();", :style => "cursor:pointer;" }
 				%span.glyphicon.glyphicon-zoom-in
-		%div{ :style => "clear:right;" }
-	= render :partial => "shared/tasklist", :object => @job.tasks
+			= render :partial => "shared/tasklist", :object => @job.tasks
 
-	= link_to '<< Index', jobs_path
-	
 	%H1
-		= @job.ref
+		= @job.reference
+		= @job.party_a.blank? ? "?" : link_to( @job.party_a_name, contact_path(@job.party_a, :from => "job") )
+		v
+		= @job.party_b.blank? ? "?" : link_to( @job.party_b_name, contact_path(@job.party_b, :from => "job") )
 		= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_job_path(@job), html = {:title => "Edit", :style => "cursor:pointer;"}
 
-
+	= link_to '<< All  Jobs', jobs_path
+	
 	%h2= @job.title
 
+
 	.form-horizontal{ :style => "width: 74%; float: left;" }
+		.form-group
+			%strong.col-sm-3 Status:
+			.col-sm-4
+				= Job::JobStatus::NAMES[@job.status]
+				%em
+					= " (" + @job.start_date.strftime("%d-%b-%Y") + ")" if @job.start_date
+
 		.form-group
 			%strong.col-sm-3 Text:
 			.col-sm-4
@@ -32,17 +41,17 @@
 		.form-group
 			%strong.col-sm-3 Legal Rep A:
 			.col-sm-4
-				= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_a.full_name
+				= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : link_to(@job.legal_rep_a.full_name, contact_path(@job.legal_rep_a, :from=>"job"))
 
 		.form-group
 			%strong.col-sm-3 Legal Rep B:
 			.col-sm-4
-				= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : @job.legal_rep_b.full_name
+				= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : link_to(@job.legal_rep_b.full_name, contact_path(@job.legal_rep_b, :from=>"job"))
 
 		.form-group
 			%strong.col-sm-3 Mediator:
 			.col-sm-4
-				= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : @job.mediator_contact.full_name
+				= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : link_to(@job.mediator_contact.full_name, contact_path(@job.mediator_contact, :from=>"job"))
 
 		.form-group
 			%strong.col-sm-3 Fees Paid:
@@ -52,13 +61,18 @@
 		.form-group
 			%strong.col-sm-3 Mediation Date:
 			.col-sm-4
-				= @job.mediation_date.strftime("%d %b %Y") if !@job.mediation_date.blank?
+				= @job.mediation_date.strftime("%d %b %Y %H:%M") if !@job.mediation_date.blank?
 
 	%div{ :style => "clear:left;" }
 	%hr
 
-	%h2 Notes
-	= form_for(@note, :html => { :class => "form-horizontal", :style => "width: 74%; float: left;", :role => "form" }) do |f|
+	%h2
+		Notes
+		%button.btn.btn-default{ :type => "button", :title => "Add", :onclick => "$('.note-form').toggle();" }
+			%span.glyphicon.glyphicon-plus
+
+
+	= form_for(@note, :html => { :class => "form-horizontal note-form", :style => "width: 74%; float: left; display:none;", :role => "form" }) do |f|
 		= hidden_field_tag :from, "job"
 		= f.hidden_field :job_id
 		.form-group
@@ -120,3 +134,5 @@
 				%td.text-right= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
 				-# if is_admin?
 				%td= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(n, :from => "job"), html = {:title => "Edit"}
+%div{ :style => "clear:both;" }
+

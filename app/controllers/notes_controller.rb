@@ -4,7 +4,8 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.all
+    @jobs = Job.order("jobs.reference DESC").all
+    #@notes = Note.all
   end
 
   # GET /notes/1

@@ -21,7 +21,7 @@
 										%li
 											= link_to "Sign out", signout_path, method: "delete"
 							- else
-								%li= link_to "Sign in", signin_path
+								%li.navbar-right= link_to "Sign in", signin_path
 
 	/ Fixed navbar
 	.navbar.navbar-inverse.navbar-fixed-top{ :role => "navigation" }
@@ -61,5 +61,5 @@
 								%li.divider
 								%li= link_to "Sign out", signout_path, method: "delete"
 					- else
-						%li.pull-right.active= link_to "Sign in", signin_path
+						%li.navebar-right.active= link_to "Sign in", signin_path
 

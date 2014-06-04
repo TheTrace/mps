@@ -7,7 +7,7 @@
 
 %h1 Jobs Listing
 
-%div{ :style => "max-height:1000px; overflow-y:scroll; width:25%; float:right;" }
+.task-list-holder.pull-right{ :style => "max-height:1000px; overflow-y:scroll;" }
 	= render :partial => "shared/tasklist", :object => @tasks
 
 .job-list
@@ -16,11 +16,13 @@
 		- @jobs.each do |job|
 			- class_list += "'j#{job.id}', "
 			%li.job{ :class => "j#{job.id}", :onclick => "location.href='" + job_path(job) + "'", :style => "background-color: ##{job.colour ? job.colour : '428bca'}; color: #{job.foreground_colour};" }
-				%h1
+				%h2
 					= job.reference.to_s
 					%br
 					= job.parties
 				= job.title
+				%br
+				= job.mediation_date.strftime("%d-%b-%Y %H:%M") if job.mediation_date
 			-# = "&nbsp;&nbsp;&nbsp;".html_safe
 			-# &nbsp;&nbsp;&nbsp;
 			-# = link_to 'Edit', edit_job_path(job)

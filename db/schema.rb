@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522092928) do
+ActiveRecord::Schema.define(version: 20140603184257) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20140522092928) do
     t.string   "note_type"
     t.decimal  "cost",       precision: 9, scale: 2
     t.decimal  "time_taken", precision: 9, scale: 2
-    t.boolean  "paid"
+    t.boolean  "paid",                               default: false
     t.datetime "the_date"
     t.decimal  "mileage",    precision: 9, scale: 2
   end
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20140522092928) do
     t.decimal  "cost",                  precision: 9, scale: 2
     t.boolean  "is_financial",                                  default: false
     t.boolean  "paid",                                          default: false
+    t.integer  "template_task_id"
   end
 
   create_table "template_tasks", force: true do |t|
@@ -123,7 +124,7 @@ ActiveRecord::Schema.define(version: 20140522092928) do
     t.string   "remember_token"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end

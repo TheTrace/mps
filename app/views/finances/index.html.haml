@@ -1,35 +1,43 @@
 %h1 Owing
 %ul.finance
 	- grand_tot = 0.00
+	- tot_hours = 0.00
 	- @jobs.each do |j|
 		%li
 			%span.reference
 				= link_to j.ref, finance_path(j.id)
-			%span.amount
+			%span.paid
 				= number_to_currency(j.owing.to_s, unit: "&pound; ".html_safe)
 			%span.time
 				= j.time_taken
 				h
+		- tot_hours += j.time_taken.to_f
 		- grand_tot += j.owing.to_s.to_f
 	%li
 		%span.reference &nbsp;
-		%span.amount
+		%span.paid
 			%strong= number_to_currency(grand_tot, unit: "&pound;".html_safe)
+		%span.time
+			%strong= tot_hours.to_s + " h".html_safe
 
 %h1 Received
 %ul.finance
 	- grand_tot = 0.00
+	- tot_hours = 0.00
 	- @jobs.each do |j|
 		%li
 			%span.reference
 				= link_to j.ref, finance_path(j.id)
-			%span.amount
+			%span.owing
 				= number_to_currency(j.received.to_s, unit: "&pound; ".html_safe)
 			%span.time
 				= j.time_taken
 				h
+		- tot_hours += j.time_taken.to_f
 		- grand_tot += j.received.to_s.to_f
 	%li
 		%span.reference &nbsp;
-		%span.amount
+		%span.owing
 			%strong= number_to_currency(grand_tot, unit: "&pound;".html_safe)
+		%span.time
+			%strong= tot_hours.to_s + " h".html_safe

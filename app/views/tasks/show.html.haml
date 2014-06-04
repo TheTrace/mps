@@ -1,11 +1,11 @@
 %p#notice= notice
 
-= link_to '<< Index', tasks_path
-
 %h1
 	= "(" + @task.sort_order.to_s + ")"
-	= link_to @task.job.title, @task.job if @task.job
+	= link_to @task.job.reference, @task.job if @task.job
 	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_task_path(@task), html = {:title => "Edit Task"}
+
+= link_to '<< All Tasks', tasks_path
 
 %h2= @task.title
 

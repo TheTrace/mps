@@ -1,35 +1,22 @@
 .pull-right
 	= link_to '<span class="glyphicon glyphicon-plus"></span> Add Note'.html_safe, new_note_path, :class => "btn btn-default" if is_admin?
 
-%h1 Listing notes
+%h1 Listing Notes
 
-%table.table
-	%thead
-		%tr
-			%th Title
-			%th Text
-			%th Type
-			%th.text-right Cost
-			%th Time
-			%th 
-			%th
- 
-	%tbody
-		- current_job = nil
-		- @notes.each do |note|
-			- if current_job != note.job
-				- current_job = note.job
-				%tr.success
-					%td{ :colspan => 7 }= link_to note.job.ref, job_path(note.job) if note.job
-			%tr
-				%td= note.title
-				%td= note.text
-				%td= note.note_type
-				%td.text-right= number_to_currency(note.cost.to_s, unit: "&pound; ".html_safe)
-				%td= note.time_taken
-				%td
-					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, note, html = {:title => "Show"}
-					= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(note), html = {:title => "Edit"}
-				%td.text-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, note, method: :delete, data: { confirm: 'Are you sure you want to delete?' }, :title => "Destroy"
+%ul
+	- @jobs.each do |job|
+		%li.success
+			%div{ :"data-toggle" => "collapse", :"data-target" => "#notes#{job.id}", :style => "cursor:pointer;" }
+				= link_to( job.ref + " " + job.title, job)
 
--#= link_to 'New Note', new_note_path
+			%ul{ :id => "notes#{job.id}", :style => "height:0px;", :class => "collapse" }
+				- job.notes.order("the_date ASC").each do |note|
+					%li
+						= note.the_date.strftime("%b %m %Y %H:%M") if note.the_date
+						= note.title
+						= note.text
+						= note.note_type
+						= number_to_currency(note.cost.to_s, unit: "&pound; ".html_safe)
+						= note.time_taken
+						= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, note, html = {:title => "Show"}
+						= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(note), html = {:title => "Edit"}

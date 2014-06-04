@@ -16,8 +16,12 @@ li.job {
 	h1 { font-size: 18px; }
 }
 
-.task-list { width: 25%; min-width: 200px; }
-.job-list { width: 73%; min-width: 300px; float: left; }
+.pull-right a.btn { margin-top: 3px; margin-right: 16px; }
+.task-list-holder { width: 24%; }
+.task-list { min-width: 200px; }
+.job-list { width: 73%; min-width: 300px; float: left;
+	ul { padding-left: 7px; }
+}
 
 .panel-heading.hand, .list-group-item.hand { cursor: pointer; }
 .panel.job-height { height: 200px; }

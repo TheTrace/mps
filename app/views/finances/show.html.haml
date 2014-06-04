@@ -1,30 +1,51 @@
 %h1 Breakdown
 %h2= link_to @job.ref, @job
 
+= link_to "<< Finance Page", finances_path
+
 %ul.finance
-	- grand_tot = 0.00
+	- tot_owing = 0.00
+	- tot_received = 0.00
+	- tot_hours = 0.00
 	%li.list-group-item.list-group-item-success
 		%span.reference
 			Fees Paid
-		%span.amount
+		%span.paid
 			= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
 
 	- @job.tasks.each do |t|
 		- next unless t.is_financial
-		%li{ :class => "list-group-item #{t.task_complete? ? "list-group-item-success" : "financial"}" }
+		%li{ :class => "list-group-item #{(t.paid || t.task_complete?) ? "list-group-item-success" : "financial"}" }
 			%span.reference
 				= t.title
-			%span.amount
-				= number_to_currency(t.cost, unit: "&pound; ".html_safe)
+			%span.paid
+				- if t.paid
+					= number_to_currency(t.cost, unit: "&pound; ".html_safe)
+					- tot_received += t.cost.to_f
+			%span.owing
+				- if !t.paid
+					= number_to_currency(t.cost, unit: "&pound; ".html_safe)
+					- tot_owing += t.cost.to_f
 
 	- @job.notes.each do |n|
-		%li{ :class => "list-group-item financial" }
+		%li{ :class => "list-group-item #{n.paid ? "list-group-item-success" : "financial"}" }
 			%span.reference
 				= n.title
-			%span.amount
-				= number_to_currency(n.cost, unit: "&pound; ".html_safe)
+			%span.paid
+				- if n.paid
+					= number_to_currency(n.cost, unit: "&pound; ".html_safe)
+					- tot_received += n.cost.to_f
+			%span.owing
+				- if !n.paid
+					= number_to_currency(n.cost, unit: "&pound; ".html_safe)
+					- tot_owing += n.cost.to_f
 			%span.time
-				= n.time_taken
-				h
+				- if !n.time_taken.blank?
+					= n.time_taken.to_s + " h".html_safe
+					- tot_hours += n.time_taken
 
-= link_to "Index", finances_path
+	%li.list-group-item
+		%span.reference Total
+		%span.paid= number_to_currency(tot_received, unit: "&pound;".html_safe)
+		%span.owing= number_to_currency(tot_owing, unit: "&pound;".html_safe)
+		%span.time= tot_hours.to_s + " h".html_safe

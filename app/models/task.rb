@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
 	belongs_to :job
+	belongs_to :template_task
 
 	def due_date_text
 		return the_due_date.strftime("%d-%b") if !the_due_date.blank?

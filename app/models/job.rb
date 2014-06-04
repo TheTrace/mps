@@ -17,32 +17,61 @@ class Job < ActiveRecord::Base
 		ALL = [PRIMARY, SUCCESS, INFO, WARNNING, DANGER]
 	end
 
+	class JobStatus
+		ENQUIRY = "enquiry"
+		ACTIVE = "active"
+		COMPLETE = "complete"
+		ARCHIVE = "archive"
+
+		ALL = [ENQUIRY, ACTIVE, COMPLETE, ARCHIVE]
+
+		NAMES = {
+			ENQUIRY => "Enquiry",
+			ACTIVE => "Active",
+			COMPLETE => "Complete",
+			ARCHIVE => "Archive"
+		}
+		def self.status_select
+			ALL.map{|s|[NAMES[s],s]}
+		end
+	end
+
 	def self.for_select
 		Job.all.map{|j|[j.ref, j.id]}
 	end
 
 	def add_tasks
+		# Note to self Jun-14 - just use tentative_due_date & forget about due_date (& hard_due_days)
 		template_tasks = TemplateTask.order("template_tasks.sort_order, template_tasks.created_at")
 
+		use_date = start_date.blank? ? DateTime.now() : start_date
 		template_tasks.each do |t|
 			new_task = Task.new()
 			new_task.title = t.title
 			new_task.text = t.text
 			new_task.job_id = self.id
-			new_task.tentative_due_date = DateTime.now() + t.due_days.to_i
-			new_task.due_date = t.hard_due_days.blank? ? nil : DateTime.now() + t.hard_due_days
+			new_task.tentative_due_date = use_date + t.due_days.to_i
+			new_task.due_date = t.hard_due_days.blank? ? nil : use_date + t.hard_due_days
 			new_task.sort_order = t.sort_order
 			new_task.is_financial = t.is_financial
+			new_task.template_task = t.id
 			new_task.save()
 		end
 	end
 
+	def update_tasks_date
+		tasks.each do |tsk|
+			use_date = start_date.blank? ? DateTime.now() : start_date
+			tsk.update_attribute(:tentative_due_date, use_date + tsk.template_task.due_days.to_i) if !tsk.task_complete? && tsk.template_task
+		end
+	end
+
 	def party_a_name
-		party_a.blank? ? "?" : party_a.last_name
+		party_a.blank? ? "?" : (party_a.last_name.blank? ? party_a.company : party_a.last_name)
 	end
 
 	def party_b_name
-		party_b.blank? ? "?" : party_b.last_name
+		party_b.blank? ? "?" : (party_b.last_name.blank? ? party_b.company : party_b.last_name)
 	end
 
 	def parties
@@ -56,7 +85,7 @@ class Job < ActiveRecord::Base
 	def owing
 		sum = 0.00
 		tasks.each do |t|
-			next unless !t.task_complete?
+			#next unless !t.task_complete?
 			next unless t.is_financial
 			next if t.paid
 			sum += t.cost.to_f if !t.cost.blank?
@@ -71,7 +100,7 @@ class Job < ActiveRecord::Base
 	def received
 		sum = 0.00
 		tasks.each do |t|
-			next unless t.task_complete?
+			#next unless t.task_complete?
 			next unless t.is_financial
 			next unless t.paid
 			sum += t.cost.to_f if !t.cost.blank?

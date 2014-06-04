@@ -1,12 +1,15 @@
 -#%script{ :type=>"text/javascript", :src=>"/jscolor.js" }
-- start_date = @job.mediation_date.blank? ? "" :  @job.mediation_date.strftime('%d %b %Y')
+- start_date = @job.start_date.blank? ? "" :  @job.start_date.strftime('%d %b %Y')
+- med_date = @job.mediation_date.blank? ? "" :  @job.mediation_date.strftime('%d %b %Y')
 - start_hour = @job.mediation_time.blank? ? DateTime.now().strftime('%H') : @job.mediation_time.strftime('%H')
 - start_minute = @job.mediation_time.blank? ? DateTime.now().strftime('%M') : @job.mediation_time.strftime('%M')
 
 :javascript
 	jQuery(function() {
 		jQuery( "#job_mediation_date" ).datepicker( { dateFormat: 'dd M yy' } );
-		jQuery( "#job_mediation_date" ).datepicker( "option", "defaultDate", "#{start_date}" );
+		jQuery( "#job_mediation_date" ).datepicker( "option", "defaultDate", "#{med_date}" );
+		jQuery( "#job_start_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#job_start_date" ).datepicker( "option", "defaultDate", "#{start_date}" );
 
 		jQuery( "#starttime" ).timepicker( { timeFormat: 'hh:mm', hourGrid: 4, minuteGrid: 10, hour: "#{start_hour}", minute: "#{start_minute}" } );
 	});
@@ -25,8 +28,16 @@
 	#role
 	.form-group
 		= f.label :reference, :class => "control-label col-sm-2"
-		.col-sm-5
+		.col-sm-2
 			= f.text_field :reference, :class => "form-control"
+		.col-sm-3
+			= f.select :status, options_for_select(Job::JobStatus.status_select, @job.status), {}, :class => "form-control"
+
+	.form-group
+		= f.label :start_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			- val = @job.start_date.blank? ? "" : @job.start_date.strftime("%d %b %Y")
+			= f.text_field :start_date, :value => val, :class => "form-control"
 
 	.form-group
 		= f.label :colour, :class => "control-label col-sm-2"
@@ -36,7 +47,7 @@
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :title, :class => "form-control autofocus"
+			= f.text_field :title, :class => "form-control"
 
 	.form-group
 		= f.label :description, :class => "control-label col-sm-2"

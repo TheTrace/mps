@@ -5,9 +5,6 @@ TODO stuff
 - Can we list / search jobs by job reference as options;
 - Fix color in job edit - need to refresh page currently to show it
 - Show the color pallet for color box
-- Jobs need a "status" - closed, archived, enquiry, active
-- Jobs need a "start date" - refresh (incomplete) tasks from this date when changed
-- Add 3 "observers" based on mediators for job (maybe use links table)
 - Need a links table for > 1 party in A or B
 - Show up to 2 weeks jobs as default in jobs#index
 - Add mediation date/time UI widget to job mediation date
@@ -20,6 +17,7 @@ Tasks
 - Create logic for showing by due date
 - Create hover classes for job/task pair highlight
 - Add jQuery UI date dropdowns (use for times on notes too)
+- Have an option for 2 party checkbox or just complete checkbox (use helper?)
 
 Notes
 
@@ -52,3 +50,6 @@ DONE
 - Tasks need to be removed from overview list once they have been completed (as discussed)
 - Default tasks to short list (in job view)
 - Update note types: Travel -> Travel (time), Transport -> Transport (cost)
+- Jobs need a "status" - closed, archived, enquiry, active
+- Jobs need a "start date" - refresh (incomplete) tasks from this date when changed
+- Add 3 "observers" based on mediators for job (maybe use links table)

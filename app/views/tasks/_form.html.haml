@@ -27,7 +27,7 @@
 				- @task.errors.full_messages.each do |msg|
 					%li= msg
 
-	%h2= @task.job.title if @task.job
+	%h2=link_to @task.job.ref, job_path(@task.job) if @task.job
 
 	- if !@task.job
 		.form-group

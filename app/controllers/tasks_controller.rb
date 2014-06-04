@@ -4,7 +4,8 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.order("tasks.job_id,tasks.sort_order").all
+    @jobs = Job.order("jobs.reference DESC").all
+    #@tasks = Task.joins("left join jobs on jobs.id = tasks.id").order("jobs.reference,tasks.sort_order").all
   end
 
   # GET /tasks/1

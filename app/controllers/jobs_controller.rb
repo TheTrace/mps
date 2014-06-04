@@ -30,7 +30,8 @@ class JobsController < ApplicationController
 		@job = Job.new(job_params)
 
 		if @job.save
-			@job.add_tasks
+			# Add tasks later - when changing status
+			#@job.add_tasks
 			if params[:contact_type] && !params[:contact_type].blank?
 				redirect_to new_contact_path(:job => @job, :contact_type => params[:contact_type])
 			else
@@ -44,7 +45,20 @@ class JobsController < ApplicationController
 	# PATCH/PUT /jobs/1
 	# PATCH/PUT /jobs/1.json
 	def update
+		old_date = @job.start_date
+		old_status = @job.status
 		if @job.update(job_params)
+			if @job.status.eql?( Job::JobStatus::ACTIVE )
+				# only add or update if Active status
+				if @job.start_date != old_date || old_status.eql?( Job::JobStatus::ENQUIRY )
+					@job.update_attribute(:start_date, DateTime.now()) if @job.start_date.blank?
+					if @job.tasks.any?
+						@job.update_tasks_date
+					else
+						@job.add_tasks
+					end
+				end
+			end
 			if params[:contact_type] && !params[:contact_type].blank?
 				redirect_to new_contact_path(:job => @job, :contact_type => params[:contact_type])
 			else

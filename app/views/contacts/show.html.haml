@@ -1,11 +1,14 @@
 %p#notice= notice
 
-= link_to '<< Index', contacts_path
-
 %h1
 	= @contact.title if !@contact.title.blank?
 	= @contact.full_name
 	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_contact_path(@contact), html = {:title => "Edit"}
+
+- if params[:from]
+	= link_to "<< Back", :back
+- else
+	= link_to '<< All Contacts', contacts_path
 
 .form-horizontal
 	.form-group
