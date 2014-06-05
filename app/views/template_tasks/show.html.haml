@@ -1,10 +1,10 @@
 %p#notice= notice
 
-= link_to '<< Index', template_tasks_path
-
 %h1
 	= @template_task.title
 	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_template_task_path(@template_task), html = {:title => "Edit Task Template"}
+
+= link_to '<< All Template Tasks', template_tasks_path
 
 .form-horizontal
 	.form-group

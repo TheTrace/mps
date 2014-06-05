@@ -2,6 +2,8 @@
 
 TODO stuff
 
+- Filter and sort jobs & contacts
+
 - Can we list / search jobs by job reference as options;
 - Fix color in job edit - need to refresh page currently to show it
 - Show the color pallet for color box

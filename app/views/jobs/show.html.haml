@@ -33,7 +33,7 @@
 		= @job.party_b.blank? ? "?" : link_to( @job.party_b_name, contact_path(@job.party_b, :from => "job") )
 		= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_job_path(@job), html = {:title => "Edit", :style => "cursor:pointer;"}
 
-	= link_to '<< All  Jobs', jobs_path
+	= link_to '<< All  Jobs', jobs_path(:show => @job.status)
 	
 	%h2= @job.title
 

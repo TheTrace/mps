@@ -1,9 +1,9 @@
 .pull-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, @template_task, method: :delete, data: { confirm: "Are you sure you want to DELETE this task template?\n (#{@template_task.title})" }, :title => "Destroy" if is_admin?
 
-= link_to '<< Index', template_tasks_path
-
 %h1
 	Editing Task Template
 	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, @template_task, :title => "Show Template Task"
+
+= link_to '<< All Template Tasks', template_tasks_path
 
 = render 'form'

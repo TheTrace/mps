@@ -7,8 +7,10 @@
 
 %h1 Jobs Listing
 
+= render :partial => "jobs_header"
+
 .task-list-holder.pull-right{ :style => "max-height:1000px; overflow-y:scroll;" }
-	= render :partial => "shared/tasklist", :object => @tasks
+	= render :partial => "shared/tasklist", :object => @tasks if @tasks.any?
 
 .job-list
 	%ul

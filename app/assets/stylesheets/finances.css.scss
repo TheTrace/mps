@@ -5,9 +5,9 @@
 ul.finance {
 	li {
 		.reference{ display: inline-block; float: left; width: 400px; }
-		.paid { display: inline-block; width: 100px; }
-		.owing { display: inline-block; width: 100px; }
-		.time { display: inline-block; width: 100px; }
+		.paid { display: inline-block; width: 100px; text-align: right; }
+		.owing { display: inline-block; width: 100px; text-align: right; }
+		.time { display: inline-block; width: 100px; text-align: right; }
 	}
 }
 td.paid { color: green; }

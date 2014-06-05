@@ -4,9 +4,15 @@ class JobsController < ApplicationController
 	# GET /jobs
 	# GET /jobs.json
 	def index
-		@jobs = Job.order("reference")
+		choice = Job::JobStatus::ACTIVE
+		if params[:show]
+			choice = params[:show]
+		end
+		@jobs = Job.where(["status = ?",choice]).order("reference")
+		job_list = @jobs.map{|a| a.id }
+		@tasks = []
 		# @tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL) AND (due_date IS NOT NULL AND due_date < DATE_ADD(CURDATE(), INTERVAL 14 DAY)").order("due_date,tentative_due_date")
-		@tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date")
+		@tasks = Task.where("job_id IN (#{job_list.join(',').to_s}) AND (party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date") if @jobs.any?
 	end
 
 	# GET /jobs/1
