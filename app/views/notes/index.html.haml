@@ -3,20 +3,26 @@
 
 %h1 Listing Notes
 
-%ul
+%ul.notes
 	- @jobs.each do |job|
 		%li.success
 			%div{ :"data-toggle" => "collapse", :"data-target" => "#notes#{job.id}", :style => "cursor:pointer;" }
-				= link_to( job.ref + " " + job.title, job)
+				= link_to( job.reference, job)
+				= job.parties + " : " + job.title
 
-			%ul{ :id => "notes#{job.id}", :style => "height:0px;", :class => "collapse" }
+			%ul.note.collapse{ :id => "notes#{job.id}", :style => "height:0px;" }
 				- job.notes.order("the_date ASC").each do |note|
 					%li
-						= note.the_date.strftime("%b %m %Y %H:%M") if note.the_date
-						= note.title
-						= note.text
-						= note.note_type
-						= number_to_currency(note.cost.to_s, unit: "&pound; ".html_safe)
-						= note.time_taken
-						= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, note, html = {:title => "Show"}
-						= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(note), html = {:title => "Edit"}
+						%span.the-date= note.the_date.strftime("%d %b %Y %H:%M") if note.the_date
+						%span.title{ :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(note.text, :length => 168)}", :style => "cursor:default;" }= note.title
+						%span.type= Note::NoteType::NAMES[note.note_type]
+						%span.paid= number_to_currency(note.cost, unit: "&pound; ".html_safe) if note.paid && !note.cost.blank?
+						%span.owing= number_to_currency(note.cost.to_s, unit: "&pound; ".html_safe) if !note.paid&& !note.cost.blank?
+						%span.time= note.time_taken.to_s + " h".html_safe if !note.time_taken.blank?
+						= link_to "<button type='button' class='btn btn-default btn-xs pull-right'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, note, html = {:title => "Show"}
+					%div{ :style => "clear:both;" }
+
+:javascript
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+	});

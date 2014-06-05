@@ -2,3 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+ul.notes li {
+	a { font-weight: normal; }
+	ul.note li { margin: 5px; padding: 10px; border: 1px solid white;
+		a { font-weight: normal; }
+		.the-date { display: inline-block; width: 140px; }
+		.title { display: inline-block; width: 360px; }
+		.type { display: inline-block; width: 60px; }
+		.paid { display: inline-block; width: 100px; background: green; text-align: right; margin-right: 5px; }
+		.owing { display: inline-block; width: 100px; background: red; text-align: right; margin-right: 5px; }
+		.time { display: inline-block; width: 60px; }
+	}
+}

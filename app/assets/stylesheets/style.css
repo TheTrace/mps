@@ -159,8 +159,8 @@ h3 {
 .success {
     color: #fff;
     margin: 5px auto;
-    padding: 4px;
-    font-weight: bold;
+    padding: 7px;
+    font-weight: normal;
     font-size: 16px;
     background: #565681;
     margin-right: 40px;

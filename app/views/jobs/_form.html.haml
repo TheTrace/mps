@@ -29,7 +29,7 @@
 	.form-group
 		= f.label :reference, :class => "control-label col-sm-2"
 		.col-sm-2
-			= f.text_field :reference, :class => "form-control"
+			= f.text_field :reference, :class => "form-control", :autofocus => true
 		.col-sm-3
 			= f.select :status, options_for_select(Job::JobStatus.status_select, @job.status), {}, :class => "form-control"
 
@@ -42,7 +42,7 @@
 	.form-group
 		= f.label :colour, :class => "control-label col-sm-2"
 		.col-sm-5
-			= f.text_field :colour, :value => @job.colour, :class => "color {hash:true:required:false}"
+			= f.text_field :colour, :value => @job.colour, :class => "form-control color {hash:true:required:false}"
 
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"

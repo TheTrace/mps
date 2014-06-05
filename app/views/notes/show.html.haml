@@ -16,8 +16,8 @@
 
 	.form-group
 		%strong.col-sm-3 Text:
-		.col-sm-4
-			= @note.text
+		.col-sm-8
+			= @note.text.gsub("\n", "<br />").html_safe
 
 	.form-group
 		%strong.col-sm-3 Type:
@@ -27,7 +27,7 @@
 	.form-group
 		%strong.col-sm-3 Cost:
 		.col-sm-4
-			= number_to_currency(@note.cost.to_s, unit: "&pound; ".html_safe)
+			= number_to_currency(@note.cost.to_s, unit: "&pound; ".html_safe) if !@note.cost.blank?
 
 	.form-group
 		%strong.col-sm-3 Time:

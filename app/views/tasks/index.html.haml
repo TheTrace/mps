@@ -3,28 +3,29 @@
 
 %h1 Task List
 
-%ul
+%ul.tasks
 	- @jobs.each do |job|
 		%li.success
 			%div{ :"data-toggle" => "collapse", :"data-target" => "#tasks#{job.id}", :style => "cursor:pointer;" }
-				= link_to( job.reference + " " + job.title, job)
+				= link_to( job.reference, job)
+				= job.parties + " : " + job.title
 
-			%ul{ :id => "tasks#{job.id}", :style => "height:0px;", :class => "collapse" }
+			%ul.task{ :id => "tasks#{job.id}", :style => "height:0px;", :class => "collapse" }
 				- job.tasks.order("sort_order ASC").each do |task|
 					%li{ :class => "#{'financial' if task.is_financial}" }
-						= task.sort_order
-						= task.title
-						= task.text
-						- if !task.party_a_complete_date.blank?
-							= task.party_a_complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.party_a_complete_date.year}")
-						- if !task.party_b_complete_date.blank?
-							= task.party_b_complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.party_b_complete_date.year}")
-						- if !task.complete_date.blank?
-							= task.complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.complete_date.year}")
-						- if !task.tentative_due_date.blank?
-							= task.tentative_due_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.tentative_due_date.year}")
-						- if !task.due_date.blank?
-							= task.due_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.due_date.year}")
-						= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, task, html = {:title => "Show"}
-						= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_task_path(task), html = {:title => "Edit"}
-						%div.text-right= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, task, method: :delete, data: { confirm: 'Are you sure you want to delete this task?' }, :title => "Destroy"
+						%span.order= task.sort_order
+						%span.checked
+							- if task.task_complete?
+								%span.glyphicon.glyphicon-ok
+						%span.title{ :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(task.text, :length => 168)}", :style => "cursor:default;" }= truncate(task.title, :length => 45)
+						%span.due
+							- if !task.tentative_due_date.blank?
+								= task.tentative_due_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.tentative_due_date.year}")
+						%span.completed
+							- if !task.complete_date.blank?
+								= task.complete_date.strftime("%a, %e %b #{'%y' if DateTime.now.year != task.complete_date.year}")
+						= link_to "<button type='button' class='btn btn-default btn-xs pull-right'><span class='glyphicon glyphicon-eye-open'></span></button>".html_safe, task, html = {:title => "Show"}
+:javascript
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+	});

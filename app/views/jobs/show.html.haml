@@ -4,6 +4,19 @@
 		jQuery( "#note_the_date" ).datepicker( "option", "defaultDate", "#{@note.the_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @note.the_date.strftime('%d %b %Y')}" );
 	});
 
+/ Modal
+#myModal.modal.fade{ :tabindex => "-1", :role => "dialog", :"aria-labelledby" => "myModalLabel", :"aria-hidden" => "true" }
+	.modal-dialog.modal-lg
+		.modal-content
+			.modal-header
+				%button{ :type => "button", :class => "close", :"data-dismiss" => "modal", :"aria-hidden" => "true" } &nbsp;&nbsp;&nbsp; &times;
+				%h4.modal-title#myModalLabel Modal title
+			.modal-body#myModalBody
+				\...
+			.modal-footer
+				%button.btn.btn-primary{ :type => "button", :"data-dismiss" => "modal" } Close
+
+
 .center-block
 	%p#notice= notice
 
@@ -127,12 +140,26 @@
 			%tr
 				%td= Note::NoteType::NAMES[n.note_type]
 				%td= n.the_date.strftime("%d %b") if !n.the_date.blank?
-				%td{ :title => n.text }= n.title
+				%td
+					:javascript
+						$('#example').tooltip();
+					%span{ :rel => "tooltip", :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(n.text, :length => 168)}", :style => "cursor:default;" }= n.title
 				%td.text-right{ :class => "#{'paid' if n.paid}" }
 					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank?
 				%td.text-right= n.time_taken.to_s + " h".html_safe if !n.time_taken.blank?
 				%td.text-right= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
-				-# if is_admin?
-				%td= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_note_path(n, :from => "job"), html = {:title => "Edit"}
-%div{ :style => "clear:both;" }
+				%td
+					- content = n.text
+					- content.gsub!("\n", "<br />")
+					%div{ :id => "note#{n.id}", :style => "display:none;" }= content.html_safe
+					%div{ :id => "header#{n.id}", :style => "display:none;" }= "<span class='label label-default pull-right'>#{Note::NoteType::NAMES[n.note_type]}</span>  #{n.title}&nbsp; <a href='/notes/#{n.id}/edit?from=job' title='Edit'><button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button></a>".html_safe
+					/ Button trigger modal
+					%button.btn.btn-primary.btn-xs{ :"data-toggle" => "modal", :"data-target" => "#myModal", :onclick => "$('#myModalLabel').html($('#header#{n.id}').html());$('#myModalBody').html($('#note#{n.id}').html());" }
+						%span.glyphicon.glyphicon-eye-open
 
+%div{ :style => "clear:both;" }
+:javascript
+	$(function () {
+		//$("[rel='tooltip']").tooltip();
+		$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+	});
