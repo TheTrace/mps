@@ -2,24 +2,44 @@
 
 TODO stuff
 
-- Filter and sort jobs & contacts
+Change DB stuff
+- Need a links table for > 1 party in A or B
+- Add user to note creation (& task creation)
+  => Log changes
+- Owner of Notes from login
+- Have an option for 2 party checkbox or just complete checkbox (use helper?)
 
+
+Grant's Changes
+- Remove tasks from Opening jobs list and display in individual jobs
+- Use tabs home Finance etc
+- Last update date/time in individual jobs
+- Notes: Sort facility by date Type
+- Notes ordered by Date, Type, Details, Owner, Action, edit/delete
+- Order sort Task lists (in Admin)
+- in Notes:
+  >> rate x Time = fee
+  >> Rate x Miles = Cost
+  >> Add Dispersement as a cost
+
+
+Other outstanding stuff
+- Filter and sort jobs & contacts
 - Can we list / search jobs by job reference as options;
+- Show up to 2 weeks jobs as default in jobs#index
+
+UI stuff
 - Fix color in job edit - need to refresh page currently to show it
 - Show the color pallet for color box
-- Need a links table for > 1 party in A or B
-- Show up to 2 weeks jobs as default in jobs#index
+- Add jQuery UI date dropdowns (use for times on tasks and notes too)
 - Add mediation date/time UI widget to job mediation date
-- Probably don't need "tentative_due_date" as well as "due_date" for tasks - sort out the logic
+- Create hover classes for job/task pair highlight
+- Probably don't need "tentative_due_date" as well as "due_date" for tasks <- Just use tentative_due_date as due date
 
 General
 - Add search box - jobs, contacts, notes?
 
 Tasks
-- Create logic for showing by due date
-- Create hover classes for job/task pair highlight
-- Add jQuery UI date dropdowns (use for times on notes too)
-- Have an option for 2 party checkbox or just complete checkbox (use helper?)
 
 Notes
 
@@ -27,10 +47,6 @@ Jobs
 
 Contacts
 
-Finance
-- Summarise (by month)
--- Due - link to breakdown
--- Received - link to breakdown
 
 DONE
 - Show check boxes for marking off
@@ -55,3 +71,23 @@ DONE
 - Jobs need a "status" - closed, archived, enquiry, active
 - Jobs need a "start date" - refresh (incomplete) tasks from this date when changed
 - Add 3 "observers" based on mediators for job (maybe use links table)
+- Time stamp Notes and order by day & time
+- Option to change task date completion, on hold or edit facility
+- Mediation Fee & Admin Fee in Type
+- Add facility to Types, Need additional Ground visit
+  >> Add type: Invoice / sent / paid
+  >> T&C
+  >> Request for Change (RFC)
+  >> Decision
+- Add task to job
+- New Note opens boxes - default closed
+- Create logic for showing (tasks) by due date
+- Sort Task list - open expand each job
+- Introduce a Status - Enquiry, Active complete Archive
+- Legal Rep, Name firm, link from contacts for full information
+- Need to access Job contacts from Job or display key information in overview, Tel & email contact info
+Finance
+- Summarise (by month)
+-- Due - link to breakdown
+-- Received - link to breakdown
+- Fees paid on overview need refinement and value inserted automatically from Job total paid
