@@ -3,8 +3,8 @@
 		jQuery( "#task_tentative_due_date" ).datepicker( { dateFormat: 'dd M yy' } );
 		jQuery( "#task_tentative_due_date" ).datepicker( "option", "defaultDate", "#{@task.tentative_due_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.tentative_due_date.strftime('%d %b %Y')}" );
 
-		jQuery( "#task_due_date" ).datepicker( { dateFormat: 'dd M yy' } );
-		jQuery( "#task_due_date" ).datepicker( "option", "defaultDate", "#{@task.due_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.due_date.strftime('%d %b %Y')}" );
+		//jQuery( "#task_due_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		//jQuery( "#task_due_date" ).datepicker( "option", "defaultDate", "#{@task.due_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.due_date.strftime('%d %b %Y')}" );
 
 		jQuery( "#task_party_a_complete_date" ).datepicker( { dateFormat: 'dd M yy' } );
 		jQuery( "#task_party_a_complete_date" ).datepicker( "option", "defaultDate", "#{@task.party_a_complete_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @task.party_a_complete_date.strftime('%d %b %Y')}" );
@@ -29,6 +29,7 @@
 
 	%h2=link_to @task.job.ref, job_path(@task.job) if @task.job
 
+	= hidden_field_tag :from, params[:from] if params[:from] && !params[:from].blank?
 	- if !@task.job
 		.form-group
 			= f.label :job, :class => "control-label col-sm-2"
@@ -45,16 +46,17 @@
 			= f.text_area :text, :class => "form-control", :rows => "5"
 
 	.form-group
-		= f.label :tentative_due_date, :class => "control-label col-sm-2"
-		.col-sm-5
-			- val = @task.tentative_due_date.blank? ? "" : @task.tentative_due_date.strftime("%d %b %Y")
-			= f.text_field :tentative_due_date, :value => val, :class => "form-control autofocus"
-
-	.form-group
 		= f.label :due_date, :class => "control-label col-sm-2"
 		.col-sm-5
-			- val = @task.due_date.blank? ? "" : @task.due_date.strftime("%d %b %Y")
-			= f.text_field :due_date, :value => val, :class => "form-control"
+			- val = @task.tentative_due_date.blank? ? "" : @task.tentative_due_date.strftime("%d %b %Y")
+			= f.text_field :tentative_due_date, :value => val, :class => "form-control"
+
+	.form-group
+		.col-sm-offset-2.col-sm-10
+			.checkbox
+				%label
+					= f.check_box :two
+					Both Parties need Completion 
 
 	.form-group
 		= f.label :party_a_complete_date, :class => "control-label col-sm-2"
@@ -84,7 +86,7 @@
 			.checkbox
 				%label
 					= f.check_box :is_financial
-					Finincial task 
+					Financial task 
 
 	.form-group
 		= f.label :amount, :class => "control-label col-sm-2"

@@ -24,6 +24,7 @@
 						%span.glyphicon.glyphicon-sort
 					%td{ :style => "min-width:170px;"}
 						= text_field_tag "sort_order[#{template_task.id}]", template_task.sort_order, :id => template_task.id, :class => "increment col-sm-4"
+						= "&nbsp; (2)".html_safe if template_task.two
 					%td= template_task.title
 					%td= template_task.text
 					%td= template_task.due_days

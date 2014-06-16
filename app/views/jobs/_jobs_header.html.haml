@@ -1,15 +1,19 @@
 %ul.nav.nav-tabs
-	%li{ :class => "#{params[:show].blank? || params[:show].eql?(Job::JobStatus::ACTIVE) ? "active" : ""}" }
-		= link_to "Active", jobs_path(:show => Job::JobStatus::ACTIVE)
-	%li{ :class => "#{ params[:show].eql?(Job::JobStatus::ENQUIRY) ? "active" : ""}" }
-		= link_to "Enquiries", jobs_path(:show => Job::JobStatus::ENQUIRY)
-	%li{ :class => "#{ params[:show].eql?(Job::JobStatus::COMPLETE) ? "active" : ""}" }
-		= link_to "Complete", jobs_path(:show => Job::JobStatus::COMPLETE)
-	%li{ :class => "#{ params[:show].eql?(Job::JobStatus::ARCHIVE) ? "active" : ""}" }
-		= link_to "Archived", jobs_path(:show => Job::JobStatus::ARCHIVE)
+	%li.dropdown
+		%a.dropdown-toggle{ :href => "", :"data-toggle" => "dropdown" }
+			- tab = Job::JobStatus::NAMES[params[:show]] if !params[:show].blank?
+			- tab = Job::JobStatus::NAMES[Job::JobStatus::ACTIVE] if !tab
+			Jobs :
+			= tab
+			%span.caret
+		%ul.dropdown-menu
+			%li{ :class => "#{ params[:show].eql?(Job::JobStatus::ENQUIRY) ? "active" : ""}" }
+				= link_to "Enquiries", jobs_path(:show => Job::JobStatus::ENQUIRY)
+			%li{ :class => "#{params[:show].blank? || params[:show].eql?(Job::JobStatus::ACTIVE) ? "active" : ""}" }
+				= link_to "Active", jobs_path(:show => Job::JobStatus::ACTIVE)
+			%li{ :class => "#{ params[:show].eql?(Job::JobStatus::COMPLETE) ? "active" : ""}" }
+				= link_to "Complete", jobs_path(:show => Job::JobStatus::COMPLETE)
+			%li{ :class => "#{ params[:show].eql?(Job::JobStatus::ARCHIVE) ? "active" : ""}" }
+				= link_to "Archived", jobs_path(:show => Job::JobStatus::ARCHIVE)
+	%li= link_to "Tasks", tasklist_jobs_path
 
-:javascript
-$('#myTab a').click(function (e) {
-	e.preventDefault()
-	$(this).tab('show')
-})

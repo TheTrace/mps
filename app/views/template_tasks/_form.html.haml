@@ -25,6 +25,13 @@
 			= f.text_field :due_days, :class => "form-control"
 
 	.form-group
+		.col-sm-offset-2.col-sm-10
+			.checkbox
+				%label
+					= f.check_box :two
+					Both Parties need Completion 
+
+	.form-group
 		= f.label :text, :class => "control-label col-sm-2"
 		.col-sm-5
 			= f.text_area :text, :class => "form-control", :rows => "5"
@@ -34,7 +41,7 @@
 			.checkbox
 				%label
 					= f.check_box :is_financial
-					Finincial task 
+					Financial task 
 
 	.actions
 		.col-sm-offset-2

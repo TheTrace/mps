@@ -1,0 +1,38 @@
+-# Displays the task complete checkbox, or checkboxes, depending on the "two" field
+- task = checkboxes
+
+- if task.job
+	- if task.two
+		.checkbox
+			%label
+				= check_box :task, :party_a_complete_date, :onclick => "complete_party( #{task.id}, '_a' );", :checked => task.a_complete?
+				= task.job.party_a_name
+
+		.checkbox
+			%label
+				= check_box :task, :party_b_complete, :onclick => "complete_party( #{task.id}, '_b' );", :checked => task.b_complete?
+				= task.job.party_b_name
+	- else
+		.checkbox
+			%label
+				= check_box :task, :omplete_date, :onclick => "complete_party( #{task.id}, '' );", :checked => task.task_complete?
+				Complete
+
+:javascript
+	function complete_party( task_id, pty ) {
+		//begin_operation();
+		jQuery.post( '/tasks/'+task_id+'/complete' + pty, function(data) {
+			if (data=='complete' || data=='allcomplete') {
+				jQuery('.task-'+task_id).addClass( 'complete' );
+				if (data=='allcomplete') {
+					jQuery('#t'+task_id).addClass( 'complete' ).fadeOut(1000);
+					jQuery('#comp'+task_id).removeClass( 'in' );
+					jQuery('#li'+task_id).fadeOut(1000);
+				}
+			} else {
+				jQuery('.task-'+task_id).removeClass( 'complete' );
+				jQuery('#t'+task_id).removeClass( 'complete' );
+			}
+			//end_operation();
+		} );
+	}

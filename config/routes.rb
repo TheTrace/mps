@@ -14,10 +14,15 @@ Mps::Application.routes.draw do
     member do
       post :complete_a
       post :complete_b
+      post :complete
     end
   end
 
-  resources :jobs
+  resources :jobs do
+    collection do
+      get :tasklist
+    end
+  end
 
   resources :finances
 

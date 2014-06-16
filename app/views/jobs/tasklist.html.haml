@@ -1,0 +1,24 @@
+%h1 Tasks
+
+= render :partial => "jobs_header"
+
+- if @tasks.any?
+
+	-#list-group
+	%ul.task-list{ :style => "padding-left:0px;" }
+		- @tasks.each do |t|
+			- bkg_col = col = ""
+			- bkg_col = "##{t.job.colour if t.job}"
+			- col = "#{t.job.foreground_colour if t.job}"
+			%li.task{ :id => "li#{t.id}", :style => "background-color:#{bkg_col}; color: #{col}; #{'display:none;' if t.task_complete?}" }
+				%div.due-date= t.due_date_text
+				%p.joblink=link_to t.job.reference.to_s, job_path(t.job) if t.job
+				= render :partial => "shared/checkboxes", :object => t
+				%div{ :id => "t#{t.id}", :class => "j#{t.job.id if t.job} #{'complete' if t.task_complete?}", :style => "background-color:#{bkg_col}; color: #{col};" }
+					%h2
+						- if t.task_complete?
+							%span.glyphicon.glyphicon-ok
+						- if t.is_financial
+							%span.glyphicon.glyphicon-gbp
+						= link_to truncate(t.title), edit_task_path(t, :from => "tasklist")
+

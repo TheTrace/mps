@@ -28,6 +28,7 @@ class TemplateTasksController < ApplicationController
 
     respond_to do |format|
       if @template_task.save
+        @template_task.update_attribute(:user_id, @current_user.id)
         format.html { redirect_to @template_task, notice: 'Template task was successfully created.' }
         format.json { render action: 'show', status: :created, location: @template_task }
       else
@@ -81,6 +82,6 @@ class TemplateTasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def template_task_params
-      params.require(:template_task).permit(:title, :text, :due_days, :hard_due_days, :sort_order, :is_financial)
+      params.require(:template_task).permit(:title, :text, :due_days, :hard_due_days, :sort_order, :is_financial, :two)
     end
 end

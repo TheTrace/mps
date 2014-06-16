@@ -8,10 +8,9 @@
 	jQuery(function() {
 		jQuery( "#job_mediation_date" ).datepicker( { dateFormat: 'dd M yy' } );
 		jQuery( "#job_mediation_date" ).datepicker( "option", "defaultDate", "#{med_date}" );
+		jQuery( "#job_mediation_time" ).timepicker( { timeFormat: 'HH:mm', hourGrid:4, minuteGrid: 10, hour: "#{start_hour}", minute: "#{start_minute}" } );
 		jQuery( "#job_start_date" ).datepicker( { dateFormat: 'dd M yy' } );
 		jQuery( "#job_start_date" ).datepicker( "option", "defaultDate", "#{start_date}" );
-
-		jQuery( "#starttime" ).timepicker( { timeFormat: 'hh:mm', hourGrid: 4, minuteGrid: 10, hour: "#{start_hour}", minute: "#{start_minute}" } );
 	});
 
 = form_for(@job, :html => { :class => "form-horizontal", :role => "form", :id => "job_form" } ) do |f|
@@ -147,7 +146,8 @@
 			- val = @job.mediation_date.blank? ? "" : @job.mediation_date.strftime("%d %b %Y")
 			= f.text_field :mediation_date, :value => val, :class => "form-control"
 		.col-sm-2
-			= f.text_field :mediation_time, :class => "form-control"
+			- val = @job.mediation_time.blank? ? "" : @job.mediation_time.strftime("%H:%M")
+			= f.text_field :mediation_time, :value => val, :class => "form-control"
 
 	.actions
 		.col-sm-offset-2

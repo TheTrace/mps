@@ -5,7 +5,15 @@
 	= link_to @task.job.reference, @task.job if @task.job
 	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_task_path(@task), html = {:title => "Edit Task"}
 
-= link_to '<< All Tasks', tasks_path
+- if params[:from] && !params[:from].blank?
+	- if params[:from].eql?("job")
+		= link_to "<< Return to job", job_path(@task.job)
+	- elsif params[:from].eql?("tasklist")
+		= link_to "<< Return to Task List", tasklist_jobs_path()
+	- else
+		= link_to "<< Back", :back
+- else
+	= link_to '<< All Tasks', tasks_path
 
 %h2= @task.title
 
@@ -26,14 +34,14 @@
 			= @task.party_b_complete_date.strftime("%d %b %Y") if !@task.party_b_complete_date.blank?
 
 	.form-group
-		%strong.col-sm-3 Tentative Due Date:
+		%strong.col-sm-3 Both parties complete?:
 		.col-sm-4
-			= @task.tentative_due_date.strftime("%d %b %Y") if !@task.tentative_due_date.blank?
+			= @task.two ? "Yes" : "No"
 
 	.form-group
 		%strong.col-sm-3 Due Date:
 		.col-sm-4
-			= @task.due_date.strftime("%d %b %Y") if !@task.due_date.blank?
+			= @task.tentative_due_date.strftime("%d %b %Y") if !@task.tentative_due_date.blank?
 
 	.form-group
 		%strong.col-sm-3 Complete Date:
@@ -41,7 +49,7 @@
 			= @task.complete_date.strftime("%d %b %Y") if !@task.complete_date.blank?
 
 	.form-group
-		%strong.col-sm-3 Finincial Task:
+		%strong.col-sm-3 Financial Task:
 		.col-sm-4
 			= @task.is_financial ? "Yes" : "No"
 

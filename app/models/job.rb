@@ -40,7 +40,7 @@ class Job < ActiveRecord::Base
 		Job.all.map{|j|[j.ref, j.id]}
 	end
 
-	def add_tasks
+	def add_tasks user_id
 		# Note to self Jun-14 - just use tentative_due_date & forget about due_date (& hard_due_days)
 		template_tasks = TemplateTask.order("template_tasks.sort_order, template_tasks.created_at")
 
@@ -54,7 +54,9 @@ class Job < ActiveRecord::Base
 			new_task.due_date = t.hard_due_days.blank? ? nil : use_date + t.hard_due_days
 			new_task.sort_order = t.sort_order
 			new_task.is_financial = t.is_financial
-			new_task.template_task = t.id
+			new_task.template_task_id = t.id
+			new_task.two = t.two
+			new_task.user_id = user_id
 			new_task.save()
 		end
 	end

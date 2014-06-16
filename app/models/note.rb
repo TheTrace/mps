@@ -1,5 +1,6 @@
 class Note < ActiveRecord::Base
 	belongs_to :job
+	belongs_to :user
 
 	class NoteType
 		GENERAL = "general"
@@ -46,4 +47,26 @@ class Note < ActiveRecord::Base
 			ALL.map{|t|[NAMES[t], t]}
 		end
 	end
+
+	def time_date_formatted show_day = false, show_year = true
+		# Feb 2012 - The has_start_time now means that the times are used. The date_end will be there always, just need to check if it's the same date as date_start
+		return '?' unless self.the_date
+
+		#times = "("
+		times = ""
+		dte_str = "%d %b"
+		dte_str = "%a, " + dte_str if show_day
+		dte_str += " %y" if self.the_date.year != DateTime.now.year && show_year
+		times += self.the_date.strftime(dte_str)
+		times += self.the_date.strftime(" %H:%M ")
+		#times += ")"
+
+		times
+	end
+  
+  	def log user_id, type = Log::Types::CREATE_NOTE
+		j_id = self.job.id if self.job
+		Log.create(detail: self.title, type_str: type, note_id: self.id, job_id: j_id, user_id: user_id )
+ 	end
+
 end

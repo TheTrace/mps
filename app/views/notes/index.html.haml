@@ -11,7 +11,7 @@
 				= job.parties + " : " + job.title
 
 			%ul.note.collapse{ :id => "notes#{job.id}", :style => "height:0px;" }
-				- job.notes.order("the_date ASC").each do |note|
+				- job.notes.order("the_date DESC").each do |note|
 					%li
 						%span.the-date= note.the_date.strftime("%d %b %Y %H:%M") if note.the_date
 						%span.title{ :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(note.text, :length => 168)}", :style => "cursor:default;" }= note.title

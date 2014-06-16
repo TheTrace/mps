@@ -26,9 +26,12 @@ class NotesController < ApplicationController
   # POST /notes.json
   def create
     @note = Note.new(note_params)
+    @note.user_id = @current_user.id
 
     respond_to do |format|
       if @note.save
+        # Log the creation of the note
+        @note.log(@current_user.id, Log::Types::CREATE_NOTE)
         if params[:from] == "job"
           redirect_to job_path(@note.job), notice: 'Note was successfully created.' 
           return
@@ -47,6 +50,8 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1.json
   def update
     if @note.update(note_params)
+      # Log the update of the note
+      @note.log(@current_user.id, Log::Types::UPDATE_NOTE)
       bdone = false
       if params[:from] && !params[:from].blank?
         if params[:from].eql?("job") && @note.job
@@ -64,6 +69,7 @@ class NotesController < ApplicationController
   # DELETE /notes/1
   # DELETE /notes/1.json
   def destroy
+    @note.log(@current_user.id, Log::Types::DELETE_NOTE)
     @note.destroy
     respond_to do |format|
       format.html { redirect_to notes_url }

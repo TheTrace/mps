@@ -31,8 +31,6 @@ Other outstanding stuff
 UI stuff
 - Fix color in job edit - need to refresh page currently to show it
 - Show the color pallet for color box
-- Add jQuery UI date dropdowns (use for times on tasks and notes too)
-- Add mediation date/time UI widget to job mediation date
 - Create hover classes for job/task pair highlight
 - Probably don't need "tentative_due_date" as well as "due_date" for tasks <- Just use tentative_due_date as due date
 
@@ -59,6 +57,9 @@ DONE
 - Specified colours
 - Ability to sort rows (task templates)
 - Add ability to search contact from job form (added "add" buttons)
+- Add jQuery UI date dropdowns (use for times on tasks and notes too)
+- Add mediation date/time UI widget to job mediation date
+
 --- As asked by Grant ---
 - The sort on the task template needs sorting as it won't sort logically, even by grabbing and moving - it does not seem to retain the new position even if I adjust the sort number;
 - In "Type" we need to add Travel (Hrs), Transport (£), Mileage rate - plus a calculation if possible by multiplying miles by a set rate of say 45p per mile;

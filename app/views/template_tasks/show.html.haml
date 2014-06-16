@@ -13,16 +13,21 @@
 			= @template_task.sort_order
 
 	.form-group
-		%strong.col-sm-3 Text:
-		.col-sm-4
-			= @template_task.text
-
-	.form-group
 		%strong.col-sm-3 Days until due:
 		.col-sm-4
 			= @template_task.due_days
 
 	.form-group
+		%strong.col-sm-3 Both parties complete?:
+		.col-sm-4
+			= @template_task.two ? "Yes" : "No"
+
+	.form-group
 		%strong.col-sm-3 Financial task:
 		.col-sm-4
 			= @template_task.is_financial ? "Yes" : "No"
+
+	.form-group
+		%strong.col-sm-3 Text:
+		.col-sm-4
+			= @template_task.text

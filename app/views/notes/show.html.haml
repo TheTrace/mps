@@ -12,7 +12,7 @@
 	.form-group
 		%strong.col-sm-3 Date:
 		.col-sm-4
-			= @note.the_date.strftime("%d %b %Y") if !@note.the_date.blank?
+			= @note.the_date.strftime("%d %b %Y %H:%M") if !@note.the_date.blank?
 
 	.form-group
 		%strong.col-sm-3 Text:

@@ -10,9 +10,18 @@ class JobsController < ApplicationController
 		end
 		@jobs = Job.where(["status = ?",choice]).order("reference")
 		job_list = @jobs.map{|a| a.id }
+		#@tasks = []
+		# Try for 2weeks worth:  @tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL) AND (due_date IS NOT NULL AND due_date < DATE_ADD(CURDATE(), INTERVAL 14 DAY)").order("due_date,tentative_due_date")
+		#@tasks = Task.where("job_id IN (#{job_list.join(',').to_s}) AND (party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date") if @jobs.any?
+	end
+
+	def tasklist
 		@tasks = []
-		# @tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL) AND (due_date IS NOT NULL AND due_date < DATE_ADD(CURDATE(), INTERVAL 14 DAY)").order("due_date,tentative_due_date")
-		@tasks = Task.where("job_id IN (#{job_list.join(',').to_s}) AND (party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date") if @jobs.any?
+		# Try for 2weeks worth:  @tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL) AND (due_date IS NOT NULL AND due_date < DATE_ADD(CURDATE(), INTERVAL 14 DAY)").order("due_date,tentative_due_date")
+		#@tasks = Task.where("(party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date").limit(32)
+		jobs = Job.where(["status = ?",Job::JobStatus::ACTIVE]).order("reference")
+		job_list = jobs.map{|a| a.id }
+		@tasks = Task.where("job_id IN (#{job_list.join(',').to_s}) AND (party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date").limit(32) if jobs.any?
 	end
 
 	# GET /jobs/1
@@ -34,10 +43,11 @@ class JobsController < ApplicationController
 	# POST /jobs.json
 	def create
 		@job = Job.new(job_params)
+		@job.user_id = @current_user.id
 
 		if @job.save
 			# Add tasks later - when changing status
-			#@job.add_tasks
+			#@job.add_tasks @current_user.id
 			if params[:contact_type] && !params[:contact_type].blank?
 				redirect_to new_contact_path(:job => @job, :contact_type => params[:contact_type])
 			else
@@ -61,7 +71,7 @@ class JobsController < ApplicationController
 					if @job.tasks.any?
 						@job.update_tasks_date
 					else
-						@job.add_tasks
+						@job.add_tasks @current_user.id
 					end
 				end
 			end

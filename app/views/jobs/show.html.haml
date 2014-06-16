@@ -1,7 +1,11 @@
 :javascript
 	jQuery(function() {
-		jQuery( "#note_the_date" ).datepicker( { dateFormat: 'dd M yy' } );
-		jQuery( "#note_the_date" ).datepicker( "option", "defaultDate", "#{@note.the_date.blank? ? DateTime.now().strftime('%d %b %Y') :  @note.the_date.strftime('%d %b %Y')}" );
+		jQuery( "#note_the_date" ).datetimepicker( { timeFormat: 'HH:mm', dateFormat: 'dd M yy', showSecond: false, separator: ' ' } );
+
+		var def_date = "#{@note.the_date.blank? ? (@note.created_at.blank? ? DateTime.now.strftime('%d %b %Y %H:%M') : @note.created_at.strftime('%d %b %Y %H:%M')) : @note.the_date.strftime('%d %b %Y %H:%M')}";
+
+		jQuery( "#note_the_date" ).datetimepicker( "option", "defaultDate", def_date );
+		jQuery( "#note_the_date" ).val( def_date );
 	});
 
 / Modal
@@ -14,6 +18,7 @@
 			.modal-body#myModalBody
 				\...
 			.modal-footer
+				#myModalCreated.created
 				%button.btn.btn-primary{ :type => "button", :"data-dismiss" => "modal" } Close
 
 
@@ -74,7 +79,8 @@
 		.form-group
 			%strong.col-sm-3 Mediation Date:
 			.col-sm-4
-				= @job.mediation_date.strftime("%d %b %Y %H:%M") if !@job.mediation_date.blank?
+				= @job.mediation_date.strftime("%d %b %Y") if !@job.mediation_date.blank?
+				= @job.mediation_time.strftime(" %H:%M") if !@job.mediation_time.blank?
 
 	%div{ :style => "clear:left;" }
 	%hr
@@ -91,13 +97,13 @@
 		.form-group
 			= f.label :Date, :class => "control-label col-sm-2"
 			.col-sm-5
-				- val = @note.the_date.blank? ? (@note.created_at.blank? ? DateTime.now.strftime("%d %b %Y") : @note.created_at.strftime("%d %b %Y")) : @note.the_date.strftime("%d %b %Y")
-				= f.text_field :the_date, :value => val, :class => "form-control autofocus"
+				- val = @note.the_date.blank? ? (@note.created_at.blank? ? DateTime.now.strftime("%d %b %Y %H:%M") : @note.created_at.strftime("%d %b %Y %H:%M")) : @note.the_date.strftime("%d %b %Y %H:%M")
+				= f.text_field :the_date, :value => val, :class => "form-control", :autofocus => true
 
 		.form-group
 			= f.label :title, :class => "control-label col-sm-2"
 			.col-sm-5
-				= f.text_field :title, :class => "form-control autofocus"
+				= f.text_field :title, :class => "form-control"
 
 		.form-group
 			= f.label :text, :class => "control-label col-sm-2"
@@ -135,27 +141,26 @@
 			.col-sm-offset-2
 				= f.submit class: "btn btn-primary"
 
-	%table.table.table-striped{ :style => "width: 74%; float: left;" }
+	%table.table.table-striped.notes{ :style => "" }
 		- @job.notes.order("the_date desc").each do |n|
+			- content = n.text
+			- content.gsub!("\n", "<br />")
 			%tr
-				%td= Note::NoteType::NAMES[n.note_type]
-				%td= n.the_date.strftime("%d %b") if !n.the_date.blank?
-				%td
-					:javascript
-						$('#example').tooltip();
-					%span{ :rel => "tooltip", :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(n.text, :length => 168)}", :style => "cursor:default;" }= n.title
-				%td.text-right{ :class => "#{'paid' if n.paid}" }
-					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank?
-				%td.text-right= n.time_taken.to_s + " h".html_safe if !n.time_taken.blank?
-				%td.text-right= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
-				%td
-					- content = n.text
-					- content.gsub!("\n", "<br />")
+				%td.the-date= n.time_date_formatted if !n.the_date.blank?
+				%td.title
 					%div{ :id => "note#{n.id}", :style => "display:none;" }= content.html_safe
 					%div{ :id => "header#{n.id}", :style => "display:none;" }= "<span class='label label-default pull-right'>#{Note::NoteType::NAMES[n.note_type]}</span>  #{n.title}&nbsp; <a href='/notes/#{n.id}/edit?from=job' title='Edit'><button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button></a>".html_safe
-					/ Button trigger modal
-					%button.btn.btn-primary.btn-xs{ :"data-toggle" => "modal", :"data-target" => "#myModal", :onclick => "$('#myModalLabel').html($('#header#{n.id}').html());$('#myModalBody').html($('#note#{n.id}').html());" }
-						%span.glyphicon.glyphicon-eye-open
+					%div{ :id => "by#{n.id}", :style => "display:none;" }= "Created by: " + n.user.name if n.user
+					%span{ :rel => "tooltip", :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(n.text, :length => 168)}", :style => "cursor:pointer;" }
+						%span{ :"data-toggle" => "modal", :"data-target" => "#myModal", :onclick => "$('#myModalLabel').html($('#header#{n.id}').html());$('#myModalBody').html($('#note#{n.id}').html());$('#myModalCreated').html($('#by#{n.id}').html());" }= n.title
+				%td.type= Note::NoteType::NAMES[n.note_type]
+				%td.paid{ :class => "#{'paid' if n.paid}" }
+					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank? && n.paid
+				%td.owing
+					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank? && !n.paid
+				%td.time= n.time_taken.to_s + " h".html_safe if !n.time_taken.blank?
+				%td.mileage= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
+
 
 %div{ :style => "clear:both;" }
 :javascript

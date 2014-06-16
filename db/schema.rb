@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603184257) do
+ActiveRecord::Schema.define(version: 20140614140015) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 20140603184257) do
     t.integer  "observer3"
     t.datetime "start_date"
     t.string   "status",                                 default: "enquiry"
+    t.integer  "user_id"
+  end
+
+  create_table "links", force: true do |t|
+    t.integer  "job_id"
+    t.integer  "contact_id"
+    t.string   "contact_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "logs", force: true do |t|
@@ -82,6 +91,7 @@ ActiveRecord::Schema.define(version: 20140603184257) do
     t.boolean  "paid",                               default: false
     t.datetime "the_date"
     t.decimal  "mileage",    precision: 9, scale: 2
+    t.integer  "user_id"
   end
 
   create_table "tasks", force: true do |t|
@@ -100,6 +110,8 @@ ActiveRecord::Schema.define(version: 20140603184257) do
     t.boolean  "is_financial",                                  default: false
     t.boolean  "paid",                                          default: false
     t.integer  "template_task_id"
+    t.integer  "user_id"
+    t.boolean  "two",                                           default: true
   end
 
   create_table "template_tasks", force: true do |t|
@@ -111,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140603184257) do
     t.integer  "hard_due_days"
     t.integer  "sort_order"
     t.boolean  "is_financial",  default: false
+    t.boolean  "two",           default: true
   end
 
   create_table "users", force: true do |t|
