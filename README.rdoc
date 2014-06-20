@@ -4,16 +4,9 @@ TODO stuff
 
 Change DB stuff
 - Need a links table for > 1 party in A or B
-- Add user to note creation (& task creation)
-  => Log changes
-- Owner of Notes from login
-- Have an option for 2 party checkbox or just complete checkbox (use helper?)
 
 
 Grant's Changes
-- Remove tasks from Opening jobs list and display in individual jobs
-- Use tabs home Finance etc
-- Last update date/time in individual jobs
 - Notes: Sort facility by date Type
 - Notes ordered by Date, Type, Details, Owner, Action, edit/delete
 - Order sort Task lists (in Admin)
@@ -26,13 +19,11 @@ Grant's Changes
 Other outstanding stuff
 - Filter and sort jobs & contacts
 - Can we list / search jobs by job reference as options;
-- Show up to 2 weeks jobs as default in jobs#index
 
 UI stuff
 - Fix color in job edit - need to refresh page currently to show it
 - Show the color pallet for color box
 - Create hover classes for job/task pair highlight
-- Probably don't need "tentative_due_date" as well as "due_date" for tasks <- Just use tentative_due_date as due date
 
 General
 - Add search box - jobs, contacts, notes?
@@ -59,6 +50,11 @@ DONE
 - Add ability to search contact from job form (added "add" buttons)
 - Add jQuery UI date dropdowns (use for times on tasks and notes too)
 - Add mediation date/time UI widget to job mediation date
+- Add user to note creation (& task creation)
+  => Log changes
+- Owner of Notes from login
+- Have an option for 2 party checkbox or just complete checkbox (use helper?)
+- Probably don't need "tentative_due_date" as well as "due_date" for tasks <- Just use tentative_due_date as due date
 
 --- As asked by Grant ---
 - The sort on the task template needs sorting as it won't sort logically, even by grabbing and moving - it does not seem to retain the new position even if I adjust the sort number;
@@ -87,6 +83,10 @@ DONE
 - Introduce a Status - Enquiry, Active complete Archive
 - Legal Rep, Name firm, link from contacts for full information
 - Need to access Job contacts from Job or display key information in overview, Tel & email contact info
+- Remove tasks from Opening jobs list and display in individual jobs
+- Last update date/time in individual jobs
+- Show up to 2 weeks jobs as default in jobs#index
+- Use tabs home Finance etc
 Finance
 - Summarise (by month)
 -- Due - link to breakdown

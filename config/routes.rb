@@ -19,6 +19,10 @@ Mps::Application.routes.draw do
   end
 
   resources :jobs do
+    member do
+      get :finance
+      get :contacts
+    end
     collection do
       get :tasklist
     end

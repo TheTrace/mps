@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-	before_action :set_job, only: [:show, :edit, :update, :destroy]
+	before_action :set_job, only: [:show, :edit, :update, :finance, :contacts, :destroy]
 
 	# GET /jobs
 	# GET /jobs.json
@@ -22,6 +22,12 @@ class JobsController < ApplicationController
 		jobs = Job.where(["status = ?",Job::JobStatus::ACTIVE]).order("reference")
 		job_list = jobs.map{|a| a.id }
 		@tasks = Task.where("job_id IN (#{job_list.join(',').to_s}) AND (party_a_complete_date IS NULL OR party_b_complete_date IS NULL)").order("due_date,tentative_due_date").limit(32) if jobs.any?
+	end
+
+	def finance
+	end
+
+	def contacts
 	end
 
 	# GET /jobs/1

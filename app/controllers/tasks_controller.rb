@@ -15,7 +15,12 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    job = nil
+    if !params[:job].blank?
+      job = Job.find params[:job]
+      job ||= nil
+    end
+    @task = Task.new(:job => job)
   end
 
   # GET /tasks/1/edit

@@ -1,6 +1,9 @@
 %h1 New task
 
-= link_to '<< All Tasks', tasks_path
+- if params[:job] && !params[:job].blank?
+	= link_to "<< Return to job", job_path(@task.job)
+- else
+	= link_to '<< All Tasks', tasks_path
 
 = render 'form'
 

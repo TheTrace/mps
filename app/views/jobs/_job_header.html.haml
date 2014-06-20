@@ -1,0 +1,21 @@
+.center-block
+	%p#notice= notice
+
+
+	%H1
+		= @job.reference
+		= @job.party_a.blank? ? "?" : link_to( @job.party_a_name, contact_path(@job.party_a, :from => "job") )
+		v
+		= @job.party_b.blank? ? "?" : link_to( @job.party_b_name, contact_path(@job.party_b, :from => "job") )
+		= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_job_path(@job), html = {:title => "Edit", :style => "cursor:pointer;"}
+
+	= link_to '<< All  Jobs', jobs_path(:show => @job.status)
+	
+	-# Tabs bit
+	%ul.nav.nav-tabs
+		%li{ :class => "#{'active' if params[:action].eql?('show')}" }
+			= link_to "Notes", @job
+		%li{ :class => "#{'active' if params[:action].eql?('finance')}" }
+			= link_to "Finance", finance_job_path( @job )
+		%li{ :class => "#{'active' if params[:action].eql?('contacts')}" }
+			= link_to "Contacts", contacts_job_path( @job )

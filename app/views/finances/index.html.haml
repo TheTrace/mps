@@ -18,7 +18,7 @@
 		%span.paid
 			%strong= number_to_currency(grand_tot, unit: "&pound;".html_safe)
 		%span.time
-			%strong= tot_hours.to_s + " h".html_safe
+			%strong= tot_hours.round(2).to_s + " h".html_safe
 
 %h1 Received
 %ul.finance
@@ -40,4 +40,4 @@
 		%span.owing
 			%strong= number_to_currency(grand_tot, unit: "&pound;".html_safe)
 		%span.time
-			%strong= tot_hours.to_s + " h".html_safe
+			%strong= tot_hours.round(2).to_s + " h".html_safe

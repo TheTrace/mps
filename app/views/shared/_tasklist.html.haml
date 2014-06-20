@@ -14,4 +14,8 @@
 						= t.title
 						= " (" + t.due_date_text + ")"
 					%div{ :id => "comp#{ t.id }", :class => "collapse", :style => "height: 0px;" }
+						%div.pull-right
+							= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_task_path(t, :from => "job"), html = {:title => "Edit", :style => "cursor:pointer;"}
+							= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-trash'></span></button>".html_safe, t, method: :delete, data: { confirm: "Are you sure you want to DELETE this task?\n (#{t.title})" }, :html => { :title => "Destroy", :style => "cursor:pointer;"}
+
 						= render :partial => "shared/checkboxes", :object => t

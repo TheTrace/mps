@@ -1,3 +1,5 @@
+= render :partial => "job_header"
+
 :javascript
 	jQuery(function() {
 		jQuery( "#note_the_date" ).datetimepicker( { timeFormat: 'HH:mm', dateFormat: 'dd M yy', showSecond: false, separator: ' ' } );
@@ -21,145 +23,135 @@
 				#myModalCreated.created
 				%button.btn.btn-primary{ :type => "button", :"data-dismiss" => "modal" } Close
 
+- if @job.tasks.any?
+	.task-list-holder.pull-right
+		%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();", :style => "cursor:pointer;margin-left:10px;" }
+			%span.glyphicon.glyphicon-zoom-in{ :style => "margin-top:10px;" }
+		.pull-right
+			= link_to '<span class="glyphicon glyphicon-plus"></span> New Task'.html_safe, new_task_path(:job => @job), :class => "btn btn-default"
+		.div{ :style => "clear:both;" }
+		= render :partial => "shared/tasklist", :object => @job.tasks
 
-.center-block
-	%p#notice= notice
-
-	- if @job.tasks.any?
-		.task-list-holder.pull-right
-			%buttonbtn.btn-default.btn-xs{ :type => "button", :title => "Show/Hide Completed", :onclick => "jQuery('.complete').toggle();", :style => "cursor:pointer;" }
-				%span.glyphicon.glyphicon-zoom-in
-			= render :partial => "shared/tasklist", :object => @job.tasks
-
-	%H1
-		= @job.reference
-		= @job.party_a.blank? ? "?" : link_to( @job.party_a_name, contact_path(@job.party_a, :from => "job") )
-		v
-		= @job.party_b.blank? ? "?" : link_to( @job.party_b_name, contact_path(@job.party_b, :from => "job") )
-		= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_job_path(@job), html = {:title => "Edit", :style => "cursor:pointer;"}
-
-	= link_to '<< All  Jobs', jobs_path(:show => @job.status)
-	
-	%h2= @job.title
+%h2= @job.title
 
 
-	.form-horizontal{ :style => "width: 74%; float: left;" }
-		.form-group
-			%strong.col-sm-3 Status:
-			.col-sm-4
-				= Job::JobStatus::NAMES[@job.status]
-				%em
-					= " (" + @job.start_date.strftime("%d-%b-%Y") + ")" if @job.start_date
+.form-horizontal{ :style => "width: 74%; float: left;" }
+	.form-group
+		%strong.col-sm-3 Status:
+		.col-sm-4
+			= Job::JobStatus::NAMES[@job.status]
+			%em
+				= " (" + @job.start_date.strftime("%d-%b-%Y") + ")" if @job.start_date
 
-		.form-group
-			%strong.col-sm-3 Text:
-			.col-sm-4
-				= @job.text
+	.form-group
+		%strong.col-sm-3 Text:
+		.col-sm-4
+			= @job.text
 
-		.form-group
-			%strong.col-sm-3 Legal Rep A:
-			.col-sm-4
-				= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : link_to(@job.legal_rep_a.full_name, contact_path(@job.legal_rep_a, :from=>"job"))
+	.form-group
+		%strong.col-sm-3 Legal Rep A:
+		.col-sm-4
+			= @job.legal_rep_a.blank? ? "<em>No Legal Rep</em>".html_safe : link_to(@job.legal_rep_a.full_name, contact_path(@job.legal_rep_a, :from=>"job"))
 
-		.form-group
-			%strong.col-sm-3 Legal Rep B:
-			.col-sm-4
-				= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : link_to(@job.legal_rep_b.full_name, contact_path(@job.legal_rep_b, :from=>"job"))
+	.form-group
+		%strong.col-sm-3 Legal Rep B:
+		.col-sm-4
+			= @job.legal_rep_b.blank? ? "<em>No Legal Rep</em>".html_safe : link_to(@job.legal_rep_b.full_name, contact_path(@job.legal_rep_b, :from=>"job"))
 
-		.form-group
-			%strong.col-sm-3 Mediator:
-			.col-sm-4
-				= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : link_to(@job.mediator_contact.full_name, contact_path(@job.mediator_contact, :from=>"job"))
+	.form-group
+		%strong.col-sm-3 Mediator:
+		.col-sm-4
+			= @job.mediator_contact.blank? ? "<em>No Mediator</em>".html_safe : link_to(@job.mediator_contact.full_name, contact_path(@job.mediator_contact, :from=>"job"))
 
-		.form-group
-			%strong.col-sm-3 Fees Paid:
-			.col-sm-4
-				= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
+	.form-group
+		%strong.col-sm-3 Fees Paid:
+		.col-sm-4
+			= number_to_currency(@job.fees_paid, unit: "&pound; ".html_safe)
 
-		.form-group
-			%strong.col-sm-3 Mediation Date:
-			.col-sm-4
-				= @job.mediation_date.strftime("%d %b %Y") if !@job.mediation_date.blank?
-				= @job.mediation_time.strftime(" %H:%M") if !@job.mediation_time.blank?
+	.form-group
+		%strong.col-sm-3 Mediation Date:
+		.col-sm-4
+			= @job.mediation_date.strftime("%d %b %Y") if !@job.mediation_date.blank?
+			= @job.mediation_time.strftime(" %H:%M") if !@job.mediation_time.blank?
 
-	%div{ :style => "clear:left;" }
-	%hr
+%div{ :style => "clear:left;" }
+%hr
 
-	%h2
-		Notes
-		%button.btn.btn-default{ :type => "button", :title => "Add", :onclick => "$('.note-form').toggle();" }
-			%span.glyphicon.glyphicon-plus
+%h2
+	Notes
+	%button.btn.btn-default{ :type => "button", :title => "Add", :onclick => "$('.note-form').toggle();" }
+		%span.glyphicon.glyphicon-plus
 
 
-	= form_for(@note, :html => { :class => "form-horizontal note-form", :style => "width: 74%; float: left; display:none;", :role => "form" }) do |f|
-		= hidden_field_tag :from, "job"
-		= f.hidden_field :job_id
-		.form-group
-			= f.label :Date, :class => "control-label col-sm-2"
-			.col-sm-5
-				- val = @note.the_date.blank? ? (@note.created_at.blank? ? DateTime.now.strftime("%d %b %Y %H:%M") : @note.created_at.strftime("%d %b %Y %H:%M")) : @note.the_date.strftime("%d %b %Y %H:%M")
-				= f.text_field :the_date, :value => val, :class => "form-control", :autofocus => true
+= form_for(@note, :html => { :class => "form-horizontal note-form", :style => "width: 74%; float: left; display:none;", :role => "form" }) do |f|
+	= hidden_field_tag :from, "job"
+	= f.hidden_field :job_id
+	.form-group
+		= f.label :Date, :class => "control-label col-sm-2"
+		.col-sm-5
+			- val = @note.the_date.blank? ? (@note.created_at.blank? ? DateTime.now.strftime("%d %b %Y %H:%M") : @note.created_at.strftime("%d %b %Y %H:%M")) : @note.the_date.strftime("%d %b %Y %H:%M")
+			= f.text_field :the_date, :value => val, :class => "form-control", :autofocus => true
 
-		.form-group
-			= f.label :title, :class => "control-label col-sm-2"
-			.col-sm-5
-				= f.text_field :title, :class => "form-control"
+	.form-group
+		= f.label :title, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_field :title, :class => "form-control"
 
-		.form-group
-			= f.label :text, :class => "control-label col-sm-2"
-			.col-sm-5
-				= f.text_area :text, :class => "form-control", :rows => "5"
+	.form-group
+		= f.label :text, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.text_area :text, :class => "form-control", :rows => "5"
 
-		.form-group
-			= f.label :type, :class => "control-label col-sm-2"
-			.col-sm-5
-				= f.select :note_type, options_for_select(Note::NoteType.for_select, @note.note_type), {}, :class => "form-control"
+	.form-group
+		= f.label :type, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.select :note_type, options_for_select(Note::NoteType.for_select, @note.note_type), {}, :class => "form-control"
 
-		.form-group
-			= f.label :cost, :class => "control-label col-sm-2"
-			.col-sm-5
-				.input-group
-					%span.input-group-addon &pound;
-					= f.number_field :cost, :class => "form-control", :step => "any"
-			.col-sm-2
-				.checkbox
-					%label
-						= f.check_box :paid
-						Paid 
+	.form-group
+		= f.label :cost, :class => "control-label col-sm-2"
+		.col-sm-5
+			.input-group
+				%span.input-group-addon &pound;
+				= f.number_field :cost, :class => "form-control", :step => "any"
+		.col-sm-2
+			.checkbox
+				%label
+					= f.check_box :paid
+					Paid 
 
-		.form-group
-			= f.label :time_taken, :class => "control-label col-sm-2"
-			.col-sm-5
-				= f.number_field :time_taken, :class => "form-control", :step => "any"
+	.form-group
+		= f.label :time_taken, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.number_field :time_taken, :class => "form-control", :step => "any"
 
-		.form-group
-			= f.label :mileage, :class => "control-label col-sm-2"
-			.col-sm-5
-				= f.number_field :mileage, :class => "form-control", :step => "any"
+	.form-group
+		= f.label :mileage, :class => "control-label col-sm-2"
+		.col-sm-5
+			= f.number_field :mileage, :class => "form-control", :step => "any"
 
-		.actions
-			.col-sm-offset-2
-				= f.submit class: "btn btn-primary"
+	.actions
+		.col-sm-offset-2
+			= f.submit class: "btn btn-primary"
 
-	%table.table.table-striped.notes{ :style => "" }
-		- @job.notes.order("the_date desc").each do |n|
-			- content = n.text
-			- content.gsub!("\n", "<br />")
-			%tr
-				%td.the-date= n.time_date_formatted if !n.the_date.blank?
-				%td.title
-					%div{ :id => "note#{n.id}", :style => "display:none;" }= content.html_safe
-					%div{ :id => "header#{n.id}", :style => "display:none;" }= "<span class='label label-default pull-right'>#{Note::NoteType::NAMES[n.note_type]}</span>  #{n.title}&nbsp; <a href='/notes/#{n.id}/edit?from=job' title='Edit'><button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button></a>".html_safe
-					%div{ :id => "by#{n.id}", :style => "display:none;" }= "Created by: " + n.user.name if n.user
-					%span{ :rel => "tooltip", :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(n.text, :length => 168)}", :style => "cursor:pointer;" }
-						%span{ :"data-toggle" => "modal", :"data-target" => "#myModal", :onclick => "$('#myModalLabel').html($('#header#{n.id}').html());$('#myModalBody').html($('#note#{n.id}').html());$('#myModalCreated').html($('#by#{n.id}').html());" }= n.title
-				%td.type= Note::NoteType::NAMES[n.note_type]
-				%td.paid{ :class => "#{'paid' if n.paid}" }
-					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank? && n.paid
-				%td.owing
-					= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank? && !n.paid
-				%td.time= n.time_taken.to_s + " h".html_safe if !n.time_taken.blank?
-				%td.mileage= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
+%table.table.table-striped.notes{ :style => "" }
+	- @job.notes.order("the_date desc").each do |n|
+		- content = n.text
+		- content.gsub!("\n", "<br />")
+		%tr
+			%td.the-date= n.time_date_formatted if !n.the_date.blank?
+			%td.title
+				%div{ :id => "note#{n.id}", :style => "display:none;" }= content.html_safe
+				%div{ :id => "header#{n.id}", :style => "display:none;" }= "<span class='label label-default pull-right'>#{Note::NoteType::NAMES[n.note_type]}</span>  #{n.title}&nbsp; <a href='/notes/#{n.id}/edit?from=job' title='Edit'><button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button></a>".html_safe
+				%div{ :id => "by#{n.id}", :style => "display:none;" }= "Created by: " + n.user.name if n.user
+				%span{ :rel => "tooltip", :"data-toggle" => "tooltip", :title => "", :"data-original-title" => "#{truncate(Nokogiri::HTML(n.text).text, :length => 168)}", :style => "cursor:pointer;" }
+					%span{ :"data-toggle" => "modal", :"data-target" => "#myModal", :onclick => "$('#myModalLabel').html($('#header#{n.id}').html());$('#myModalBody').html($('#note#{n.id}').html());$('#myModalCreated').html($('#by#{n.id}').html());" }= n.title
+			%td.type= Note::NoteType::NAMES[n.note_type]
+			%td.paid{ :class => "#{'paid' if n.paid}" }
+				= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank? && n.paid
+			%td.owing
+				= number_to_currency(n.cost.to_s, unit: "&pound; ".html_safe) if !n.cost.blank? && !n.paid
+			%td.time= n.time_taken.to_s + " h".html_safe if !n.time_taken.blank?
+			%td.mileage= n.mileage.to_s + " mi".html_safe if !n.mileage.blank?
 
 
 %div{ :style => "clear:both;" }

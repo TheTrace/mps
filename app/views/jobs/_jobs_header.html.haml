@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-	%li.dropdown
+	%li.dropdown{ :class => "#{'active' if params[:action].eql?('index')}"}
 		%a.dropdown-toggle{ :href => "", :"data-toggle" => "dropdown" }
 			- tab = Job::JobStatus::NAMES[params[:show]] if !params[:show].blank?
 			- tab = Job::JobStatus::NAMES[Job::JobStatus::ACTIVE] if !tab
@@ -15,5 +15,5 @@
 				= link_to "Complete", jobs_path(:show => Job::JobStatus::COMPLETE)
 			%li{ :class => "#{ params[:show].eql?(Job::JobStatus::ARCHIVE) ? "active" : ""}" }
 				= link_to "Archived", jobs_path(:show => Job::JobStatus::ARCHIVE)
-	%li= link_to "Tasks", tasklist_jobs_path
+	%li{ :class => "#{'active' if params[:action].eql?('tasklist')}"}= link_to "Tasks", tasklist_jobs_path
 

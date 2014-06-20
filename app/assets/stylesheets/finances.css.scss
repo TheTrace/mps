@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-ul.finance {
+ul.finance { margin-top: 15px;
 	li {
 		.reference{ display: inline-block; float: left; width: 400px; }
 		.paid { display: inline-block; width: 100px; text-align: right; }
