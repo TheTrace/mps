@@ -17,3 +17,4 @@
 //= require_tree .
 //= require bootstrap
 //= require jscolor
+//= require autocomplete-rails

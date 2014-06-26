@@ -21,6 +21,8 @@
 				\...
 			.modal-footer
 				#myModalCreated.created
+				-#%button.btn.btn-primary{ :type => "button" }
+				-#	= link_to_function "Print", "javascript:print();"
 				%button.btn.btn-primary{ :type => "button", :"data-dismiss" => "modal" } Close
 
 - if @job.tasks.any?

@@ -6,7 +6,11 @@ Mps::Application.routes.draw do
     end
   end
 
-  resources :contacts
+  resources :contacts do
+    member do
+      get :jobs
+    end
+  end
 
   resources :notes
 
@@ -25,6 +29,8 @@ Mps::Application.routes.draw do
     end
     collection do
       get :tasklist
+      get :search
+      get :autocomplete_all_name
     end
   end
 

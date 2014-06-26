@@ -1,0 +1,37 @@
+= render :partial => "header"
+
+%h2 As a Client (Party)
+%ul
+	- @contact.party_a.each do |a|
+		%li= link_to a.ref, a
+	- @contact.party_b.each do |b|
+		%li= link_to b.ref, b
+
+%h2 As a Legal Rep
+%ul
+	- @contact.legal_rep1.each do |a|
+		%li= link_to a.ref, a
+	- @contact.legal_rep2.each do |b|
+		%li= link_to b.ref, b
+	- @contact.legal_rep3.each do |b|
+		%li= link_to b.ref, b
+
+%h2 As a Mediator
+%ul
+	- @contact.mediator.each do |a|
+		%li= link_to a.ref, a
+	- @contact.mediator1.each do |b|
+		%li= link_to b.ref, b
+	- @contact.mediator2.each do |b|
+		%li= link_to b.ref, b
+	- @contact.mediator3.each do |b|
+		%li= link_to b.ref, b
+
+%h2 As an Observer
+%ul
+	- @contact.observer1.each do |a|
+		%li= link_to a.ref, a
+	- @contact.observer2.each do |b|
+		%li= link_to b.ref, b
+	- @contact.observer3.each do |b|
+		%li= link_to b.ref, b

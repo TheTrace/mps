@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%h1
+	= @contact.title if !@contact.title.blank?
+	= @contact.full_name
+	= link_to "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-pencil'></span></button>".html_safe, edit_contact_path(@contact), html = {:title => "Edit"}
+
+- if params[:from]
+	= link_to "<< Back", :back
+- else
+	= link_to '<< All Contacts', contacts_path
+
+-# Tabs bit
+%ul.nav.nav-tabs
+	%li{ :class => "#{'active' if params[:action].eql?('show')}" }
+		= link_to "Details", @contact
+	%li{ :class => "#{'active' if params[:action].eql?('jobs')}" }
+		= link_to "Jobs", jobs_contact_path( @contact )

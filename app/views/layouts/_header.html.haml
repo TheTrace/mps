@@ -30,6 +30,13 @@
 								%li{ :class => "#{params[:controller].eql?("tasks") ? "active" : ""}" }= link_to "Tasks", :tasks
 				%ul.nav.navbar-nav.navbar-right
 					- if signed_in?
+						%li
+							= form_tag search_jobs_path, :method => :get, :id => 'search_box' do
+								.left-inner-addon
+									%span.glyphicon.glyphicon-search
+									= autocomplete_field_tag 'all', '', autocomplete_all_name_jobs_path, :class => "preFocus", :size => 30, :id_element => "#search_id", :placholder => "Search...", :class => "form-control"
+								= hidden_field_tag :search_id
+
 						%li.dropdown.active
 							%a.dropdown-toggle.pull-right{ :href => "#", :"data-toggle" => "dropdown", :class => "#{"active" if params[:controller].eql?("users") && @user && @user == @current_user}" }
 								%span.glyphicon.glyphicon-user{ :style => "padding-right:10px;" }

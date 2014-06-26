@@ -40,12 +40,8 @@
 					= n.time_taken.to_s + " h".html_safe
 					- tot_hours += n.time_taken
 
-	%li.list-group-item
-		%span.reference
-			%strong Total
-		%span.paid
-			%strong= number_to_currency(tot_received, unit: "&pound;".html_safe)
-		%span.owing
-			%strong= number_to_currency(tot_owing, unit: "&pound;".html_safe)
-		%span.time
-			%strong= tot_hours.round(2).to_s + " h".html_safe
+	%li.total.list-group-item
+		%span.reference Total
+		%span.paid= number_to_currency(tot_received, unit: "&pound;".html_safe)
+		%span.owing= number_to_currency(tot_owing, unit: "&pound;".html_safe)
+		%span.time= tot_hours.round(2).to_s + " h".html_safe

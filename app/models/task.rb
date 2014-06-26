@@ -3,6 +3,10 @@ class Task < ActiveRecord::Base
 	belongs_to :template_task
 	belongs_to :user
 
+	def name
+		return title
+	end
+
 	def due_date_text
 		return the_due_date.strftime("%d-%b") if !the_due_date.blank?
 		return "Not set"

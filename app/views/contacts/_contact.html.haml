@@ -1,7 +1,10 @@
+- from ||= nil
+- job_id ||= nil
+
 %li
 	.col-sm-5
 		= contact_gravatar contact, size: 52
-		= link_to contact.full_name, contact
+		= link_to contact.full_name, contact_path(contact, :from => from, :job_id => job_id)
 		= "(" + contact.types_str + ")" if !contact.types_str.empty?
 		%br
 		= contact.email

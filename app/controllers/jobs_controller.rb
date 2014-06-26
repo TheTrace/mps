@@ -1,6 +1,64 @@
 class JobsController < ApplicationController
 	before_action :set_job, only: [:show, :edit, :update, :finance, :contacts, :destroy]
 
+	MAX_RESULTS = 10
+
+	autocomplete :all, :name
+
+	def autocomplete_all_name
+		@term = params[:term]
+
+		if !@term.blank?
+			items = []
+			items = Job.where(["reference LIKE ? OR title LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('1'+p.id.to_s).to_i }
+			items = Contact.where(["first_name LIKE ? OR last_name LIKE ? OR company LIKE ?", "%#{@term}%", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('2'+p.id.to_s).to_i }
+			items = Note.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('3'+p.id.to_s).to_i }
+			#items = Task.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('4'+p.id.to_s).to_i }
+		else
+			items = {}
+		end
+
+		render :json => test_json_for_autocomplete(items, :name )
+	end
+
+	def test_json_for_autocomplete(items, method)
+		items.collect do |item| 
+			icon = ''
+			icon = '<span class="glyphicon glyphicon-user"></span> ' if item.is_a? Job
+			icon = '<span class="glyphicon glyphicon-user"></span> ' if item.is_a? Contact
+			icon = '<span class="glyphicon glyphicon-user"></span> ' if item.is_a? Note
+			icon = '<span class="glyphicon glyphicon-user"></span> ' if item.is_a? Task
+			#{ "id" => item.id, "label" => (icon+(item.send(method)||'')).html_safe, "value" => item.send(method) }
+			{ "id" => item.id, "label" => ((item.send(method)||'')).html_safe, "value" => item.send(method) }
+		end
+	end
+
+
+	def search
+
+		case params[:search_id]
+		when /^1(.*)/
+			job = Job.find( $1 )
+			redirect_to job_path( job ) and return
+		when /^2(.*)/
+			contact = Contact.find( $1 )
+			redirect_to contact_path( contact ) and return
+		when /^3(.*)/
+			note = Note.find( $1 )
+			redirect_to note_path( note ) and return
+		when /^4(.*)/
+			task = Task.find( $1 )
+			redirect_to task_path( task ) and return
+		end
+
+		# Fallthrough behaviour - normal search
+		@term = params[:all]
+		@jobs = Job.where(["reference LIKE ? OR title LIKE ?", "%#{@term}%", "%#{@term}%"]).limit(MAX_RESULTS).load
+		@contacts = Contact.where(["first_name LIKE ? OR last_name LIKE ? OR company LIKE ?", "%#{@term}%", "%#{@term}%", "%#{@term}%"]).limit(MAX_RESULTS).load
+		@notes = Note.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).limit(MAX_RESULTS).load
+		@tasks = Task.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).limit(MAX_RESULTS).load
+	end
+
 	# GET /jobs
 	# GET /jobs.json
 	def index

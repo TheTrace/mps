@@ -3,7 +3,7 @@
 %h2 Parties
 
 %ul.contacts
-	= render :partial => "/contacts/contact", :object => @job.party_a if @job.party_a
+	= render :partial => "/contacts/contact", :object => @job.party_a, :options => { :from => "job_contact", :job_id => @job.id } if @job.party_a
 
 	= render :partial => "/contacts/contact", :object => @job.party_b if @job.party_b
 

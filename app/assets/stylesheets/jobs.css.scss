@@ -66,3 +66,17 @@ ul.task-list {
 }
 
 #myModalCreated.created { float: left; font-size: 11px; }
+
+#all { margin-top: 10px; margin-right: 10px; }
+.left-inner-addon {
+    position: relative;
+    margin-right: 20px;
+}
+.left-inner-addon input {
+    padding-left: 30px;    
+}
+.left-inner-addon .glyphicon {
+    position: absolute;
+    padding: 18px 12px;
+    pointer-events: none;
+}

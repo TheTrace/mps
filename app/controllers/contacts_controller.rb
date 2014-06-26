@@ -1,5 +1,5 @@
 class ContactsController < ApplicationController
-  before_action :set_contact, only: [:show, :edit, :update, :destroy]
+  before_action :set_contact, only: [:show, :edit, :update, :destroy, :jobs]
 
   # GET /contacts
   # GET /contacts.json
@@ -94,6 +94,9 @@ class ContactsController < ApplicationController
       format.html { redirect_to contacts_url }
       format.json { head :no_content }
     end
+  end
+
+  def jobs
   end
 
   private

@@ -1,6 +1,11 @@
 == README
 
-TODO stuff
+*** TODO stuff
+Add ":from" params to contact tabs
+Add ":from" params to contact list from job's contacts
+Sort auto_search from search box (don't hit return once selected item)
+Use glyphicons in search box drop-down
+
 
 Change DB stuff
 - Need a links table for > 1 party in A or B
@@ -14,7 +19,7 @@ Grant's Changes
   >> rate x Time = fee
   >> Rate x Miles = Cost
   >> Add Dispersement as a cost
-
+- Print out note(s)
 
 Other outstanding stuff
 - Filter and sort jobs & contacts

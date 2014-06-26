@@ -42,6 +42,10 @@ class Job < ActiveRecord::Base
 		end
 	end
 
+	def name
+		return title
+	end
+
 	def self.for_select
 		Job.all.map{|j|[j.ref, j.id]}
 	end

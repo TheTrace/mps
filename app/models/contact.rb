@@ -1,8 +1,16 @@
 class Contact < ActiveRecord::Base
-#	belongs_to :job_party_a, :class_name => "Contact", :foreign_key => :party_a_id
-#	belongs_to :job_party_b, :class_name => "Contact", :foreign_key => :party_b_id
-#	belongs_to :job_legal_rep, :class_name => "Contact", :foreign_key => :legal_rep
-#	belongs_to :job_mediator, :class_name => "Contact", :foreign_key => :mediator
+	has_many :party_a, :class_name => "Job", :foreign_key => :party_a_id
+	has_many :party_b, :class_name => "Job", :foreign_key => :party_b_id
+	has_many :legal_rep1, :class_name => "Job", :foreign_key => :legal_rep1
+	has_many :legal_rep2, :class_name => "Job", :foreign_key => :legal_rep2
+	has_many :legal_rep3, :class_name => "Job", :foreign_key => :legal_rep3
+	has_many :mediator, :class_name => "Job", :foreign_key => :mediator
+	has_many :mediator1, :class_name => "Job", :foreign_key => :mediator1
+	has_many :mediator2, :class_name => "Job", :foreign_key => :mediator2
+	has_many :mediator3, :class_name => "Job", :foreign_key => :mediator3
+	has_many :observer1, :class_name => "Job", :foreign_key => :observer1
+	has_many :observer2, :class_name => "Job", :foreign_key => :observer2
+	has_many :observer3, :class_name => "Job", :foreign_key => :observer3
 
 	def self.for_select
 		Contact.order("contacts.last_name,contacts.first_name").map{|c|[[c.first_name,c.last_name].join(" "),c.id]}
@@ -31,6 +39,10 @@ class Contact < ActiveRecord::Base
 		fn = self.company if fn.blank?
 		fn = "No Name" if fn.blank?
 		fn
+	end
+
+	def name
+		return full_name
 	end
 
 	def types_str

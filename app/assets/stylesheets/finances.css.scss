@@ -8,6 +8,11 @@ ul.finance { margin-top: 15px;
 		.paid { display: inline-block; width: 100px; text-align: right; }
 		.owing { display: inline-block; width: 100px; text-align: right; }
 		.time { display: inline-block; width: 100px; text-align: right; }
+		&.total {
+			font-weight: bold;
+			.paid { color: green; }
+			.owing { color: red; }
+		}
 	}
 }
 td.paid { color: green; }

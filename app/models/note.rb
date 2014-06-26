@@ -48,6 +48,10 @@ class Note < ActiveRecord::Base
 		end
 	end
 
+	def name
+		return title
+	end
+
 	def time_date_formatted show_day = false, show_year = true
 		# Feb 2012 - The has_start_time now means that the times are used. The date_end will be there always, just need to check if it's the same date as date_start
 		return '?' unless self.the_date

@@ -1,0 +1,38 @@
+%h1
+	Search Results
+	- if params[:all] && !params[:all].blank?
+		= ("for &quot;" + params[:all].to_s + "&quot;").html_safe
+
+- if @jobs.any?
+	%h2 Jobs
+	%ul
+		- @jobs.each do |job|
+			%li
+				= link_to job.ref, job
+
+
+- if @contacts.any?
+	%h2 Contacts
+	%ul
+		- @contacts.each do |contact|
+			%li
+				= link_to contact.full_name, contact
+
+
+- if @notes.any?
+	%h2 Notes
+	%ul
+		- @notes.each do |note|
+			%li
+				= link_to note.job.reference.to_s, note.job if note.job
+				= note.job.parties if note.job
+				= link_to note.title, note
+
+- if @tasks.any?
+	%h2 Tasks
+	%ul
+		- @tasks.each do |task|
+			%li
+				= link_to task.job.reference.to_s, task.job if task.job
+				= task.job.parties if task.job
+				= link_to task.title, task

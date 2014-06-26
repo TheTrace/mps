@@ -61,6 +61,7 @@ group :doc do
 end
 
 gem 'nokogiri'
+gem 'rails4-autocomplete', '~> 1.1.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
