@@ -43,7 +43,7 @@ class Job < ActiveRecord::Base
 	end
 
 	def name
-		return title
+		return ref
 	end
 
 	def self.for_select

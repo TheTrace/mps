@@ -10,10 +10,10 @@ class JobsController < ApplicationController
 
 		if !@term.blank?
 			items = []
-			items = Job.where(["reference LIKE ? OR title LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('1'+p.id.to_s).to_i }
-			items = Contact.where(["first_name LIKE ? OR last_name LIKE ? OR company LIKE ?", "%#{@term}%", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('2'+p.id.to_s).to_i }
-			items = Note.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('3'+p.id.to_s).to_i }
-			#items = Task.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('4'+p.id.to_s).to_i }
+			items += Job.where(["reference LIKE ? OR title LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('1'+p.id.to_s).to_i }
+			items += Contact.where(["first_name LIKE ? OR last_name LIKE ? OR company LIKE ?", "%#{@term}%", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('2'+p.id.to_s).to_i }
+			items += Note.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('3'+p.id.to_s).to_i }
+			#items += Task.where(["title LIKE ? OR text LIKE ?", "%#{@term}%", "%#{@term}%"]).load.each { |p| p.id = ('4'+p.id.to_s).to_i }
 		else
 			items = {}
 		end
@@ -22,6 +22,7 @@ class JobsController < ApplicationController
 	end
 
 	def test_json_for_autocomplete(items, method)
+		# This not work properly (yet) Jun 14
 		items.collect do |item| 
 			icon = ''
 			icon = '<span class="glyphicon glyphicon-user"></span> ' if item.is_a? Job

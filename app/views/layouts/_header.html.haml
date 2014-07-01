@@ -34,7 +34,7 @@
 							= form_tag search_jobs_path, :method => :get, :id => 'search_box' do
 								.left-inner-addon
 									%span.glyphicon.glyphicon-search
-									= autocomplete_field_tag 'all', '', autocomplete_all_name_jobs_path, :class => "preFocus", :size => 30, :id_element => "#search_id", :placholder => "Search...", :class => "form-control"
+									= autocomplete_field_tag 'all', '', autocomplete_all_name_jobs_path, :class => "preFocus", :size => 30, :id_element => "#search_id", :placholder => "Search...", :class => "form-control", :autocomplete => "on"
 								= hidden_field_tag :search_id
 
 						%li.dropdown.active
@@ -49,3 +49,11 @@
 					- else
 						%li.navebar-right.active= link_to "Sign in", signin_path
 
+:javascript
+	$('#all').bind('railsAutocomplete.select', function(event, data){
+		/* New version of autocomplete requires this way - the jQuery("#search_id").change() doesn't work anymore */
+		if (jQuery('#search_id').val() > 0) {
+			jQuery('#all').addClass('ui-autocomplete-loading');
+			jQuery('#search_box').submit();
+		}
+	});
