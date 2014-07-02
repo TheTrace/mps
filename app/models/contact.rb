@@ -4,7 +4,7 @@ class Contact < ActiveRecord::Base
 	has_many :legal_rep1, :class_name => "Job", :foreign_key => :legal_rep1
 	has_many :legal_rep2, :class_name => "Job", :foreign_key => :legal_rep2
 	has_many :legal_rep3, :class_name => "Job", :foreign_key => :legal_rep3
-	has_many :mediator, :class_name => "Job", :foreign_key => :mediator
+	has_many :mediator0, :class_name => "Job", :foreign_key => :mediator
 	has_many :mediator1, :class_name => "Job", :foreign_key => :mediator1
 	has_many :mediator2, :class_name => "Job", :foreign_key => :mediator2
 	has_many :mediator3, :class_name => "Job", :foreign_key => :mediator3

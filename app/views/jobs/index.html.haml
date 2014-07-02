@@ -24,7 +24,8 @@
 					= job.parties
 				= job.title
 				%br
-				= job.mediation_date.strftime("%d-%b-%Y %H:%M") if job.mediation_date
+				= job.mediation_date.strftime("%d-%b-%Y") if job.mediation_date
+				= job.mediation_time.strftime("%H:%M") if job.mediation_time
 			-# = "&nbsp;&nbsp;&nbsp;".html_safe
 			-# &nbsp;&nbsp;&nbsp;
 			-# = link_to 'Edit', edit_job_path(job)

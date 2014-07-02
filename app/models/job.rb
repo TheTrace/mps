@@ -9,9 +9,9 @@ class Job < ActiveRecord::Base
 	belongs_to :mediator_1, :class_name=> "Contact", :foreign_key => :mediator1
 	belongs_to :mediator_2, :class_name=> "Contact", :foreign_key => :mediator2
 	belongs_to :mediator_3, :class_name=> "Contact", :foreign_key => :mediator3
-	belongs_to :observer_1, :class_name=> "Contact", :foreign_key => :observerr1
-	belongs_to :observer_2, :class_name=> "Contact", :foreign_key => :observerr2
-	belongs_to :observer_3, :class_name=> "Contact", :foreign_key => :observerr3
+	belongs_to :observer_1, :class_name=> "Contact", :foreign_key => :observer1
+	belongs_to :observer_2, :class_name=> "Contact", :foreign_key => :observer2
+	belongs_to :observer_3, :class_name=> "Contact", :foreign_key => :observer3
 
 	class JobColours
 		PRIMARY = "#428bca"

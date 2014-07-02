@@ -28,6 +28,7 @@
 					%li= msg
 
 	%h2=link_to @task.job.ref, job_path(@task.job) if @task.job
+	= f.hidden_field :job_id
 
 	= hidden_field_tag :from, params[:from] if params[:from] && !params[:from].blank?
 	- if !@task.job
