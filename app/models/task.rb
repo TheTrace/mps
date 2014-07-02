@@ -32,7 +32,7 @@ class Task < ActiveRecord::Base
 
 	def check_complete?
 		if task_complete?
-			self.update_attribute(:complete_date, max(party_a_complete_date, party_b_complete_date))
+			self.update_attribute(:complete_date, (party_a_complete_date > party_b_complete_date ? party_a_complete_date : party_b_complete_date))
 		else
 			self.update_attribute(:complete_date, nil)
 		end
