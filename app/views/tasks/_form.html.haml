@@ -27,15 +27,20 @@
 				- @task.errors.full_messages.each do |msg|
 					%li= msg
 
-	%h2=link_to @task.job.ref, job_path(@task.job) if @task.job
-	= f.hidden_field :job_id
+	- if params[:from] && !params[:from].blank?
+		= hidden_field_tag :from, params[:from]
+	- elsif params[:job] && !params[:job].blank?
+		= hidden_field_tag :from, "job"
 
-	= hidden_field_tag :from, params[:from] if params[:from] && !params[:from].blank?
-	- if !@task.job
+	- if @task.job
+		%h2=link_to @task.job.ref, job_path(@task.job)
+		= f.hidden_field :job_id
+	- else
 		.form-group
 			= f.label :job, :class => "control-label col-sm-2"
 			.col-sm-5
 				= f.select :job_id, options_for_select(Job.for_select), {}, :class => "form-control"
+
 	.form-group
 		= f.label :title, :class => "control-label col-sm-2"
 		.col-sm-5

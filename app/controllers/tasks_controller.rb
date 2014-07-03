@@ -37,7 +37,7 @@ class TasksController < ApplicationController
       if @task.save
         # Log the creation of the task
         @task.log(@current_user.id, Log::Types::CREATE_TASK)
-        if params[:from] == "job"
+        if params[:from] == "job" || !params[:job].blank?
           redirect_to job_path(@task.job), notice: 'Task was successfully created.'
           return
         elsif params[:from] == "tasklist"

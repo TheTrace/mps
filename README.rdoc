@@ -3,8 +3,8 @@
 *** TODO stuff
 Add ":from" params to contact tabs
 Add ":from" params to contact list from job's contacts
-Sort auto_search from search box (don't hit return once selected item)
 Use glyphicons in search box drop-down
+Get delete contact to work properly
 
 
 Change DB stuff
@@ -31,7 +31,6 @@ UI stuff
 - Create hover classes for job/task pair highlight
 
 General
-- Add search box - jobs, contacts, notes?
 
 Tasks
 
@@ -60,6 +59,8 @@ DONE
 - Owner of Notes from login
 - Have an option for 2 party checkbox or just complete checkbox (use helper?)
 - Probably don't need "tentative_due_date" as well as "due_date" for tasks <- Just use tentative_due_date as due date
+- Add search box - jobs, contacts, notes?
+- Sort auto_search from search box (don't hit return once selected item)
 
 --- As asked by Grant ---
 - The sort on the task template needs sorting as it won't sort logically, even by grabbing and moving - it does not seem to retain the new position even if I adjust the sort number;
