@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140614140015) do
+ActiveRecord::Schema.define(version: 20140903084119) do
 
   create_table "contacts", force: true do |t|
     t.string   "title"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140614140015) do
     t.boolean  "solicitor",  default: false
     t.boolean  "mediator",   default: false
     t.boolean  "client",     default: false
+    t.integer  "upload_id"
   end
 
   create_table "jobs", force: true do |t|
@@ -40,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140614140015) do
     t.integer  "party_b_id"
     t.integer  "legal_rep"
     t.integer  "mediator"
-    t.decimal  "fees_paid",      precision: 9, scale: 2
+    t.decimal  "fees_paid",       precision: 9, scale: 2
     t.date     "mediation_date"
     t.integer  "legal_rep1"
     t.integer  "legal_rep2"
@@ -48,14 +49,16 @@ ActiveRecord::Schema.define(version: 20140614140015) do
     t.integer  "mediator1"
     t.integer  "mediator2"
     t.integer  "mediator3"
-    t.string   "colour",                                 default: "428BCA"
+    t.string   "colour",                                  default: "428BCA"
     t.time     "mediation_time"
     t.integer  "observer1"
     t.integer  "observer2"
     t.integer  "observer3"
     t.datetime "start_date"
-    t.string   "status",                                 default: "enquiry"
+    t.string   "status",                                  default: "enquiry"
     t.integer  "user_id"
+    t.datetime "enquiry_date"
+    t.datetime "completion_date"
   end
 
   create_table "links", force: true do |t|

@@ -1,4 +1,11 @@
 == README
+*** Info needed Sept 14
+Enquiry Date (job)
+Date of Completion (job)
+Picture in Contacts
+Add pdf ability for notes
+Additional Party members for A & B
+
 
 *** TODO stuff
 Add ":from" params to contact tabs
@@ -9,6 +16,8 @@ Get delete contact to work properly
 
 Change DB stuff
 - Need a links table for > 1 party in A or B
+- Add attachments for notes, jobs, tasks
+- Add images for contacts (not many gravitars!)
 
 
 Grant's Changes
