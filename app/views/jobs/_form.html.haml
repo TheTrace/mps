@@ -11,6 +11,10 @@
 		jQuery( "#job_mediation_time" ).timepicker( { timeFormat: 'HH:mm', hourGrid:4, minuteGrid: 10, hour: "#{start_hour}", minute: "#{start_minute}" } );
 		jQuery( "#job_start_date" ).datepicker( { dateFormat: 'dd M yy' } );
 		jQuery( "#job_start_date" ).datepicker( "option", "defaultDate", "#{start_date}" );
+		jQuery( "#job_enquiry_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#job_enquiry_date" ).datepicker( "option", "defaultDate", "#{DateTime.now().strftime('%d %b %Y')}" );
+		jQuery( "#job_completion_date" ).datepicker( { dateFormat: 'dd M yy' } );
+		jQuery( "#job_completion_date" ).datepicker( "option", "defaultDate", "#{DateTime.now().strftime('%d %b %Y')}" );
 	});
 
 = form_for(@job, :html => { :class => "form-horizontal", :role => "form", :id => "job_form" } ) do |f|
@@ -31,6 +35,12 @@
 			= f.text_field :reference, :class => "form-control", :autofocus => true
 		.col-sm-3
 			= f.select :status, options_for_select(Job::JobStatus.status_select, @job.status), {}, :class => "form-control"
+
+	.form-group
+		= f.label :enquiry_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			- val = @job.enquiry_date.blank? ? "" : @job.enquiry_date.strftime("%d %b %Y")
+			= f.text_field :enquiry_date, :value => val, :class => "form-control"
 
 	.form-group
 		= f.label :start_date, :class => "control-label col-sm-2"
@@ -148,6 +158,12 @@
 		.col-sm-2
 			- val = @job.mediation_time.blank? ? "" : @job.mediation_time.strftime("%H:%M")
 			= f.text_field :mediation_time, :value => val, :class => "form-control"
+
+	.form-group
+		= f.label :completion_date, :class => "control-label col-sm-2"
+		.col-sm-5
+			- val = @job.completion_date.blank? ? "" : @job.completion_date.strftime("%d %b %Y")
+			= f.text_field :completion_date, :value => val, :class => "form-control"
 
 	.actions
 		.col-sm-offset-2

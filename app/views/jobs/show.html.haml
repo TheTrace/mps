@@ -38,6 +38,12 @@
 
 
 .form-horizontal{ :style => "width: 74%; float: left;" }
+	- if !@job.enquiry_date.blank?
+		.form-group
+			%strong.col-sm-3 Enquiry Date:
+			.col-sm-4
+				= @job.enquiry_date.strftime("%d-%b-%Y")
+
 	.form-group
 		%strong.col-sm-3 Status:
 		.col-sm-4
@@ -75,6 +81,12 @@
 		.col-sm-4
 			= @job.mediation_date.strftime("%d %b %Y") if !@job.mediation_date.blank?
 			= @job.mediation_time.strftime(" %H:%M") if !@job.mediation_time.blank?
+
+	- if !@job.completion_date.blank?
+		.form-group
+			%strong.col-sm-3 Completion Date:
+			.col-sm-4
+				= @job.completion_date.strftime("%d-%b-%Y")
 
 %div{ :style => "clear:left;" }
 %hr

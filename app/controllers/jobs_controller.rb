@@ -109,6 +109,7 @@ class JobsController < ApplicationController
 	def create
 		@job = Job.new(job_params)
 		@job.user_id = @current_user.id
+		@job.enquiry_date = DateTime.now() if @job.enquiry_date.blank?
 
 		if @job.save
 			# Add tasks later - when changing status
@@ -130,7 +131,7 @@ class JobsController < ApplicationController
 		old_status = @job.status
 		if @job.update(job_params)
 			if @job.status.eql?( Job::JobStatus::ACTIVE )
-				# only add or update if Active status
+				# only add or update Tasks if Active status
 				if @job.start_date != old_date || old_status.eql?( Job::JobStatus::ENQUIRY )
 					@job.update_attribute(:start_date, DateTime.now()) if @job.start_date.blank?
 					if @job.tasks.any?
@@ -140,6 +141,7 @@ class JobsController < ApplicationController
 					end
 				end
 			end
+			@job.update_attribute(:completion_date, DateTime.now()) if @job.status.eql?( Job::JobStatus::COMPLETE ) && !old_status.eql?( Job::JobStatus::COMPLETE ) && @job.completion_date.blank?
 			if params[:contact_type] && !params[:contact_type].blank?
 				redirect_to new_contact_path(:job => @job, :contact_type => params[:contact_type])
 			else
