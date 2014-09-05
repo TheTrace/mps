@@ -154,4 +154,8 @@ class Job < ActiveRecord::Base
 
 	end
 
+  	def log user_id, type = Log::Types::CREATE_JOB, text = "Job create"
+		Log.create(detail: text, type_str: type, job_id: self.id, user_id: user_id )
+ 	end
+
 end
